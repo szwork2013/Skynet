@@ -9,10 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.okar.android.wxmp.R;
-
-import static com.okar.android.wxmp.common.DensityUtil.dip2px;
-import static com.okar.android.wxmp.common.DensityUtil.getDM;
+import com.works.skynet.activity.R;
+import com.works.skynet.common.utils.DensityUtils;
 
 /**
  * Created by wangfengchen on 14-7-23.
@@ -58,7 +56,7 @@ public class RefreshView extends ViewGroup{
 
 // Default size if no limits are specified.
 
-        int result = getDM(context).heightPixels;
+        int result = DensityUtils.getDM(context).heightPixels;
         if (specMode == MeasureSpec.AT_MOST){
 
 // Calculate the ideal size of your
@@ -82,7 +80,7 @@ public class RefreshView extends ViewGroup{
         int specSize = MeasureSpec.getSize(measureSpec);
 
 // Default size if no limits are specified.
-        int result = getDM(context).widthPixels;
+        int result = DensityUtils.getDM(context).widthPixels;
         if (specMode == MeasureSpec.AT_MOST){
 // Calculate the ideal size of your control
 // within this maximum size.
@@ -113,8 +111,8 @@ public class RefreshView extends ViewGroup{
     }
 
     private void init(){
-        screenWidth = getDM(context).widthPixels;
-        headViewHeight = dip2px(context,60f);
+        screenWidth = DensityUtils.getDM(context).widthPixels;
+        headViewHeight = DensityUtils.dip2px(context, 60f);
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         headView = layoutInflater.inflate(R.layout.head_layout,null);
         headView.setLayoutParams(new LayoutParams(screenWidth, headViewHeight));

@@ -3,11 +3,14 @@ package com.works.skynet.activity;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class MainActivity extends Activity {
+import com.google.inject.name.Named;
+import com.works.skynet.base.BaseActivity;
+
+public class MainActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void init() {
         setContentView(R.layout.activity_main);
     }
+
 }
