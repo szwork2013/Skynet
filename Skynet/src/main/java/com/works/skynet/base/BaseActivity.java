@@ -18,8 +18,13 @@ public abstract class BaseActivity extends RoboFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
+        onListener();
     }
 
     protected abstract void init();
+
+    protected void onListener(){
+
+    }
 
 }

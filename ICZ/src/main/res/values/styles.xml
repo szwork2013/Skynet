@@ -1,8 +1,28 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat">
+    <style name="AppTheme">
         <!-- Customize your theme here. -->
+        <item name="android:background">@color/appBackgroundColor</item>
+    </style>
+    
+    <style name="MemberHeadSingleton">
+        <item name="android:layout_width">120sp</item>
+        <item name="android:layout_height">120sp</item>
+        <item name="android:background">@color/appDefImgBackgroundColor</item>
+        <item name="android:layout_marginLeft">8sp</item>
+        <item name="android:layout_marginTop">8sp</item>
+    </style>
+
+    <style name="Label">
+        <item name="android:color">@color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Label.DefLabel1">
+        <item name="android:layout_marginLeft">8sp</item>
+        <item name="android:layout_marginTop">8sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>

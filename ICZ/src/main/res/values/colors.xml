@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="appBackgroundColor">#fff</color>
+    <color name="appDefImgBackgroundColor">#eee</color>
+    <color name="black">#000</color>
+</resources>
