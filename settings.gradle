@@ -1,1 +1,1 @@
-include ':app', ':Skynet'
+include ':app', ':Skynet', ':ICZ'
