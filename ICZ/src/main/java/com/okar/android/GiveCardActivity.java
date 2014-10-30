@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.works.skynet.base.BaseActivity;
 import com.works.skynet.common.utils.Logger;
 
-import roboguice.inject.InjectResource;
+import roboguice.inject.InjectView;
 
 /**
  * Created by wangfengchen on 14/10/29.
@@ -14,13 +14,12 @@ import roboguice.inject.InjectResource;
 public class GiveCardActivity extends BaseActivity {
 
 
-    @InjectResource(R.id.give_card_member_head)
+    @InjectView(R.id.giveCardMemberHead)
     ImageView head;
 
     @Override
     protected void init() {
-        setContentView(R.layout.give_card_activity);
-
+        setContentView(R.layout.giveCardActivity);
     }
 
     @Override

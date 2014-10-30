@@ -1,13 +1,13 @@
 //apply plugin: 'com.android.application'
 apply plugin: 'android-library'
 android {
-    compileSdkVersion 'android-L'
+    compileSdkVersion 15
     buildToolsVersion "20.0.0"
 
     defaultConfig {
         applicationId "com.works.skynet"
-        minSdkVersion 11
-        targetSdkVersion 11
+        minSdkVersion 8
+        targetSdkVersion 15
         versionCode 1
         versionName "1.0"
     }

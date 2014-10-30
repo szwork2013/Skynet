@@ -6,7 +6,7 @@
 
     <ImageView
         style="@style/MemberHeadSingleton"
-        android:id="@+id/give_card_member_head"
+        android:id="@+id/giveCardMemberHead"
         />
 
 </RelativeLayout>
