@@ -13,6 +13,6 @@
         android:layout_height="60sp"
         style="@style/TextStyle.TextTitle"
         android:text="head view"
-        android:id="@+id/textView"
+        android:id="@+id/head_text"
         />
 </LinearLayout>

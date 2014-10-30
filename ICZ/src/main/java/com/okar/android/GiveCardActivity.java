@@ -14,12 +14,12 @@ import roboguice.inject.InjectView;
 public class GiveCardActivity extends BaseActivity {
 
 
-    @InjectView(R.id.giveCardMemberHead)
+    @InjectView(R.id.give_card_member_head)
     ImageView head;
 
     @Override
     protected void init() {
-        setContentView(R.layout.giveCardActivity);
+        setContentView(R.layout.give_card_activity);
     }
 
     @Override
