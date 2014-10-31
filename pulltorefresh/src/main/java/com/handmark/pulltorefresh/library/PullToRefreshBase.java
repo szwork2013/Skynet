@@ -1650,4 +1650,21 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		void onSmoothScrollFinished();
 	}
 
+    public void doPullRefreshing(final boolean smoothScroll,final int scrollDuration, final long delayMillis) {
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int newScrollValue = -180;
+                int duration = smoothScroll ? scrollDuration : 0;
+                //-----------------
+                mCurrentMode = Mode.PULL_FROM_START;
+                setState(State.REFRESHING, true);
+                callRefreshListener();
+                //-----------------
+                smoothScrollTo(newScrollValue, duration);
+            }
+        }, delayMillis);
+    }
+
+
 }

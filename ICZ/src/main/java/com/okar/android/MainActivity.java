@@ -23,6 +23,7 @@ public class MainActivity extends BaseActivity implements PullToRefreshBase.OnRe
     public void init() {
         setContentView(R.layout.activity_ptr_scrollview);
         mScrollView = (ScrollView) RefreshUtils.init(mPullRefreshScrollView, this);
+        mPullRefreshScrollView.doPullRefreshing(true,200,200);
     }
 
     private class GetDataTask extends AsyncTask<Void, Void, String[]> {
@@ -50,6 +51,7 @@ public class MainActivity extends BaseActivity implements PullToRefreshBase.OnRe
 
     @Override
     public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+        System.out.println("-> "+refreshView.getMode());
         new GetDataTask().execute();
     }
 
