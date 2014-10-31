@@ -1,0 +1,56 @@
+package com.okar.base;
+
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.okar.dao.DatabaseHelper;
+import com.okar.utils.IczLoadDataInfOps;
+import com.works.skynet.base.BaseActivity;
+
+/**
+ * Created by wangfengchen on 14/10/31.
+ */
+public abstract class IczBaseActivity<T> extends BaseActivity implements IczLoadDataInfOps {
+
+    public int p;
+
+    public DatabaseHelper databaseHelper;
+
+    public void initDatabaseHelper(){
+        databaseHelper = new DatabaseHelper(this);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        mArrayAdapter = new ArrayAdapter<T>(this,0,0){
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                return getSupView(position,convertView,parent);
+            }
+        };
+        super.onCreate(savedInstanceState);
+    }
+
+    public ArrayAdapter<T> mArrayAdapter;
+
+    public View getSupView(int position, View convertView, ViewGroup parent){
+        return null;
+    }
+
+    public int getState(){
+        PullToRefreshBase refreshBase = getRefreshView();
+        if(refreshBase!=null){
+            switch (refreshBase.getCurrentMode()){
+                case PULL_FROM_START:
+                    return 1;
+                default:
+                    return 0;
+            }
+        }
+        return 0;
+    }
+}

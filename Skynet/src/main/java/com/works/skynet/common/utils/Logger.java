@@ -7,7 +7,7 @@ import android.util.Log;
  */
 public class Logger {
 
-    public static void info(Object target,String msg){
+    public static void info(Object target,boolean debug,String msg){
         String tag = "debug -> ";
         if(target!=null){
             tag = target.getClass().getSimpleName();
