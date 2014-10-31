@@ -15,7 +15,7 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library.internal;
 
-import android.annotation.SuppressLint;
+//import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
@@ -33,7 +33,7 @@ import android.widget.ImageView.ScaleType;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.R;
 
-@SuppressLint("ViewConstructor")
+//@SuppressLint("ViewConstructor")
 public class IndicatorLayout extends FrameLayout implements AnimationListener {
 
 	static final int DEFAULT_ROTATION_ANIMATION_DURATION = 150;

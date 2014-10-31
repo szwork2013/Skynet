@@ -7,31 +7,22 @@ import android.widget.ScrollView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.okar.utils.RefreshUtils;
 import com.works.skynet.base.BaseActivity;
 
 import roboguice.inject.InjectView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener<ScrollView>{
 
+    @InjectView(R.id.pull_refresh_scrollview)
     PullToRefreshScrollView mPullRefreshScrollView;
     ScrollView mScrollView;
 
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void init() {
         setContentView(R.layout.activity_ptr_scrollview);
-
-        mPullRefreshScrollView = (PullToRefreshScrollView) findViewById(R.id.pull_refresh_scrollview);
-        mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
-
-            @Override
-            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                new GetDataTask().execute();
-            }
-        });
-
-        mScrollView = mPullRefreshScrollView.getRefreshableView();
+        mScrollView = (ScrollView) RefreshUtils.init(mPullRefreshScrollView, this);
     }
 
     private class GetDataTask extends AsyncTask<Void, Void, String[]> {
@@ -57,6 +48,10 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+        new GetDataTask().execute();
+    }
 
 
 }

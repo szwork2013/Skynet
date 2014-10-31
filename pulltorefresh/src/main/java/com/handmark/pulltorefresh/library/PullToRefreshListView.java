@@ -15,7 +15,7 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library;
 
-import android.annotation.TargetApi;
+//import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -253,7 +253,7 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 		}
 	}
 
-	@TargetApi(9)
+//	@TargetApi(9)
 	final class InternalListViewSDK9 extends InternalListView {
 
 		public InternalListViewSDK9(Context context, AttributeSet attrs) {

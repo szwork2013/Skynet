@@ -15,7 +15,7 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library;
 
-import android.annotation.TargetApi;
+//import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
@@ -73,7 +73,7 @@ public class PullToRefreshScrollView extends PullToRefreshBase<ScrollView> {
 		return false;
 	}
 
-	@TargetApi(9)
+//	@TargetApi(9)
 	final class InternalScrollViewSDK9 extends ScrollView {
 
 		public InternalScrollViewSDK9(Context context, AttributeSet attrs) {

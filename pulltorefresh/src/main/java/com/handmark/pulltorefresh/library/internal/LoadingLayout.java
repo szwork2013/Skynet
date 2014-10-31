@@ -15,7 +15,7 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library.internal;
 
-import android.annotation.SuppressLint;
+//import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -40,7 +40,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Orientation;
 import com.handmark.pulltorefresh.library.R;
 
-@SuppressLint("ViewConstructor")
+//@SuppressLint("ViewConstructor")
 public abstract class LoadingLayout extends FrameLayout implements ILoadingLayout {
 
 	static final String LOG_TAG = "PullToRefresh-LoadingLayout";

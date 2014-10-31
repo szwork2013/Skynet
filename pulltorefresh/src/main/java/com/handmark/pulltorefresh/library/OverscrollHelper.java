@@ -15,14 +15,14 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library;
 
-import android.annotation.TargetApi;
+//import android.annotation.TargetApi;
 import android.util.Log;
 import android.view.View;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 
-@TargetApi(9)
+//@TargetApi(9)
 public final class OverscrollHelper {
 
 	static final String LOG_TAG = "OverscrollHelper";
