@@ -53,7 +53,7 @@ public class CommodityListActivity extends IczBaseActivity<Commodity> implements
     }
 
     void getCommodity(int p){
-        String url = "http://mp.ichezhen.com/commodity/indexMore.htm?mpid=&uuid=&openid=oqx9juGEtjdc717rC95xcfTZIHDI&accountId=80&p="+p;
+        String url = "http://localhost:8081/commodity/indexMore.htm?mpid=&uuid=&openid=oqx9juGEtjdc717rC95xcfTZIHDI&accountId=80&p="+p;
         Logger.info(this,DEBUG,"get commodity url -> "+url);
         client.get(url,new IczResponseHandler(this,new TypeToken<List<Commodity>>(){}.getType()){
 
