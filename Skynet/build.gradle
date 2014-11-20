@@ -27,4 +27,6 @@ dependencies {
     compile group: 'com.loopj.android', name: 'android-async-http', version: '1.4.4'
     compile group: 'com.nostra13.universalimageloader', name: 'universal-image-loader', version: '1.9.2'
     compile group: 'com.j256.ormlite', name: 'ormlite-android', version: '4.48'
+    compile group: 'de.greenrobot', name: 'eventbus', version: '2.4.0'
+    compile group: 'com.nineoldandroids', name: 'library', version: '2.4.0'
 }

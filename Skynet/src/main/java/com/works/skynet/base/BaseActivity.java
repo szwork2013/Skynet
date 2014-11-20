@@ -3,6 +3,8 @@ package com.works.skynet.base;
 import android.os.Bundle;
 import com.loopj.android.http.AsyncHttpClient;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import de.greenrobot.event.EventBus;
 import roboguice.activity.RoboFragmentActivity;
 
 /**
@@ -25,6 +27,11 @@ public abstract class BaseActivity extends RoboFragmentActivity {
 
     protected void onListener(){
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
 }

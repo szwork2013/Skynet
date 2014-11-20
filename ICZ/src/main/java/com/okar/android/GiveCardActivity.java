@@ -27,7 +27,7 @@ public class GiveCardActivity extends BaseActivity {
         head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Logger.info(GiveCardActivity.this,"click head");
+//                Logger.info(GiveCardActivity.this,"click head");
             }
         });
     }
