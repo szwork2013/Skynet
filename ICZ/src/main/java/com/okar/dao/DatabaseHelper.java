@@ -1,11 +1,15 @@
 package com.okar.dao;
 
+import com.j256.ormlite.android.DatabaseTableConfigUtil;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.DatabaseTableConfig;
 import com.j256.ormlite.table.TableUtils;
 import com.okar.model.Commodity;
+import com.okar.po.TextMsg;
+import com.okar.service.MsgParser;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,8 +25,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // 数据库version
     private static final int DATABASE_VERSION = 1;
 
-    private Dao<Commodity, Integer> commodityDao = null;
-    private RuntimeExceptionDao<Commodity, Integer> commodityRuntimeDao = null;
+    private RuntimeExceptionDao<TextMsg, Integer> textMsgDao = null;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,10 +47,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
             //建立Commodity表
-            TableUtils.createTable(connectionSource, Commodity.class);
-            //初始化DAO
-            commodityDao = getCommodityDao();
-            commodityRuntimeDao = getCommodityDataDao();
+            DatabaseTableConfig<TextMsg> config = DatabaseTableConfigUtil.fromClass(connectionSource, TextMsg.class);
+            TableUtils.createTableIfNotExists(connectionSource,config);
+            TableUtils.createTable(connectionSource, TextMsg.class);
         } catch (SQLException e) {
             Log.e(TAG, e.toString());
             e.printStackTrace();
@@ -58,28 +60,18 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, Commodity.class, true);
+            TableUtils.dropTable(connectionSource, TextMsg.class, true);
         } catch (SQLException e) {
             Log.e(TAG, e.toString());
             e.printStackTrace();
         }
     }
 
-    /**
-     * @return
-     * @throws SQLException
-     */
-    private Dao<Commodity, Integer> getCommodityDao() throws SQLException {
-        if (commodityDao == null)
-            commodityDao = getDao(Commodity.class);
-        return commodityDao;
-    }
-
-    public RuntimeExceptionDao<Commodity, Integer> getCommodityDataDao() {
-        if (commodityRuntimeDao == null) {
-            commodityRuntimeDao = getRuntimeExceptionDao(Commodity.class);
+    public RuntimeExceptionDao<TextMsg, Integer> getTextMsgDao() {
+        if(textMsgDao == null) {
+            textMsgDao = getRuntimeExceptionDao(TextMsg.class);
         }
-        return commodityRuntimeDao;
+        return textMsgDao;
     }
 
     /**
@@ -88,7 +80,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void close() {
         super.close();
-        commodityRuntimeDao = null;
+        textMsgDao = null;
     }
 
 }

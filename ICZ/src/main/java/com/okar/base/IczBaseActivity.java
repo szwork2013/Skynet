@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.okar.dao.DatabaseHelper;
 import com.okar.utils.IczLoadDataInfOps;
 import com.works.skynet.base.BaseActivity;
@@ -52,5 +53,17 @@ public abstract class IczBaseActivity<T> extends BaseActivity implements IczLoad
             }
         }
         return 0;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        /*
+         * 释放资源
+         */
+        if (databaseHelper != null) {
+            OpenHelperManager.releaseHelper();
+            databaseHelper = null;
+        }
     }
 }
