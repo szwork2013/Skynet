@@ -3,5 +3,7 @@
 
     <string name="app_name">ICZ</string>
     <string name="hello_world">Hello world!</string>
+    <string name="register">注册</string>
+    <string name="login">登陆</string>
 
 </resources>

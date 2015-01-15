@@ -5,18 +5,24 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/chat_edit"
+        android:id="@+id/register_edit_username"
         android:layout_width="match_parent"
-        android:layout_height="180dp" />
+        android:layout_height="90dp" />
+
+    <EditText
+        android:id="@+id/register_edit_password"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:inputType="textPassword" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="send"
-        android:id="@+id/chat_send" />
+        android:text="@string/register"
+        android:id="@+id/register_submit" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/chat_msg"
+        android:id="@+id/register_msg"
         style="@style/Label.DefLabel1" />
 </LinearLayout>

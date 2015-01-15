@@ -62,11 +62,11 @@ public class ChatSendRunnable implements Runnable {
                 }
                 Logger.info(this, DEBUG, "msg -> " + msg);
                 if(!client.isClosed()){
-                    if (writer != null&&msg!=null) {
-                        byte[] len = Utils.intToBytes2(msg.getBytes("ISO-8859-1").length);
+                    if (writer != null&&Utils.notBlank(msg)) {
+                        byte[] len = Utils.intToBytes2(msg.getBytes("UTF-8").length);
                         baos.reset();
                         baos.write(len, 0, len.length);
-                        baos.write(msg.getBytes("ISO-8859-1"), 0, msg.length());
+                        baos.write(msg.getBytes("UTF-8"), 0, msg.getBytes("UTF-8").length);
                         byte[] d = baos.toByteArray();
                         try {
                             writer.write(d);

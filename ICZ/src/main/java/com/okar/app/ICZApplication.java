@@ -1,12 +1,14 @@
 package com.okar.app;
 
 import android.app.Application;
+import android.content.Intent;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.okar.android.R;
+import com.okar.service.ChatService;
 import com.works.skynet.app.SkynetApplication;
 import com.works.skynet.common.utils.Logger;
 
@@ -21,6 +23,7 @@ public class ICZApplication extends Application{
     public void onCreate() {
         super.onCreate();
         initImageLoaderConfiguration();
+        startService(new Intent(this, ChatService.class));
 //        initRobo();
     }
 
@@ -36,5 +39,11 @@ public class ICZApplication extends Application{
                 .defaultDisplayImageOptions(defaultDisplayImageOptions)
                 .build();
         ImageLoader.getInstance().init(config);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        stopService(new Intent(this, ChatService.class));
     }
 }

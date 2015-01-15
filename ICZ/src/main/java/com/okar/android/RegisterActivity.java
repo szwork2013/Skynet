@@ -5,31 +5,28 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.okar.service.ChatService;
 import com.works.skynet.base.BaseActivity;
 
 import roboguice.inject.InjectView;
+
 import static com.okar.utils.Constants.CHAT_SERVICE;
 
 /**
- * Created by wangfengchen on 15/1/13.
+ * Created by wangfengchen on 15/1/15.
  */
-public class ChatActivity extends BaseActivity{
+public class RegisterActivity extends BaseActivity {
 
-    @InjectView(R.id.chat_send)
-    private Button sendBtn;
+    @InjectView(R.id.register_edit_username)
+    EditText usernameEt;
 
-    @InjectView(R.id.chat_edit)
-    private EditText chatEt;
+    @InjectView(R.id.register_edit_password)
+    EditText passwordEt;
 
-//    @InjectView(R.id.chat_msg)
-//    private TextView msgTv;
+    @InjectView(R.id.register_submit)
+    EditText submitBtn;
 
     private IChatService chatService;
 
@@ -46,8 +43,7 @@ public class ChatActivity extends BaseActivity{
 
     @Override
     protected void init() {
-        setContentView(R.layout.activity_chat);
-//        startService(new Intent(this, ChatService.class));
+        setContentView(R.layout.activity_register);
         Intent intent = new Intent(CHAT_SERVICE);
         bindService(intent, serConn,
                 Service.BIND_AUTO_CREATE);
@@ -55,15 +51,10 @@ public class ChatActivity extends BaseActivity{
 
     @Override
     protected void onListener() {
-        sendBtn.setOnClickListener(new View.OnClickListener() {
+        submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    chatService.sendMessage(chatEt.getText().toString());
-                    chatEt.setText("");
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+
             }
         });
     }
@@ -72,6 +63,5 @@ public class ChatActivity extends BaseActivity{
     protected void onDestroy() {
         super.onDestroy();
         unbindService(serConn);
-//        stopService(new Intent(this, ChatService.class));
     }
 }
