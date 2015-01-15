@@ -5,11 +5,15 @@ import com.okar.service.MsgBlockingQueue;
 import com.works.skynet.common.utils.Logger;
 import com.works.skynet.common.utils.Utils;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.nio.charset.Charset;
+import java.util.concurrent.Executor;
 
 /**
  * Created by wangfengchen on 15/1/14.
@@ -50,21 +54,31 @@ public class ChatSendRunnable implements Runnable {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             while (!client.isClosed()) {
                 Logger.info(this, DEBUG, "send run -> ");
-                String msg = msgBlockingQueue.take();
-                if (writer != null) {
-                    byte[] len = Utils.intToBytes2(msg.getBytes().length);
-                    baos.reset();
-                    baos.write(len, 0, len.length);
-                    baos.write(msg.getBytes(), 0, msg.length());
-                    byte[] d = baos.toByteArray();
-                    writer.write(d);
-                    writer.flush();
-                    Logger.info(this, DEBUG, "take -> " + msg);
+                String msg = null;
+                try {
+                    msg = msgBlockingQueue.take();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Logger.info(this, DEBUG, "msg -> " + msg);
+                if(!client.isClosed()){
+                    if (writer != null&&msg!=null) {
+                        byte[] len = Utils.intToBytes2(msg.getBytes("ISO-8859-1").length);
+                        baos.reset();
+                        baos.write(len, 0, len.length);
+                        baos.write(msg.getBytes("ISO-8859-1"), 0, msg.length());
+                        byte[] d = baos.toByteArray();
+                        try {
+                            writer.write(d);
+                        }catch ( Exception e) {
+                            e.printStackTrace();
+                        }
+                        writer.flush();
+                        Logger.info(this, DEBUG, "take -> " + msg);
+                    }
                 }
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

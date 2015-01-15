@@ -55,7 +55,7 @@ public class ChatActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 try {
-                    chatService.sendMessage("呵呵");
+                    chatService.sendMessage("编码问题");
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }

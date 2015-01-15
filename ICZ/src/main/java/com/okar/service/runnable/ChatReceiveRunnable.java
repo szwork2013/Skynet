@@ -40,9 +40,7 @@ public class ChatReceiveRunnable implements Runnable {
 
             boolean isHead = true;
             byte[] buff = new byte[4];
-            int len;
-            while ((len = reader.read(buff)) != -1) {
-                System.out.println("receive run ->"+len);
+            while (reader.read(buff) != -1) {
                 if (isHead) {
                     int plen = Utils.bytesToInt2(buff, 0);
                     System.out.println("receive len -> " + plen);
