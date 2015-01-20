@@ -5,9 +5,13 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.gson.JsonNull;
+import com.okar.po.Packet;
+import com.okar.po.UserBody;
 import com.works.skynet.base.BaseActivity;
 
 import roboguice.inject.InjectView;
@@ -54,7 +58,13 @@ public class RegisterActivity extends BaseActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Packet packet = new Packet(Packet.REGISTER_TYPE);
+                packet.body = new UserBody(usernameEt.getText().toString(), passwordEt.getText().toString());
+                try {
+                    chatService.sendPacket(packet);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
