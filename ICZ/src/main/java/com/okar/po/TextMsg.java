@@ -2,11 +2,12 @@ package com.okar.po;
 
 import java.io.Serializable;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Created by wangfengchen on 15/1/14.
  */
-
+@DatabaseTable(tableName = "text_msg")
 public class TextMsg implements Serializable {
 
     private static final long serialVersionUID = -5683263669918171030L;
@@ -14,7 +15,7 @@ public class TextMsg implements Serializable {
     @DatabaseField(id=true)
     int id;
     @DatabaseField
-    public String text;
+    public String content;
     @DatabaseField
     public String time;
 
@@ -30,19 +31,11 @@ public class TextMsg implements Serializable {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setContent(String content) {
+        this.content = content;
     }
 }

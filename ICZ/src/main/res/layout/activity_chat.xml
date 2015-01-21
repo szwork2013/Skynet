@@ -3,20 +3,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <EditText
-        android:id="@+id/chat_edit"
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/chat_msg_list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="44dp"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrMode="both" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/chat_btm_con"
         android:layout_width="match_parent"
-        android:layout_height="180dp" />
+        android:layout_height="44dp">
+        <EditText
+            android:id="@+id/chat_edit"
+            android:layout_width="match_parent"
+            android:layout_height="44dp" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="send"
-        android:id="@+id/chat_send" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/chat_msg"
-        style="@style/Label.DefLabel1" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/send"
+            android:id="@+id/chat_send" />
+        </LinearLayout>
+
 </LinearLayout>

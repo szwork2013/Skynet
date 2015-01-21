@@ -1,22 +1,32 @@
 package com.okar.android;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.gson.JsonNull;
+import com.okar.po.Body;
 import com.okar.po.Packet;
 import com.okar.po.UserBody;
 import com.works.skynet.base.BaseActivity;
+import com.works.skynet.common.utils.Logger;
+import com.works.skynet.common.utils.Utils;
 
 import roboguice.inject.InjectView;
 
 import static com.okar.utils.Constants.CHAT_SERVICE;
+import static com.okar.utils.Constants.REV_REGISTER_FLAG;
+import static com.okar.utils.Constants.EXTRA_CONTENT;
+import static com.okar.utils.Constants.SUCCESS;
 
 /**
  * Created by wangfengchen on 15/1/15.
@@ -30,9 +40,11 @@ public class RegisterActivity extends BaseActivity {
     EditText passwordEt;
 
     @InjectView(R.id.register_submit)
-    EditText submitBtn;
+    Button submitBtn;
 
     private IChatService chatService;
+
+    private RegisterReceiveBroadCast registerReceiveBroadCast;
 
     private ServiceConnection serConn = new ServiceConnection() {
         @Override
@@ -51,6 +63,11 @@ public class RegisterActivity extends BaseActivity {
         Intent intent = new Intent(CHAT_SERVICE);
         bindService(intent, serConn,
                 Service.BIND_AUTO_CREATE);
+
+        registerReceiveBroadCast = new RegisterReceiveBroadCast();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(REV_REGISTER_FLAG);    //只有持有相同的action的接受者才能接收此广播
+        registerReceiver(registerReceiveBroadCast, filter);
     }
 
     @Override
@@ -73,5 +90,27 @@ public class RegisterActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         unbindService(serConn);
+        unregisterReceiver(registerReceiveBroadCast);//取消广播
+    }
+
+    void startChatActivity() {
+        Intent i = new Intent(this, FriendListActivity.class);
+        startActivity(i);
+    }
+
+    public class RegisterReceiveBroadCast extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //得到广播中得到的数据，并显示出来
+            Packet packet = intent.getParcelableExtra(EXTRA_CONTENT);
+            Body body = (Body) packet.body;
+            if(Utils.equals(body.type, SUCCESS)) {
+                startChatActivity();
+            }else {
+                Logger.info(RegisterActivity.this, true, "注册失败 : "+body.message);
+            }
+        }
+
     }
 }

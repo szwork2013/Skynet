@@ -3,17 +3,14 @@ package com.okar.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.RemoteException;
 
+import com.google.gson.Gson;
 import com.okar.android.IChatService;
+import com.okar.po.Packet;
 import com.okar.service.runnable.ChatWorkRunnable;
 import com.works.skynet.common.utils.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -28,11 +25,11 @@ public class ChatService extends Service {
 
     private ChatWorkRunnable chatWorkRunnable;
 
-    private ChatClient chatClient;
-
     private ExecutorService service;
 
     private final static boolean DEBUG = true;
+
+    private Gson g = new Gson();
 
     public ChatService() {
         service = Executors.newCachedThreadPool();
@@ -41,9 +38,13 @@ public class ChatService extends Service {
 
     public class ChatBinder extends IChatService.Stub {
 
-        public void sendMessage(String msg) {
+        public void sendMessage(String msg) throws RemoteException {
             chatWorkRunnable.sendMessage(msg);
-//            chatClient.sendMessage(message);
+        }
+
+        @Override
+        public void sendPacket(Packet packet) throws RemoteException {
+            chatWorkRunnable.sendMessage(g.toJson(packet));
         }
 
     }

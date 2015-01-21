@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/msg_order_con"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+
+        <ImageView
+            style="@style/MsgHead"
+            android:id="@+id/msg_order_head"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            style="@style/Label.DefLabel1"
+            android:id="@+id/msg_order_text"
+            android:layout_toLeftOf="@+id/msg_order_head" />
+    </RelativeLayout>
+
+</FrameLayout>

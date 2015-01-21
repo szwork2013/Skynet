@@ -1,26 +1,49 @@
 package com.okar.android;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.os.RemoteException;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.okar.base.IczBaseActivity;
+import com.okar.po.Friend;
+import com.okar.po.MsgBody;
+import com.okar.po.Packet;
 import com.okar.service.ChatService;
+import com.okar.utils.RefreshUtils;
 import com.works.skynet.base.BaseActivity;
+import com.works.skynet.common.utils.Logger;
 
 import roboguice.inject.InjectView;
+
 import static com.okar.utils.Constants.CHAT_SERVICE;
+import static com.okar.utils.Constants.EXTRA_CONTENT;
+import static com.okar.utils.Constants.EXTRA_ID;
+import static com.okar.utils.Constants.REV_MESSAGE_FLAG;
 
 /**
  * Created by wangfengchen on 15/1/13.
  */
-public class ChatActivity extends BaseActivity{
+public class ChatActivity extends IczBaseActivity<MsgBody> {
+
+    @InjectView(R.id.chat_msg_list_view)
+    PullToRefreshListView pullToRefreshListView;
+
+    ListView msgListView;
 
     @InjectView(R.id.chat_send)
     private Button sendBtn;
@@ -33,11 +56,16 @@ public class ChatActivity extends BaseActivity{
 
     private IChatService chatService;
 
+    private ChatReceiveBroadCast chatReceiveBroadCast;
+
+    private int uid;
+
     private ServiceConnection serConn = new ServiceConnection() {
         @Override
         public void onServiceDisconnected(ComponentName name) {
             chatService = null;
         }
+
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             chatService = IChatService.Stub.asInterface(service);
@@ -47,10 +75,27 @@ public class ChatActivity extends BaseActivity{
     @Override
     protected void init() {
         setContentView(R.layout.activity_chat);
+        msgListView = (ListView) RefreshUtils.init(pullToRefreshListView, this);
+        msgListView.setAdapter(mArrayAdapter);
+
 //        startService(new Intent(this, ChatService.class));
         Intent intent = new Intent(CHAT_SERVICE);
         bindService(intent, serConn,
                 Service.BIND_AUTO_CREATE);
+
+        chatReceiveBroadCast = new ChatReceiveBroadCast();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(REV_MESSAGE_FLAG);    //只有持有相同的action的接受者才能接收此广播
+        registerReceiver(chatReceiveBroadCast, filter);
+
+        getBundle();
+    }
+
+    void getBundle() {
+        Intent intent = getIntent();
+        if(intent!=null) {
+            uid = intent.getIntExtra(EXTRA_ID,0);
+        }
     }
 
     @Override
@@ -59,7 +104,17 @@ public class ChatActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 try {
-                    chatService.sendMessage(chatEt.getText().toString());
+                    Packet packet = new Packet(Packet.MESSAGE_TYPE);
+                    packet.to = uid;
+                    Logger.info(ChatActivity.this, true, "to "+uid);
+                    MsgBody body = new MsgBody();
+                    body.content = chatEt.getText().toString();
+                    body.type = MsgBody.CHAT_TYPE;
+                    body.messageType = MsgBody.TEXT_MESSAGE_TYPE;
+                    packet.body = body;
+                    chatService.sendPacket(packet);
+                    body.me = MsgBody.ME;
+                    mArrayAdapter.add(body);//自己发送
                     chatEt.setText("");
                 } catch (RemoteException e) {
                     e.printStackTrace();
@@ -69,9 +124,62 @@ public class ChatActivity extends BaseActivity{
     }
 
     @Override
+    public void loadData(int p) {
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(serConn);
+        unbindService(serConn);//解绑服务
+        unregisterReceiver(chatReceiveBroadCast);//取消广播
 //        stopService(new Intent(this, ChatService.class));
+    }
+
+    @Override
+    public PullToRefreshBase getRefreshView() {
+        return pullToRefreshListView;
+    }
+
+    //重载获取view item
+    @Override
+    public View getSupView(int position, View convertView, ViewGroup parent){
+        ViewHolder vh;
+        if(convertView==null){
+            convertView = layoutInflater.inflate(R.layout.item_friend,null);
+            vh = new ViewHolder(convertView);
+            convertView.setTag(vh);
+        }else{
+            vh = (ViewHolder) convertView.getTag();
+        }
+        MsgBody msg = mArrayAdapter.getItem(position);
+        vh.doView(msg);
+        return convertView;
+    }
+
+    class ViewHolder{
+
+        TextView orderTextTv;
+
+        public ViewHolder(View convertView){
+            orderTextTv = (TextView) convertView.findViewById(R.id.msg_order_text);
+        }
+
+        public void doView(MsgBody msg){
+            orderTextTv.setText(msg.content);
+        }
+    }
+
+    public class ChatReceiveBroadCast extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //得到广播中得到的数据，并显示出来
+            Packet packet = intent.getParcelableExtra(EXTRA_CONTENT);
+            MsgBody body = (MsgBody) packet.body;
+            body.me = MsgBody.NO_ME;
+            mArrayAdapter.add(body);
+        }
+
     }
 }

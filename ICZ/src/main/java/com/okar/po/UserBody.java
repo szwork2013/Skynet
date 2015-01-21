@@ -9,11 +9,11 @@ import android.os.Parcelable;
 public class UserBody implements Parcelable {
 
     public UserBody(String u, String p) {
-        userName = u;
+        username = u;
         password = p;
     }
 
-    public String userName;
+    public String username;
 
     public String password;
 
@@ -24,7 +24,7 @@ public class UserBody implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(userName);
+        dest.writeString(username);
         dest.writeString(password);
     }
 
@@ -41,7 +41,7 @@ public class UserBody implements Parcelable {
     };
 
     private UserBody(Parcel source) {
-        userName=source.readString();
+        username=source.readString();
         password=source.readString();
     }
 

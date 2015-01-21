@@ -20,9 +20,16 @@
         android:layout_height="wrap_content"
         android:text="@string/login"
         android:id="@+id/login_submit" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        android:id="@+id/login_2_register" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/login_msg"
         style="@style/Label.DefLabel1" />
+
+
 </LinearLayout>
