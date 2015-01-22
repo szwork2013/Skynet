@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <!-- The PullToRefreshScrollView replaces a standard PullToRefreshScrollView widget. -->
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/chat_msg_list_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="44dp"
         ptr:ptrAnimationStyle="flip"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="66dp"
         ptr:ptrMode="both" />
-    <LinearLayout
-        android:orientation="horizontal"
+
+    <RelativeLayout
         android:id="@+id/chat_btm_con"
-        android:layout_width="match_parent"
-        android:layout_height="44dp">
+        style="@style/SendTextEditBtmConStyle">
+
         <EditText
-            android:id="@+id/chat_edit"
-            android:layout_width="match_parent"
-            android:layout_height="44dp" />
+            android:id="@+id/chat_edit_text"
+            style="@style/SendTextEditStyle"
+            android:inputType="text"/>
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/send"
-            android:id="@+id/chat_send" />
-        </LinearLayout>
+            android:id="@+id/chat_send"
+            style="@style/SendTextBtnStyle"/>
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

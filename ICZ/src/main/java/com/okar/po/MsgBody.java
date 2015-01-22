@@ -55,4 +55,14 @@ public class MsgBody implements Parcelable{
         messageType=source.readString();
         content=source.readString();
     }
+
+    @Override
+    public String toString() {
+        return "MsgBody{" +
+                "me=" + me +
+                ", type='" + type + '\'' +
+                ", messageType='" + messageType + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

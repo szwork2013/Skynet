@@ -14,6 +14,7 @@ import com.okar.model.Commodity;
 import com.okar.po.Body;
 import com.okar.po.Friend;
 import com.okar.po.FriendList;
+import com.okar.po.MsgBody;
 import com.okar.po.Packet;
 import com.okar.po.TextMsg;
 import com.works.skynet.common.utils.Logger;
@@ -69,6 +70,18 @@ public class MsgParser {
                 Packet packet = new Packet(Packet.QUERY_TYPE);
                 packet.body = g.fromJson(result.optString("body"), FriendList.class);
                 sendBroadcast(REV_FRIEND_LIST_FLAG, packet);
+            } else if(Utils.equals(Packet.MESSAGE_TYPE, type)) {
+                Packet packet = new Packet(Packet.MESSAGE_TYPE);
+                MsgBody body = g.fromJson(result.optString("body"), MsgBody.class);
+                try {
+//                    TextMsg textMsg = new TextMsg();
+//                    textMsg.setContent(body.content);
+//                    textMsgDAO.add(textMsg);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                packet.body = body;
+                sendBroadcast(REV_MESSAGE_FLAG, packet);
             }
         } catch (JSONException e) {
             e.printStackTrace();

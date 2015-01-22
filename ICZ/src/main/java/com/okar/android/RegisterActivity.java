@@ -24,6 +24,7 @@ import com.works.skynet.common.utils.Utils;
 import roboguice.inject.InjectView;
 
 import static com.okar.utils.Constants.CHAT_SERVICE;
+import static com.okar.utils.Constants.EXTRA_MID;
 import static com.okar.utils.Constants.REV_REGISTER_FLAG;
 import static com.okar.utils.Constants.EXTRA_CONTENT;
 import static com.okar.utils.Constants.SUCCESS;
@@ -93,8 +94,9 @@ public class RegisterActivity extends BaseActivity {
         unregisterReceiver(registerReceiveBroadCast);//取消广播
     }
 
-    void startChatActivity() {
+    void startChatActivity(int mid) {
         Intent i = new Intent(this, FriendListActivity.class);
+        i.putExtra(EXTRA_MID, mid);
         startActivity(i);
     }
 
@@ -106,7 +108,8 @@ public class RegisterActivity extends BaseActivity {
             Packet packet = intent.getParcelableExtra(EXTRA_CONTENT);
             Body body = (Body) packet.body;
             if(Utils.equals(body.type, SUCCESS)) {
-                startChatActivity();
+                Logger.info(RegisterActivity.this, true , "mid -> "+body.id);
+                startChatActivity(body.id);
             }else {
                 Logger.info(RegisterActivity.this, true, "注册失败 : "+body.message);
             }

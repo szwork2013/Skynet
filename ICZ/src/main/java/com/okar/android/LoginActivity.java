@@ -26,6 +26,7 @@ import roboguice.inject.InjectView;
 
 import static com.okar.utils.Constants.CHAT_SERVICE;
 import static com.okar.utils.Constants.EXTRA_CONTENT;
+import static com.okar.utils.Constants.EXTRA_MID;
 import static com.okar.utils.Constants.REV_AUTH_FLAG;
 import static com.okar.utils.Constants.SUCCESS;
 
@@ -107,8 +108,9 @@ public class LoginActivity extends BaseActivity {
         unregisterReceiver(authReceiveBroadCast);//取消广播
     }
 
-    void startChatActivity() {
+    void startChatActivity(int mid) {
         Intent i = new Intent(this, FriendListActivity.class);
+        i.putExtra(EXTRA_MID, mid);
         startActivity(i);
     }
 
@@ -120,7 +122,8 @@ public class LoginActivity extends BaseActivity {
             Packet packet = intent.getParcelableExtra(EXTRA_CONTENT);
             Body body = (Body) packet.body;
             if(Utils.equals(body.type, SUCCESS)) {
-                startChatActivity();
+                Logger.info(LoginActivity.this, true , "mid -> "+body.id);
+                startChatActivity(body.id);
             }else {
                 Logger.info(LoginActivity.this, true, "登陆失败 : " + body.message);
             }

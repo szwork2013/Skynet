@@ -26,6 +26,7 @@
     </style>
 
     <style name="MsgHead">
+        <item name="android:src">@drawable/icon80_avatar_default</item>
         <item name="android:layout_width">45sp</item>
         <item name="android:layout_height">45sp</item>
         <item name="android:background">@color/appDefImgBackgroundColor</item>
@@ -44,6 +45,30 @@
         <item name="android:layout_marginTop">8sp</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
+    </style>
+
+    <!-- 编辑器 -->
+
+    <style name="SendTextEditBtmConStyle">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">66dp</item>
+    </style>
+
+    <style name="SendTextEditStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_height">58dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:layout_marginRight">100dp</item>
+    </style>
+
+    <style name="SendTextBtnStyle">
+        <item name="android:text">@string/send</item>
+        <item name="android:layout_width">92dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_height">58dp</item>
+        <item name="android:layout_margin">4dp</item>
     </style>
 
 </resources>

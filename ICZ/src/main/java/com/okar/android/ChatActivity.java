@@ -27,6 +27,7 @@ import com.okar.service.ChatService;
 import com.okar.utils.RefreshUtils;
 import com.works.skynet.base.BaseActivity;
 import com.works.skynet.common.utils.Logger;
+import com.works.skynet.common.utils.Utils;
 
 import roboguice.inject.InjectView;
 
@@ -34,6 +35,7 @@ import static com.okar.utils.Constants.CHAT_SERVICE;
 import static com.okar.utils.Constants.EXTRA_CONTENT;
 import static com.okar.utils.Constants.EXTRA_ID;
 import static com.okar.utils.Constants.REV_MESSAGE_FLAG;
+import static com.okar.utils.Constants.EXTRA_MID;
 
 /**
  * Created by wangfengchen on 15/1/13.
@@ -48,7 +50,7 @@ public class ChatActivity extends IczBaseActivity<MsgBody> {
     @InjectView(R.id.chat_send)
     private Button sendBtn;
 
-    @InjectView(R.id.chat_edit)
+    @InjectView(R.id.chat_edit_text)
     private EditText chatEt;
 
 //    @InjectView(R.id.chat_msg)
@@ -59,6 +61,8 @@ public class ChatActivity extends IczBaseActivity<MsgBody> {
     private ChatReceiveBroadCast chatReceiveBroadCast;
 
     private int uid;
+
+    private int mid;
 
     private ServiceConnection serConn = new ServiceConnection() {
         @Override
@@ -77,7 +81,7 @@ public class ChatActivity extends IczBaseActivity<MsgBody> {
         setContentView(R.layout.activity_chat);
         msgListView = (ListView) RefreshUtils.init(pullToRefreshListView, this);
         msgListView.setAdapter(mArrayAdapter);
-
+        msgListView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 //        startService(new Intent(this, ChatService.class));
         Intent intent = new Intent(CHAT_SERVICE);
         bindService(intent, serConn,
@@ -95,6 +99,7 @@ public class ChatActivity extends IczBaseActivity<MsgBody> {
         Intent intent = getIntent();
         if(intent!=null) {
             uid = intent.getIntExtra(EXTRA_ID,0);
+            mid = intent.getIntExtra(EXTRA_MID,0);
         }
     }
 
@@ -106,6 +111,7 @@ public class ChatActivity extends IczBaseActivity<MsgBody> {
                 try {
                     Packet packet = new Packet(Packet.MESSAGE_TYPE);
                     packet.to = uid;
+                    packet.from = mid;
                     Logger.info(ChatActivity.this, true, "to "+uid);
                     MsgBody body = new MsgBody();
                     body.content = chatEt.getText().toString();
@@ -146,7 +152,7 @@ public class ChatActivity extends IczBaseActivity<MsgBody> {
     public View getSupView(int position, View convertView, ViewGroup parent){
         ViewHolder vh;
         if(convertView==null){
-            convertView = layoutInflater.inflate(R.layout.item_friend,null);
+            convertView = layoutInflater.inflate(R.layout.item_msg,null);
             vh = new ViewHolder(convertView);
             convertView.setTag(vh);
         }else{
@@ -160,13 +166,29 @@ public class ChatActivity extends IczBaseActivity<MsgBody> {
     class ViewHolder{
 
         TextView orderTextTv;
+        TextView meTextTv;
+
+        View orderConLayout;
+        View meConLayout;
 
         public ViewHolder(View convertView){
             orderTextTv = (TextView) convertView.findViewById(R.id.msg_order_text);
+            meTextTv = (TextView) convertView.findViewById(R.id.msg_me_text);
+            orderConLayout = convertView.findViewById(R.id.msg_order_con);
+            meConLayout = convertView.findViewById(R.id.msg_me_con);
         }
 
         public void doView(MsgBody msg){
-            orderTextTv.setText(msg.content);
+            Logger.info(ChatActivity.this, DEBUG, ""+msg);
+            if(msg.me== MsgBody.NO_ME) {//不是本人
+                orderConLayout.setVisibility(View.VISIBLE);
+                meConLayout.setVisibility(View.GONE);
+                orderTextTv.setText(msg.content);
+            }else {//是本人
+                orderConLayout.setVisibility(View.GONE);
+                meConLayout.setVisibility(View.VISIBLE);
+                meTextTv.setText(msg.content);
+            }
         }
     }
 

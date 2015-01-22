@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/msg_order_con"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="wrap_content">
 
 
         <ImageView
@@ -22,6 +22,26 @@
             style="@style/Label.DefLabel1"
             android:id="@+id/msg_order_text"
             android:layout_toLeftOf="@+id/msg_order_head" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/msg_me_con"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            style="@style/MsgHead"
+            android:id="@+id/msg_me_head"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            style="@style/Label.DefLabel1"
+            android:id="@+id/msg_me_text"
+            android:layout_toRightOf="@+id/msg_me_head" />
     </RelativeLayout>
 
 </FrameLayout>

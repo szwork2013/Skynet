@@ -14,5 +14,6 @@ public class Constants {
 
     public static final String EXTRA_CONTENT = "content";
     public static final String EXTRA_ID = "id";
+    public static final String EXTRA_MID = "mid";
     public static final String SUCCESS = "success";
 }

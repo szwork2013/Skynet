@@ -37,6 +37,7 @@ import roboguice.inject.InjectView;
 import static com.okar.utils.Constants.CHAT_SERVICE;
 import static com.okar.utils.Constants.EXTRA_CONTENT;
 import static com.okar.utils.Constants.EXTRA_ID;
+import static com.okar.utils.Constants.EXTRA_MID;
 import static com.okar.utils.Constants.REV_FRIEND_LIST_FLAG;
 import static com.okar.utils.Constants.REV_REGISTER_FLAG;
 import static com.okar.utils.Constants.SUCCESS;
@@ -52,6 +53,8 @@ public class FriendListActivity extends IczBaseActivity<Friend> {
     ListView friendListView;
 
     private IChatService chatService;
+
+    private int mid;
 
     private ServiceConnection serConn = new ServiceConnection() {
         @Override
@@ -70,6 +73,7 @@ public class FriendListActivity extends IczBaseActivity<Friend> {
 
     @Override
     protected void init() {
+        getBundle();
         setContentView(R.layout.activity_friend_list);
         friendListView = (ListView) RefreshUtils.init(pullToRefreshListView, this);
         friendListView.setAdapter(mArrayAdapter);
@@ -84,6 +88,13 @@ public class FriendListActivity extends IczBaseActivity<Friend> {
         registerReceiver(friendListReceiveBroadCast, filter);
     }
 
+    void getBundle() {
+        Intent intent = getIntent();
+        if(intent!=null) {
+            mid = intent.getIntExtra(EXTRA_MID, 0);
+        }
+    }
+
     @Override
     public PullToRefreshBase getRefreshView() {
         return pullToRefreshListView;
@@ -92,6 +103,7 @@ public class FriendListActivity extends IczBaseActivity<Friend> {
     @Override
     public void loadData(int p) {
         Packet packet = new Packet(Packet.QUERY_TYPE);
+        packet.from = mid;
         Body body = new Body();
         body.type = "user";
         body.key = "all";
@@ -122,6 +134,7 @@ public class FriendListActivity extends IczBaseActivity<Friend> {
                 int id = friend.id;
                 Intent intent = new Intent(FriendListActivity.this, ChatActivity.class);
                 intent.putExtra(EXTRA_ID, id);
+                intent.putExtra(EXTRA_MID, mid);
                 startActivity(intent);
             }
         });
