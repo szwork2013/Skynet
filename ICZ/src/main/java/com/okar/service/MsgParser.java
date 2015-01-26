@@ -3,6 +3,7 @@ package com.okar.service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,6 +23,7 @@ import com.works.skynet.common.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +86,7 @@ public class MsgParser {
                 sendBroadcast(REV_MESSAGE_FLAG, packet);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("no json", ""+json);
         }
 //        Packet packet = new Packet(Packet.LOGIN_TYPE);
 //        TextMsg textMsg = new TextMsg();
