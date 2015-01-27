@@ -3,7 +3,11 @@ package com.okar.service.runnable;
 import android.content.Context;
 import android.util.Log;
 
+import com.okar.utils.ChatUtils;
+import com.works.skynet.common.utils.Logger;
+
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
@@ -12,42 +16,51 @@ import java.net.Socket;
  */
 public class ChatActiveRunnable implements Runnable {
 
+    private ChatWorkRunnable chatWorkRunnable;
+
     private Socket client;
 
-    private String host;
+    private boolean running = true;
 
-    private int port;
+    private final static boolean DEBUG = true;
 
-    public ChatActiveRunnable(Context context, Socket client, String host, int port) {
+    public ChatActiveRunnable(Socket c, ChatWorkRunnable cwr) {
+        client = c;
+        chatWorkRunnable = cwr;
+    }
+
+    public void reConnect(Socket client) {
         this.client = client;
-        this.host = host;
-        this.port = port;
     }
 
     @Override
     public void run() {
+        while (running) {
 
-        try {
+            Logger.info(this, DEBUG, " active run ->");
 
-            while (true) {
-                Thread.sleep(2000);
+            try {
+                Thread.sleep(30 * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                Logger.info(this, DEBUG, " 发送心跳 run ->");
+                OutputStream w = client.getOutputStream();
+                w.write(ChatUtils.getMsgBytes("haha"));//如果没有断开连接，则休眠
+                w.flush();
+            } catch (IOException e) {
+                Log.e("active", "write error");
+                Logger.info(this, DEBUG, "断了");
+                chatWorkRunnable.notifyWorkRunnable();//唤醒连接服务器线程
+            }
         }
+
     }
 
-    public void reConnect() {
-        Log.d("reConnect", "reConnect");
-        try {
-            if(!client.isClosed()) {
-                client.close();
-                client.connect(new InetSocketAddress(host, port));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void close() {
+        running = false;
     }
 
 }

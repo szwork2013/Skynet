@@ -2,6 +2,7 @@ package com.okar.service.runnable;
 
 import android.content.Context;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.okar.service.ChatService;
 import com.okar.service.MsgParser;
@@ -90,7 +91,7 @@ public class ChatReceiveRunnable implements Runnable {
             reader = null;
             reader = client.getInputStream();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("receive", "write error");
         }
     }
 

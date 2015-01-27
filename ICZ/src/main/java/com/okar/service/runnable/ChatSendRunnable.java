@@ -1,5 +1,7 @@
 package com.okar.service.runnable;
 
+import android.util.Log;
+
 import com.okar.service.ChatService;
 import com.okar.service.MsgBlockingQueue;
 import com.okar.utils.ChatUtils;
@@ -60,7 +62,7 @@ public class ChatSendRunnable implements Runnable {
             writer = null;
             writer = client.getOutputStream();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("send", "write error");
         }
     }
 

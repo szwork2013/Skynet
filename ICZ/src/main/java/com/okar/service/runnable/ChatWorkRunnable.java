@@ -34,13 +34,17 @@ public class ChatWorkRunnable implements Runnable {
 
     private int port;
 
-    private ChatReceiveRunnable chatReceiveRunnable;
+    private ChatReceiveRunnable chatReceiveRunnable;//接受消息线程
 
-    private ChatSendRunnable chatSendRunnable;
+    private ChatSendRunnable chatSendRunnable;//发送消息线程
+
+    private ChatActiveRunnable chatActiveRunnable;//心跳线程
 
     private ExecutorService service;
 
     private Context mContext;
+
+    private boolean running = true;
 
     private static final boolean DEBUG = true;
 
@@ -68,11 +72,13 @@ public class ChatWorkRunnable implements Runnable {
         }
         chatReceiveRunnable = new ChatReceiveRunnable(mContext, client);
         chatSendRunnable = new ChatSendRunnable(client);
+        chatActiveRunnable = new ChatActiveRunnable(client, this);
         Logger.info(this, DEBUG, "receive and send start ->");
         service.execute(chatReceiveRunnable);
         service.execute(chatSendRunnable);
+        service.execute(chatActiveRunnable);
 
-        while (true) {
+        while (running) {
             workWait();
             reConnect();
             try {
@@ -83,6 +89,10 @@ public class ChatWorkRunnable implements Runnable {
         }
     }
 
+    /**
+     * 如果没有断开连接，则休眠
+     * 如果断开连接就尝试连接
+     */
     public void workWait() {
 
         synchronized (this) {
@@ -100,6 +110,9 @@ public class ChatWorkRunnable implements Runnable {
         }
     }
 
+    /**
+     * 唤醒连接服务器
+     */
     public void notifyWorkRunnable() {
         System.out.println("notifyWorkRunnable ->");
         synchronized (this) {
@@ -107,6 +120,9 @@ public class ChatWorkRunnable implements Runnable {
         }
     }
 
+    /**
+     * 重新连接服务器
+     */
     public void reConnect() {
         Log.d("work reConnect", "reConnect");
         try {
@@ -114,7 +130,7 @@ public class ChatWorkRunnable implements Runnable {
             w.write(ChatUtils.getMsgBytes("haha"));//如果没有断开连接，则休眠
             w.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("work", "write error");
             Log.d("work connect", "connect");
             try {
                 closeClient();
@@ -122,12 +138,16 @@ public class ChatWorkRunnable implements Runnable {
                 client = new Socket(host, port);
                 chatSendRunnable.reConnect(client);
                 chatReceiveRunnable.reConnect(client);
+                chatActiveRunnable.reConnect(client);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         }
     }
 
+    /**
+     * 关闭client
+     */
     public void closeClient() {
         Log.d("closeClient", "closeClient");
         try {
@@ -137,13 +157,18 @@ public class ChatWorkRunnable implements Runnable {
         }
     }
 
+    /**
+     * 唤醒接收线程
+     */
     public void notifyReceiveRunnable() {
         if (chatReceiveRunnable != null) chatReceiveRunnable.notifyReceiveRunnable();
     }
 
     public void close() {
+        running = false;
         if (chatSendRunnable != null) chatSendRunnable.close();
         if (chatReceiveRunnable != null) chatReceiveRunnable.close();
+        if (chatActiveRunnable != null) chatActiveRunnable.close();
         if (client != null) {
             try {
                 client.close();

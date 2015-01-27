@@ -30,17 +30,13 @@ public class ChatService extends Service {
 
     private final static int CHAT_PORT = 9999;
 
-    private ChatWorkRunnable chatWorkRunnable;
+    private ChatWorkRunnable chatWorkRunnable;//处理会话
 
     private ExecutorService service;
 
     private final static boolean DEBUG = true;
 
     private Gson g = new Gson();
-
-    private ConnectivityManager connectivityManager;
-
-    private NetworkInfo networkInfo;
 
     public static NetworkInfo.State networkState;
 
@@ -53,14 +49,15 @@ public class ChatService extends Service {
             String action = intent.getAction();
             if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
                 Log.d("mark", "网络状态已经改变");
-                connectivityManager = (ConnectivityManager)
+                ConnectivityManager connectivityManager = (ConnectivityManager)
 
                         context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                networkInfo = connectivityManager.getActiveNetworkInfo();
+                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
                 if (networkInfo != null && networkInfo.isAvailable()) {
                     String name = networkInfo.getTypeName();
                     Log.d("mark", "当前网络名称：" + name);
+                    Log.d("mark", "index：" + index);
                     networkState = networkInfo.getState();
                     if (index != 0) {
                         chatWorkRunnable.notifyWorkRunnable();//网络重连
@@ -94,12 +91,18 @@ public class ChatService extends Service {
 
     }
 
+    /**
+     * 注册网络状态监听
+     */
     void registerConnectivityActionReceiver() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(mConnectivityActionReceiver, filter);
     }
 
+    /**
+     * 取消网络状态监听
+     */
     void unregisterConnectivityActionReceiver() {
         unregisterReceiver(mConnectivityActionReceiver);
     }
@@ -132,6 +135,10 @@ public class ChatService extends Service {
         service.shutdownNow();
     }
 
+    /**
+     * 是否有网络连接
+     * @return
+     */
     public static boolean hasNetwork() {
         return ChatService.networkState != null && ChatService.networkState == NetworkInfo.State.CONNECTED;
     }
