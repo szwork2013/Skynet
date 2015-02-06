@@ -1,27 +1,22 @@
 package com.okar.dao;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.okar.po.TextMsg;
-import com.works.skynet.common.po.User;
 
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * Created by wangfengchen on 15/1/21.
- */
 public class TextMsgDAO {
     Dao<TextMsg, Integer> dao = null;
-    private Context context = null;
+    //    private Context context = null;
     OrmLiteSqliteOpenHelper helper = null;
 
     public TextMsgDAO(Context context) {
-        this.context = context;
+//        this.context = context;
         // TODO Auto-generated constructor stub
         helper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
         try {
@@ -32,26 +27,33 @@ public class TextMsgDAO {
         }
     }
 
-    public TextMsg add(TextMsg t) {
+    public int add(TextMsg t) {
         try {
-            return dao.createIfNotExists(t);
+            return dao.create(t);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
     /**
      * 更新
-     *
      */
-    public void edit(TextMsg t)
-    {
+    public void edit(TextMsg t) {
         try {
             dao.createOrUpdate(t);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public int remove(TextMsg t) {
+        try {
+            return dao.delete(t);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 

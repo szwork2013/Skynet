@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.okar.utils.Constants.REV_MESSAGE_FLAG;
@@ -39,8 +40,6 @@ import static com.okar.utils.Constants.REV_FRIEND_LIST_FLAG;
  */
 public class MsgParser {
 
-//    private DatabaseHelper databaseHelper;
-
     final static boolean DEBUG = true;
 
     private Context context;
@@ -50,7 +49,6 @@ public class MsgParser {
     Gson g =  new Gson();
 
     public MsgParser(Context context) {
-//        databaseHelper = new DatabaseHelper(context);
         this.context = context;
         textMsgDAO = new TextMsgDAO(context);
     }
@@ -76,9 +74,10 @@ public class MsgParser {
                 Packet packet = new Packet(Packet.MESSAGE_TYPE);
                 MsgBody body = g.fromJson(result.optString("body"), MsgBody.class);
                 try {
-//                    TextMsg textMsg = new TextMsg();
-//                    textMsg.setContent(body.content);
-//                    textMsgDAO.add(textMsg);
+                    TextMsg textMsg = new TextMsg();
+                    textMsg.setContent(body.content);
+                    textMsg.setCreateTime(new Date());
+                    textMsgDAO.add(textMsg);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -88,12 +87,6 @@ public class MsgParser {
         } catch (JSONException e) {
             Log.e("no json", ""+json);
         }
-//        Packet packet = new Packet(Packet.LOGIN_TYPE);
-//        TextMsg textMsg = new TextMsg();
-//        textMsg.content = "json";
-//        databaseHelper.getTextMsgDao().create(textMsg);
-//        textMsgDAO.add(textMsg);
-
     }
 
     public void sendBroadcast(String flag, Packet packet) {

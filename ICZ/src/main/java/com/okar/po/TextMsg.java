@@ -1,6 +1,9 @@
 package com.okar.po;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -12,16 +15,12 @@ public class TextMsg implements Serializable {
 
     private static final long serialVersionUID = -5683263669918171030L;
 
-    @DatabaseField(id=true)
+    @DatabaseField(generatedId = true)
     int id;
     @DatabaseField
     public String content;
-    @DatabaseField
-    public String time;
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
+    @DatabaseField(dataType = DataType.DATE)
+    public Date createTime;
 
     public int getId() {
         return id;
@@ -39,12 +38,20 @@ public class TextMsg implements Serializable {
         this.content = content;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         return "TextMsg{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
-                ", time='" + time + '\'' +
+                ", createTime=" + createTime +
                 '}';
     }
 }

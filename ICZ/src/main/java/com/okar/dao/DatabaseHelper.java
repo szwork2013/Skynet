@@ -21,26 +21,14 @@ import java.sql.SQLException;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = "DatabaseHelper";
     // 数据库名称
-    private static final String DATABASE_NAME = "dataCache.db";
+    private static final String DATABASE_NAME = "iczcache1.db";
     // 数据库version
-    private static final int DATABASE_VERSION = 1;
-
-    private RuntimeExceptionDao<TextMsg, Integer> textMsgDao = null;
+    private static final int DATABASE_VERSION = 6;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         // 可以用配置文件来生成 数据表，有点繁琐，不喜欢用
         // super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
-    }
-
-    /**
-     * @param context
-     * @param databaseName
-     * @param factory
-     * @param databaseVersion
-     */
-    public DatabaseHelper(Context context, String databaseName, CursorFactory factory, int databaseVersion) {
-        super(context, databaseName, factory, databaseVersion);
     }
 
     @Override
@@ -49,6 +37,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             //建立Commodity表
 //            DatabaseTableConfig<TextMsg> config = DatabaseTableConfigUtil.fromClass(connectionSource, TextMsg.class);
 //            TableUtils.createTableIfNotExists(connectionSource,config);
+            Log.e(TAG, "onCreate tables -----> ");
             TableUtils.createTable(connectionSource, TextMsg.class);
         } catch (SQLException e) {
             Log.e(TAG, e.toString());
@@ -60,18 +49,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
+            Log.e(TAG, "onUpgrade tables -----> ");
+            Log.e(TAG, "oldVersion -> "+oldVersion);
+            Log.e(TAG, "newVersion -> "+newVersion);
             TableUtils.dropTable(connectionSource, TextMsg.class, true);
+            onCreate(sqLiteDatabase, connectionSource);
         } catch (SQLException e) {
             Log.e(TAG, e.toString());
             e.printStackTrace();
         }
-    }
-
-    public RuntimeExceptionDao<TextMsg, Integer> getTextMsgDao() {
-        if(textMsgDao == null) {
-            textMsgDao = getRuntimeExceptionDao(TextMsg.class);
-        }
-        return textMsgDao;
     }
 
     /**
@@ -80,7 +66,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void close() {
         super.close();
-        textMsgDao = null;
     }
 
 }

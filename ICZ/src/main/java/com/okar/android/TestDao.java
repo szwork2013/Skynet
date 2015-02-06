@@ -2,10 +2,9 @@ package com.okar.android;
 
 import android.app.Activity;
 import android.os.Bundle;
-
 import com.okar.dao.TextMsgDAO;
 import com.okar.po.TextMsg;
-
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,11 +18,10 @@ public class TestDao extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         textMsgDAO = new TextMsgDAO(this);
-        for(int i=0;i<10;i++){
-            TextMsg textMsg = new TextMsg();
-            textMsg.setContent("fdsdfsdfsdfsdfsdfsdfsdf");
-            textMsgDAO.add(textMsg);
-        }
+        TextMsg textMsg = new TextMsg();
+        textMsg.setContent("1232131313123");
+        textMsg.setCreateTime(new Date());
+        textMsgDAO.add(textMsg);
         List<TextMsg> list = textMsgDAO.listAll();
         for(TextMsg tm : list) {
             System.out.println(tm);
