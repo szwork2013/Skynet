@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.okar.base.IczBaseActivity;
 import com.okar.dao.DatabaseHelper;
+import com.okar.dao.MsgBodyDAO;
 import com.okar.dao.TextMsgDAO;
 import com.okar.model.ApplyMemberCardRecord;
 import com.okar.model.Commodity;
@@ -44,13 +45,13 @@ public class MsgParser {
 
     private Context context;
 
-    TextMsgDAO textMsgDAO;
+    private MsgBodyDAO msgBodyDAO;
 
     Gson g =  new Gson();
 
     public MsgParser(Context context) {
         this.context = context;
-        textMsgDAO = new TextMsgDAO(context);
+        msgBodyDAO = new MsgBodyDAO(context);
     }
     public void parseJson(String json) {
         Logger.info(this, DEBUG, "json -> "+json);
@@ -74,10 +75,7 @@ public class MsgParser {
                 Packet packet = new Packet(Packet.MESSAGE_TYPE);
                 MsgBody body = g.fromJson(result.optString("body"), MsgBody.class);
                 try {
-                    TextMsg textMsg = new TextMsg();
-                    textMsg.setContent(body.content);
-                    textMsg.setCreateTime(new Date());
-                    textMsgDAO.add(textMsg);
+                   msgBodyDAO.add(body);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

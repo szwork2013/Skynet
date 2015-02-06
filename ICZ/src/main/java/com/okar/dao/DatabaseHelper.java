@@ -8,6 +8,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 import com.j256.ormlite.table.TableUtils;
 import com.okar.model.Commodity;
+import com.okar.po.MsgBody;
 import com.okar.po.TextMsg;
 import com.okar.service.MsgParser;
 
@@ -23,7 +24,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // 数据库名称
     private static final String DATABASE_NAME = "iczcache1.db";
     // 数据库version
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -39,6 +40,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 //            TableUtils.createTableIfNotExists(connectionSource,config);
             Log.e(TAG, "onCreate tables -----> ");
             TableUtils.createTable(connectionSource, TextMsg.class);
+            TableUtils.createTable(connectionSource, MsgBody.class);
         } catch (SQLException e) {
             Log.e(TAG, e.toString());
             e.printStackTrace();
@@ -53,6 +55,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             Log.e(TAG, "oldVersion -> "+oldVersion);
             Log.e(TAG, "newVersion -> "+newVersion);
             TableUtils.dropTable(connectionSource, TextMsg.class, true);
+            TableUtils.dropTable(connectionSource, MsgBody.class, true);
             onCreate(sqLiteDatabase, connectionSource);
         } catch (SQLException e) {
             Log.e(TAG, e.toString());

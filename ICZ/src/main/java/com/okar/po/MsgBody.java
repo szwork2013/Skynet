@@ -3,9 +3,16 @@ package com.okar.po;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.j256.ormlite.field.DataType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+import java.util.Date;
+
 /**
  * Created by wangfengchen on 15/1/20.
  */
+@DatabaseTable
 public class MsgBody implements Parcelable{
 
     public final static String CHAT_TYPE = "chat";
@@ -16,13 +23,18 @@ public class MsgBody implements Parcelable{
 
     public final static int NO_ME = 0;
 
+    @DatabaseField(generatedId = true)
+    public int id;
+    @DatabaseField
     public int me = 0;
-
+    @DatabaseField
     public String type;
-
+    @DatabaseField
     public String messageType;
-
+    @DatabaseField
     public String content;
+    @DatabaseField(dataType = DataType.DATE)
+    public Date createDate;
 
     public MsgBody() {}
 
@@ -59,10 +71,12 @@ public class MsgBody implements Parcelable{
     @Override
     public String toString() {
         return "MsgBody{" +
-                "me=" + me +
+                "id=" + id +
+                ", me=" + me +
                 ", type='" + type + '\'' +
                 ", messageType='" + messageType + '\'' +
                 ", content='" + content + '\'' +
+                ", createDate=" + createDate +
                 '}';
     }
 }
