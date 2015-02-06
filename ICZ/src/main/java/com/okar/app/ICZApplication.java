@@ -9,6 +9,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.okar.android.R;
 import com.okar.service.ChatService;
+import com.okar.utils.Cache;
 import com.works.skynet.app.SkynetApplication;
 import com.works.skynet.common.utils.Logger;
 
@@ -19,11 +20,15 @@ public class ICZApplication extends Application{
 
     final static boolean DEBUG = false;
 
+    public static int MID = 0;
+
+    public static final Cache C = new Cache();
+
     @Override
     public void onCreate() {
         super.onCreate();
         initImageLoaderConfiguration();
-        startService(new Intent(this, ChatService.class));
+//        startService(new Intent(this, ChatService.class));
 //        initRobo();
     }
 
@@ -44,6 +49,6 @@ public class ICZApplication extends Application{
     @Override
     public void onTerminate() {
         super.onTerminate();
-        stopService(new Intent(this, ChatService.class));
+//        stopService(new Intent(this, ChatService.class));
     }
 }

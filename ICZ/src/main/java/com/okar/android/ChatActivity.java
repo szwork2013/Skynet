@@ -163,6 +163,11 @@ public class ChatActivity extends IczBaseActivity<MsgBody> {
         return convertView;
     }
 
+    @Override
+    public void onClick(View view) {
+
+    }
+
     class ViewHolder{
 
         TextView orderTextTv;

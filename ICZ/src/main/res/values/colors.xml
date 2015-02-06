@@ -3,4 +3,9 @@
     <color name="appBackgroundColor">#fff</color>
     <color name="appDefImgBackgroundColor">#eee</color>
     <color name="black">#000</color>
+    <color name="white">#fff</color>
+    <color name="holo_blue">#FF33E5B5</color>
+    <color name="base_green">#1ab11b</color>
+    <color name="base_grey">#eeeeee</color>
+    <color name="base_black">#111111</color>
 </resources>

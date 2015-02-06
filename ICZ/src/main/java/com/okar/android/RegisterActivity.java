@@ -100,6 +100,11 @@ public class RegisterActivity extends BaseActivity {
         startActivity(i);
     }
 
+    @Override
+    public void onClick(View view) {
+
+    }
+
     public class RegisterReceiveBroadCast extends BroadcastReceiver {
 
         @Override

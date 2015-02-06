@@ -28,4 +28,6 @@ public abstract class IczBaseFragment extends BaseFragment implements IczLoadDat
 
     public abstract void init(View view);
 
+    public void onServiceConnected() {}
+
 }

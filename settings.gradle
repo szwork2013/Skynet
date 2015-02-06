@@ -1,1 +1,1 @@
-include ':app', ':Skynet', ':ICZ', ':pulltorefresh'
+include ':app', ':Skynet', ':ICZ', ':pulltorefresh', ':android-layout-samples-master'

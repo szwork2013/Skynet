@@ -16,4 +16,12 @@ public class Constants {
     public static final String EXTRA_ID = "id";
     public static final String EXTRA_MID = "mid";
     public static final String SUCCESS = "success";
+
+    public static final String I_USERNAME = "username";
+
+    public static final String I_PASSWORD = "password";
+
+    public static final String I_ID = "mid";
+
+    public static final String SETTINGS = "settings";
 }

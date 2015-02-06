@@ -141,6 +141,11 @@ public class FriendListActivity extends IczBaseActivity<Friend> {
         return convertView;
     }
 
+    @Override
+    public void onClick(View view) {
+
+    }
+
     class ViewHolder{
 
         TextView nameTv;

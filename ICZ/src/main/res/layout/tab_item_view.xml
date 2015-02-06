@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:id="@+id/tab_normal_con"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/tab_normal_iv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:contentDescription="@null"
+            android:focusable="false"
+            android:padding="3dp"/>
+
+        <TextView
+            android:id="@+id/tab_normal_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/base_grey"
+            android:textSize="12sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:id="@+id/tab_sel_con"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/tab_sel_iv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:contentDescription="@null"
+            android:focusable="false"
+            android:padding="3dp"/>
+
+        <TextView
+            android:id="@+id/tab_sel_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/base_green"
+            android:textSize="12sp"/>
+    </LinearLayout>
+</RelativeLayout>

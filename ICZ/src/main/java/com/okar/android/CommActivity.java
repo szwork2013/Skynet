@@ -1,6 +1,7 @@
 package com.okar.android;
 
 import android.app.FragmentTransaction;
+import android.view.View;
 
 import com.okar.android.fragment.GiveCardFragment;
 import com.works.skynet.base.BaseActivity;
@@ -14,5 +15,10 @@ public class CommActivity extends BaseActivity {
         setContentView(R.layout.comm_activity);
         GiveCardFragment giveCardFragment = new GiveCardFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.comm_content,giveCardFragment).commitAllowingStateLoss();
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }

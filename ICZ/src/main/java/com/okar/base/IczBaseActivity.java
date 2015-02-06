@@ -22,9 +22,6 @@ public abstract class IczBaseActivity<T> extends BaseActivity implements IczLoad
 
     public int p;
 
-    @Inject
-    protected LayoutInflater layoutInflater;
-
     public DatabaseHelper databaseHelper;
 
     public static final boolean DEBUG = true;

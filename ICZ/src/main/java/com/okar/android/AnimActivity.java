@@ -50,4 +50,9 @@ public class AnimActivity extends BaseActivity{
             }
         });
     }
+
+    @Override
+    public void onClick(View view) {
+
+    }
 }

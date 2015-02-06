@@ -102,9 +102,7 @@ public class ChatWorkRunnable implements Runnable {
                 w.flush();
                 System.out.println("workWait ->");
                 this.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -129,7 +127,7 @@ public class ChatWorkRunnable implements Runnable {
             OutputStream w = client.getOutputStream();
             w.write(ChatUtils.getMsgBytes("haha"));//如果没有断开连接，则休眠
             w.flush();
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e("work", "write error");
             Log.d("work connect", "connect");
             try {
@@ -152,7 +150,7 @@ public class ChatWorkRunnable implements Runnable {
         Log.d("closeClient", "closeClient");
         try {
             client.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -47,8 +47,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
             //建立Commodity表
-            DatabaseTableConfig<TextMsg> config = DatabaseTableConfigUtil.fromClass(connectionSource, TextMsg.class);
-            TableUtils.createTableIfNotExists(connectionSource,config);
+//            DatabaseTableConfig<TextMsg> config = DatabaseTableConfigUtil.fromClass(connectionSource, TextMsg.class);
+//            TableUtils.createTableIfNotExists(connectionSource,config);
             TableUtils.createTable(connectionSource, TextMsg.class);
         } catch (SQLException e) {
             Log.e(TAG, e.toString());

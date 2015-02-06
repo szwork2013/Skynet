@@ -38,4 +38,13 @@ public class TextMsg implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return "TextMsg{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", time='" + time + '\'' +
+                '}';
+    }
 }

@@ -23,4 +23,9 @@ public class GiveCardActivity extends BaseActivity {
 
     @Override
     protected void onListener() {}
+
+    @Override
+    public void onClick(View view) {
+
+    }
 }

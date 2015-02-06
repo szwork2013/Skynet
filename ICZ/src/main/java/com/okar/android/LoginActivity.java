@@ -13,9 +13,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.okar.app.ICZApplication;
 import com.okar.po.Body;
 import com.okar.po.Packet;
 import com.okar.po.UserBody;
+import com.okar.receiver.AuthReceiveBroadCast;
+import com.okar.utils.Constants;
 import com.works.skynet.base.BaseActivity;
 import com.works.skynet.common.utils.Logger;
 import com.works.skynet.common.utils.Utils;
@@ -28,8 +31,7 @@ import static com.okar.utils.Constants.CHAT_SERVICE;
 import static com.okar.utils.Constants.EXTRA_CONTENT;
 import static com.okar.utils.Constants.EXTRA_MID;
 import static com.okar.utils.Constants.REV_AUTH_FLAG;
-import static com.okar.utils.Constants.SUCCESS;
-
+import static com.okar.app.ICZApplication.C;
 /**
  * Created by wangfengchen on 15/1/15.
  */
@@ -83,7 +85,11 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Packet packet = new Packet(Packet.LOGIN_TYPE);
-                packet.body = new UserBody(usernameEt.getText().toString(), passwordEt.getText().toString());
+                String username = usernameEt.getText().toString();
+                String password = passwordEt.getText().toString();
+                packet.body = new UserBody(username, password);
+                C.put(Constants.I_USERNAME, username);
+                C.put(Constants.I_PASSWORD, password);
                 try {
                     chatService.sendPacket(packet);
                 } catch (RemoteException e) {
@@ -108,26 +114,8 @@ public class LoginActivity extends BaseActivity {
         unregisterReceiver(authReceiveBroadCast);//取消广播
     }
 
-    void startChatActivity(int mid) {
-        Intent i = new Intent(this, FriendListActivity.class);
-        i.putExtra(EXTRA_MID, mid);
-        startActivity(i);
-    }
-
-    public class AuthReceiveBroadCast extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //得到广播中得到的数据，并显示出来
-            Packet packet = intent.getParcelableExtra(EXTRA_CONTENT);
-            Body body = (Body) packet.body;
-            if(Utils.equals(body.type, SUCCESS)) {
-                Logger.info(LoginActivity.this, true , "mid -> "+body.id);
-                startChatActivity(body.id);
-            }else {
-                Logger.info(LoginActivity.this, true, "登陆失败 : " + body.message);
-            }
-        }
+    @Override
+    public void onClick(View view) {
 
     }
 }
