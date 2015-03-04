@@ -14,7 +14,11 @@
         <activity
             android:name=".SplashActivity"
             android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".IndexActivity"
@@ -36,12 +40,11 @@
 
         <!-- 测试数据库 -->
         <activity android:name=".TestDao">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+
+        <!--<activity android:name=".TestActivity">-->
+        <!--</activity>-->
 
         <service
             android:name="com.okar.service.ChatService"
