@@ -78,7 +78,7 @@ public abstract class IczBaseActivity<T> extends BaseActivity implements IczLoad
 
     @Override
     public void onRefresh(PullToRefreshBase refreshView) {
-        log.debug("get current mode -> " + refreshView.getCurrentMode());
+        log.info("get current mode -> " + refreshView.getCurrentMode());
         ++p;
         if(getState()==1) p = 0;
         loadData(p);

@@ -37,7 +37,7 @@ public class MsgParser {
         msgBodyDAO = new MsgBodyDAO(context);
     }
     public void parseJson(String json) {
-        log.debug("json -> "+json);
+        log.info("json -> "+json);
 
         try {
             JSONObject result = new JSONObject(json);

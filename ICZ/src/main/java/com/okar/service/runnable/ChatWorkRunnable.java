@@ -50,7 +50,7 @@ public class ChatWorkRunnable implements Runnable {
     @Override
     public void run() {
         try {
-            log.debug("主线程开始执行 ->");
+            log.info("主线程开始执行 ->");
             client = new Socket();
             client.connect(new InetSocketAddress(host, port));
             client.setKeepAlive(true);
@@ -60,7 +60,7 @@ public class ChatWorkRunnable implements Runnable {
         chatReceiveRunnable = new ChatReceiveRunnable(mContext, client);
         chatSendRunnable = new ChatSendRunnable(client);
         chatActiveRunnable = new ChatActiveRunnable(client, this);
-        log.debug("启动接收、发送、存活线程 ->");
+        log.info("启动接收、发送、存活线程 ->");
         service.execute(chatReceiveRunnable);
         service.execute(chatSendRunnable);
         service.execute(chatActiveRunnable);
@@ -109,14 +109,14 @@ public class ChatWorkRunnable implements Runnable {
      * 重新连接服务器
      */
     public void reConnect() {
-        log.debug( "主线程：重新连接服务器");
+        log.info( "主线程：重新连接服务器");
         try {
             OutputStream w = client.getOutputStream();
             w.write(ChatUtils.getMsgBytes("haha"));//如果没有断开连接，则休眠
             w.flush();
         } catch (Exception e) {
             log.error("写数据错误");
-            log.debug("开始重新连接服务器...");
+            log.info("开始重新连接服务器...");
             try {
                 closeClient();
                 client = null;
@@ -134,7 +134,7 @@ public class ChatWorkRunnable implements Runnable {
      * 关闭client
      */
     public void closeClient() {
-        log.debug("关闭服务器连接");
+        log.info("关闭服务器连接");
         try {
             client.close();
         } catch (Exception e) {

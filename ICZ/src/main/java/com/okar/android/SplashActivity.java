@@ -84,8 +84,8 @@ public class SplashActivity extends BaseActivity {
         SharedPreferences settings = getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
         String username = settings.getString(I_USERNAME, null);
         String password = settings.getString(I_PASSWORD, null);
-        log.debug("username -> "+username);
-        log.debug("password -> "+password);
+        log.info("username -> "+username);
+        log.info("password -> "+password);
         if(Utils.isBlank(username)) {//如果username为空，则跳转到登录页
             Intent i = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(i);

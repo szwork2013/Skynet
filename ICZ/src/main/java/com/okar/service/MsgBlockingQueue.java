@@ -19,13 +19,13 @@ public class MsgBlockingQueue {
 
     public void put(String msg) throws InterruptedException{
         if(ChatService.hasNetwork()) {
-            log.debug("放入数据");
+            log.info("放入数据");
             blockingQueue.put(msg);
         }
     }
 
     public String take() throws InterruptedException{
-        log.debug("取出数据");
+        log.info("取出数据");
         return blockingQueue.take();
     }
 }

@@ -41,7 +41,7 @@ public class GiveCardFragment extends IczBaseFragmentList<ApplyMemberCardRecord>
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        log.debug("onCreateView ---");
+        log.info("onCreateView ---");
         return inflater.inflate(R.layout.apply_member_card_fragment, container, false);
     }
 
@@ -82,13 +82,13 @@ public class GiveCardFragment extends IczBaseFragmentList<ApplyMemberCardRecord>
     @Override
     public void loadData(int p) {
         String url = "http://192.168.1.26:8081/test/applyMemberCards.htm?accountId=146&p="+p;
-        log.debug("get amc url -> " + url);
+        log.info("get amc url -> " + url);
         client.get(url,new IczResponseHandler(this, new TypeToken<List<ApplyMemberCardRecord>>(){}.getType()){
 
             @Override
             public void popData(Object o) {
                 if(getState()==1) mArrayAdapter.clear();
-                log.debug("get commodity url -> "+o);
+                log.info("get commodity url -> "+o);
                 List<ApplyMemberCardRecord> amcList = (List<ApplyMemberCardRecord>) o;
                 for (ApplyMemberCardRecord amc : amcList){
                     mArrayAdapter.add(amc);

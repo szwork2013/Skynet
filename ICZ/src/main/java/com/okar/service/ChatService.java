@@ -82,9 +82,9 @@ public class ChatService extends Service {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            // log.debug("网络状态改变");
+            // log.info("网络状态改变");
             String action = intent.getAction();
-            log.debug("网络状态改变 action=" + action + " lastType=" + lastType);
+            log.info("网络状态改变 action=" + action + " lastType=" + lastType);
             // 获得网络连接服务
             ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -158,25 +158,26 @@ public class ChatService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        log.info("Chat服务创建！！！");
         registerConnectivityActionReceiver();//注册网路监听
         service.execute(chatWorkRunnable);
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        log.debug("onBind");
+        log.info("Chat服务绑定");
         return new ChatBinder();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        log.debug("onStartCommand flags -> " + flags + " startId -> " + startId);
+        log.info("Chat服务开始 flags -> " + flags + " startId -> " + startId);
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
-        log.debug("onDestroy");
+        log.info("Chat服务销毁");
         super.onDestroy();
         unregisterConnectivityActionReceiver();//取消网络监听
         chatWorkRunnable.close();

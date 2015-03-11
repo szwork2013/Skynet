@@ -76,7 +76,7 @@ public class FriendListFragment extends IczBaseFragmentList<Friend> {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        log.debug("onCreateView ---");
+        log.info("onCreateView ---");
         return inflater.inflate(R.layout.activity_friend_list, container, false);
     }
 
@@ -165,7 +165,7 @@ public class FriendListFragment extends IczBaseFragmentList<Friend> {
             ArrayList<Friend> fs = fl.data;
             mArrayAdapter.clear();
             for(Friend f: fs) {
-                log.debug(f.toString());
+                log.info(f.toString());
                 mArrayAdapter.add(f);
             }
         }

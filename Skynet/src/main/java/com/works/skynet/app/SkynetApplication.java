@@ -29,7 +29,7 @@ public class SkynetApplication extends Application {
 //    }
 
     private void initImageLoaderConfiguration(){
-        log.debug("initImageLoaderConfiguration");
+        log.info("initImageLoaderConfiguration");
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                              this).threadPriority(Thread.NORM_PRIORITY - 2)
                      .denyCacheImageMultipleSizesInMemory()

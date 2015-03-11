@@ -33,7 +33,7 @@ public abstract class IczBaseFragmentList<T> extends IczBaseFragment implements 
 
     @Override
     public void onRefresh(PullToRefreshBase refreshView) {
-        log.debug("get current mode -> " + refreshView.getCurrentMode());
+        log.info("get current mode -> " + refreshView.getCurrentMode());
         ++p;
         if(getState()==1) p = 0;
         loadData(p);

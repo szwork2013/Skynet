@@ -9,6 +9,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.okar.android.R;
+import com.okar.service.ChatService;
 import com.okar.utils.Cache;
 
 /**
@@ -28,12 +29,12 @@ public class ICZApplication extends Application{
     public void onCreate() {
         super.onCreate();
         initImageLoaderConfiguration();
-//        startService(new Intent(this, ChatService.class));
+        startService(new Intent(this, ChatService.class));
 //        initRobo();
     }
 
     private void initImageLoaderConfiguration(){
-        log.debug("initImageLoaderConfiguration");
+        log.info("initImageLoaderConfiguration");
         DisplayImageOptions defaultDisplayImageOptions = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic_launcher)
                 .build();
@@ -49,6 +50,6 @@ public class ICZApplication extends Application{
     @Override
     public void onTerminate() {
         super.onTerminate();
-//        stopService(new Intent(this, ChatService.class));
+        stopService(new Intent(this, ChatService.class));
     }
 }

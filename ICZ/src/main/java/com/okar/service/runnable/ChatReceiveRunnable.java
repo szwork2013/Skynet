@@ -38,7 +38,7 @@ public class ChatReceiveRunnable implements Runnable {
 
     @Override
     public void run() {
-        log.debug("接收线程开始执行 ->");
+        log.info("接收线程开始执行 ->");
 
         while (running) {
             try {
@@ -58,7 +58,7 @@ public class ChatReceiveRunnable implements Runnable {
 
     public void receiveWait() {
         if (!ChatService.hasNetwork()) {
-            log.debug("接收线程等待 ->");
+            log.info("接收线程等待 ->");
             synchronized (this) {
                 try {
                     this.wait();

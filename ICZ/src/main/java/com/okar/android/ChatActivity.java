@@ -110,7 +110,7 @@ public class ChatActivity extends IczBaseActivity<MsgBody> {
                     Packet packet = new Packet(Packet.MESSAGE_TYPE);
                     packet.to = uid;
                     packet.from = mid;
-                    log.debug("to "+uid);
+                    log.info("to "+uid);
                     MsgBody body = new MsgBody();
                     body.content = chatEt.getText().toString();
                     body.type = MsgBody.CHAT_TYPE;
@@ -182,7 +182,7 @@ public class ChatActivity extends IczBaseActivity<MsgBody> {
         }
 
         public void doView(MsgBody msg){
-            log.debug(""+msg);
+            log.info(""+msg);
             if(msg.me== MsgBody.NO_ME) {//不是本人
                 orderConLayout.setVisibility(View.VISIBLE);
                 meConLayout.setVisibility(View.GONE);

@@ -170,7 +170,7 @@ public class FriendListActivity extends IczBaseActivity<Friend> {
             FriendList fl = (FriendList) packet.body;
             ArrayList<Friend> fs = fl.data;
             for(Friend f: fs) {
-                log.debug(f.toString());
+                log.info(f.toString());
                 mArrayAdapter.add(f);
             }
         }

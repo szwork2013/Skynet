@@ -48,18 +48,18 @@ public abstract class IczResponseHandler extends TextHttpResponseHandler {
 
     @Override
     public void onStart() {
-        log.debug("onStart ---");
+        log.info("onStart ---");
     }
 
     @Override
     public void onFinish() {
-        log.debug("onFinish ---");
+        log.info("onFinish ---");
         finishRefresh();//完成结束刷新
     }
 
     void finishRefresh(){
         if(mObject instanceof IczLoadDataInfOps){
-            log.debug("finishRefresh ---");
+            log.info("finishRefresh ---");
             IczLoadDataInfOps ldio = (IczLoadDataInfOps) mObject;
             ldio.getRefreshView().onRefreshComplete();
         }

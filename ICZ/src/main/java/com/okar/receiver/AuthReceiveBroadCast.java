@@ -40,7 +40,7 @@ public class AuthReceiveBroadCast extends BroadcastReceiver {
         Packet packet = intent.getParcelableExtra(EXTRA_CONTENT);
         Body body = (Body) packet.body;
         if(Utils.equals(body.type, SUCCESS)) {
-            log.debug("mid -> " + body.id);
+            log.info("mid -> " + body.id);
 
             SharedPreferences settings = context.getSharedPreferences(Constants.SETTINGS, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
@@ -52,7 +52,7 @@ public class AuthReceiveBroadCast extends BroadcastReceiver {
             ICZApplication.MID = body.id;
             startChatActivity(context);
         }else {
-            log.debug("登陆失败 : " + body.message);
+            log.info("登陆失败 : " + body.message);
             toLoginActivity(context);
         }
     }

@@ -114,10 +114,10 @@ public class RegisterActivity extends BaseActivity {
             Packet packet = intent.getParcelableExtra(EXTRA_CONTENT);
             Body body = (Body) packet.body;
             if(Utils.equals(body.type, SUCCESS)) {
-                log.debug("mid -> "+body.id);
+                log.info("mid -> "+body.id);
                 startChatActivity(body.id);
             }else {
-                log.debug("注册失败 : "+body.message);
+                log.info("注册失败 : "+body.message);
             }
         }
 

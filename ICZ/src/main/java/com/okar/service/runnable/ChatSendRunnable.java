@@ -59,14 +59,14 @@ public class ChatSendRunnable implements Runnable {
         System.out.println("发送线程开始执行 ->");
 
         while (running) {
-            log.debug("发送线程执行... ");
+            log.info("发送线程执行... ");
             String msg = null;
             try {
                 msg = msgBlockingQueue.take();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            log.debug("将要写的数据 -> " + msg);
+            log.info("将要写的数据 -> " + msg);
             if (writer != null && Utils.notBlank(msg)) {
                 try {
                     writer.write(ChatUtils.getMsgBytes(msg));
@@ -81,7 +81,7 @@ public class ChatSendRunnable implements Runnable {
     }
 
     public void close() {
-        log.debug("关闭发送线程 -> ");
+        log.info("关闭发送线程 -> ");
         running = false;
         if (writer != null) {
             try {

@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.j256.ormlite.logger.LoggerFactory;
 import com.works.skynet.base.BaseActivity;
 
 import roboguice.inject.InjectView;
@@ -28,6 +29,8 @@ import roboguice.inject.InjectView;
  * Created by wangfengchen on 15/3/6.
  */
 public class ICZWebActivity extends BaseActivity{
+
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(ICZWebActivity.class);
 
     @InjectView(R.id.iw_webview)
     private WebView iwWebView;
@@ -41,6 +44,7 @@ public class ICZWebActivity extends BaseActivity{
     @Override
     protected void init() {
         setContentView(R.layout.activity_icz_web);
+        log.info("init");
         initActionBar();
         initIWWebView();
     }
