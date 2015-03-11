@@ -18,12 +18,11 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.j256.ormlite.logger.LoggerFactory;
 import com.okar.base.IczBaseActivity;
 import com.okar.po.MsgBody;
 import com.okar.po.Packet;
 import com.okar.utils.RefreshUtils;
-import com.works.skynet.common.utils.Logger;
-
 import roboguice.inject.InjectView;
 
 import static com.okar.utils.Constants.CHAT_SERVICE;
@@ -36,6 +35,8 @@ import static com.okar.utils.Constants.REV_MESSAGE_FLAG;
  * Created by wangfengchen on 15/1/27.
  */
 public class GroupChatActivity extends IczBaseActivity<MsgBody> {
+
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(GroupChatActivity.class);
 
     @InjectView(R.id.group_chat_msg_list_view)
     PullToRefreshListView pullToRefreshListView;
@@ -107,7 +108,7 @@ public class GroupChatActivity extends IczBaseActivity<MsgBody> {
                     Packet packet = new Packet(Packet.MESSAGE_TYPE);
                     packet.to = uid;
                     packet.from = mid;
-                    Logger.info(GroupChatActivity.this, true, "to " + uid);
+                    log.debug("to " + uid);
                     MsgBody body = new MsgBody();
                     body.content = chatEt.getText().toString();
                     body.type = MsgBody.CHAT_TYPE;
@@ -179,7 +180,7 @@ public class GroupChatActivity extends IczBaseActivity<MsgBody> {
         }
 
         public void doView(MsgBody msg){
-            Logger.info(GroupChatActivity.this, DEBUG, ""+msg);
+            log.debug(""+msg);
             if(msg.me== MsgBody.NO_ME) {//不是本人
                 orderConLayout.setVisibility(View.VISIBLE);
                 meConLayout.setVisibility(View.GONE);

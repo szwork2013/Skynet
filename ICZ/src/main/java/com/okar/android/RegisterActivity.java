@@ -13,12 +13,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.gson.JsonNull;
+import com.j256.ormlite.logger.LoggerFactory;
 import com.okar.po.Body;
 import com.okar.po.Packet;
 import com.okar.po.UserBody;
 import com.works.skynet.base.BaseActivity;
-import com.works.skynet.common.utils.Logger;
 import com.works.skynet.common.utils.Utils;
 
 import roboguice.inject.InjectView;
@@ -33,6 +32,8 @@ import static com.okar.utils.Constants.SUCCESS;
  * Created by wangfengchen on 15/1/15.
  */
 public class RegisterActivity extends BaseActivity {
+
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(RegisterActivity.class);
 
     @InjectView(R.id.register_edit_username)
     EditText usernameEt;
@@ -113,10 +114,10 @@ public class RegisterActivity extends BaseActivity {
             Packet packet = intent.getParcelableExtra(EXTRA_CONTENT);
             Body body = (Body) packet.body;
             if(Utils.equals(body.type, SUCCESS)) {
-                Logger.info(RegisterActivity.this, true , "mid -> "+body.id);
+                log.debug("mid -> "+body.id);
                 startChatActivity(body.id);
             }else {
-                Logger.info(RegisterActivity.this, true, "注册失败 : "+body.message);
+                log.debug("注册失败 : "+body.message);
             }
         }
 

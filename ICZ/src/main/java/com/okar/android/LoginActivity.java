@@ -20,16 +20,9 @@ import com.okar.po.UserBody;
 import com.okar.receiver.AuthReceiveBroadCast;
 import com.okar.utils.Constants;
 import com.works.skynet.base.BaseActivity;
-import com.works.skynet.common.utils.Logger;
-import com.works.skynet.common.utils.Utils;
-
-import java.io.BufferedReader;
-
 import roboguice.inject.InjectView;
 
 import static com.okar.utils.Constants.CHAT_SERVICE;
-import static com.okar.utils.Constants.EXTRA_CONTENT;
-import static com.okar.utils.Constants.EXTRA_MID;
 import static com.okar.utils.Constants.REV_AUTH_FLAG;
 import static com.okar.app.ICZApplication.C;
 /**
@@ -73,7 +66,7 @@ public class LoginActivity extends BaseActivity {
         bindService(intent, serConn,
                 Service.BIND_AUTO_CREATE);
 
-        authReceiveBroadCast = new AuthReceiveBroadCast();
+        authReceiveBroadCast = new AuthReceiveBroadCast(this);
         IntentFilter filter = new IntentFilter();
         filter.addAction(REV_AUTH_FLAG);    //只有持有相同的action的接受者才能接收此广播
         registerReceiver(authReceiveBroadCast, filter);

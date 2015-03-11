@@ -1,27 +1,22 @@
 package com.okar.service.runnable;
 
 import android.content.Context;
-import android.net.NetworkInfo;
-import android.util.Log;
-
+import com.j256.ormlite.logger.LoggerFactory;
 import com.okar.service.ChatService;
 import com.okar.service.MsgParser;
 import com.okar.utils.ChatUtils;
-import com.works.skynet.common.utils.Logger;
 import com.works.skynet.common.utils.Utils;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.concurrent.Executor;
 
 /**
  * Created by wangfengchen on 15/1/13.
  */
 public class ChatReceiveRunnable implements Runnable {
+
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(ChatReceiveRunnable.class);
 
     private InputStream reader;
 
@@ -43,7 +38,7 @@ public class ChatReceiveRunnable implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("receive start ->");
+        log.debug("接收线程开始执行 ->");
 
         while (running) {
             try {
@@ -56,7 +51,6 @@ public class ChatReceiveRunnable implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Logger.info(ChatReceiveRunnable.this, true, "re receive");
             receiveWait();
         }
 
@@ -64,7 +58,7 @@ public class ChatReceiveRunnable implements Runnable {
 
     public void receiveWait() {
         if (!ChatService.hasNetwork()) {
-            System.out.println("receiveWait ->");
+            log.debug("接收线程等待 ->");
             synchronized (this) {
                 try {
                     this.wait();
@@ -76,7 +70,7 @@ public class ChatReceiveRunnable implements Runnable {
     }
 
     public void notifyReceiveRunnable() {
-        System.out.println("receiveNotify ->");
+        System.out.println("唤醒接收线程 ->");
         synchronized (this) {
             notify();
         }
@@ -90,8 +84,10 @@ public class ChatReceiveRunnable implements Runnable {
             w.flush();
             reader = null;
             reader = client.getInputStream();
+            log.error("接收线程重新赋值reader");
+            notifyReceiveRunnable();
         } catch (IOException e) {
-            Log.e("receive", "write error");
+            log.error("重连receive写数据失败！");
         }
     }
 
@@ -101,7 +97,7 @@ public class ChatReceiveRunnable implements Runnable {
         while (reader!=null && reader.read(buff) != -1) {
             if (isHead) {
                 int plen = Utils.bytesToInt2(buff, 0);
-                System.out.println("receive len -> " + plen);
+                System.out.println("接受数据包长度 -> " + plen);
                 buff = new byte[plen];
                 isHead = false;
             } else {
@@ -113,7 +109,7 @@ public class ChatReceiveRunnable implements Runnable {
     }
 
     public void close() {
-        System.out.println("receive runnable close ->");
+        System.out.println("关闭接收线程 ->");
         running = false;
         if (reader != null) {
             try {

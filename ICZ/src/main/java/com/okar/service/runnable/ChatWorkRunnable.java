@@ -1,32 +1,21 @@
 package com.okar.service.runnable;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Debug;
-import android.util.Log;
 
-import com.okar.service.ChatService;
-import com.okar.service.MsgBlockingQueue;
+import com.j256.ormlite.logger.LoggerFactory;
 import com.okar.utils.ChatUtils;
-import com.works.skynet.common.utils.Logger;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
 /**
  * Created by wangfengchen on 15/1/13.
  */
 public class ChatWorkRunnable implements Runnable {
+
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(ChatWorkRunnable.class);
 
     private Socket client;
 
@@ -46,8 +35,6 @@ public class ChatWorkRunnable implements Runnable {
 
     private boolean running = true;
 
-    private static final boolean DEBUG = true;
-
     public ChatWorkRunnable(Context context, String host, int port, ExecutorService service) {
         mContext = context;
         this.host = host;
@@ -63,7 +50,7 @@ public class ChatWorkRunnable implements Runnable {
     @Override
     public void run() {
         try {
-            Logger.info(this, DEBUG, "work start ->");
+            log.debug("主线程开始执行 ->");
             client = new Socket();
             client.connect(new InetSocketAddress(host, port));
             client.setKeepAlive(true);
@@ -73,7 +60,7 @@ public class ChatWorkRunnable implements Runnable {
         chatReceiveRunnable = new ChatReceiveRunnable(mContext, client);
         chatSendRunnable = new ChatSendRunnable(client);
         chatActiveRunnable = new ChatActiveRunnable(client, this);
-        Logger.info(this, DEBUG, "receive and send start ->");
+        log.debug("启动接收、发送、存活线程 ->");
         service.execute(chatReceiveRunnable);
         service.execute(chatSendRunnable);
         service.execute(chatActiveRunnable);
@@ -100,7 +87,7 @@ public class ChatWorkRunnable implements Runnable {
                 OutputStream w = client.getOutputStream();
                 w.write(ChatUtils.getMsgBytes("haha"));//如果没有断开连接，则休眠
                 w.flush();
-                System.out.println("workWait ->");
+                System.out.println("主线程等待 ->");
                 this.wait();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -112,7 +99,7 @@ public class ChatWorkRunnable implements Runnable {
      * 唤醒连接服务器
      */
     public void notifyWorkRunnable() {
-        System.out.println("notifyWorkRunnable ->");
+        System.out.println("唤醒主线程 ->");
         synchronized (this) {
             notify();
         }
@@ -122,14 +109,14 @@ public class ChatWorkRunnable implements Runnable {
      * 重新连接服务器
      */
     public void reConnect() {
-        Log.d("work reConnect", "reConnect");
+        log.debug( "主线程：重新连接服务器");
         try {
             OutputStream w = client.getOutputStream();
             w.write(ChatUtils.getMsgBytes("haha"));//如果没有断开连接，则休眠
             w.flush();
         } catch (Exception e) {
-            Log.e("work", "write error");
-            Log.d("work connect", "connect");
+            log.error("写数据错误");
+            log.debug("开始重新连接服务器...");
             try {
                 closeClient();
                 client = null;
@@ -147,7 +134,7 @@ public class ChatWorkRunnable implements Runnable {
      * 关闭client
      */
     public void closeClient() {
-        Log.d("closeClient", "closeClient");
+        log.debug("关闭服务器连接");
         try {
             client.close();
         } catch (Exception e) {

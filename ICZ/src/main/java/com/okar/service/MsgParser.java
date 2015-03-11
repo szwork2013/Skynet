@@ -2,34 +2,17 @@ package com.okar.service;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.util.Log;
-
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.okar.base.IczBaseActivity;
-import com.okar.dao.DatabaseHelper;
+import com.j256.ormlite.logger.LoggerFactory;
 import com.okar.dao.MsgBodyDAO;
-import com.okar.dao.TextMsgDAO;
-import com.okar.model.ApplyMemberCardRecord;
-import com.okar.model.Commodity;
 import com.okar.po.Body;
-import com.okar.po.Friend;
 import com.okar.po.FriendList;
 import com.okar.po.MsgBody;
 import com.okar.po.Packet;
-import com.okar.po.TextMsg;
-import com.works.skynet.common.utils.Logger;
 import com.works.skynet.common.utils.Utils;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import static com.okar.utils.Constants.REV_MESSAGE_FLAG;
 import static com.okar.utils.Constants.EXTRA_CONTENT;
 import static com.okar.utils.Constants.REV_REGISTER_FLAG;
@@ -41,7 +24,7 @@ import static com.okar.utils.Constants.REV_FRIEND_LIST_FLAG;
  */
 public class MsgParser {
 
-    final static boolean DEBUG = true;
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(MsgParser.class);
 
     private Context context;
 
@@ -54,7 +37,7 @@ public class MsgParser {
         msgBodyDAO = new MsgBodyDAO(context);
     }
     public void parseJson(String json) {
-        Logger.info(this, DEBUG, "json -> "+json);
+        log.debug("json -> "+json);
 
         try {
             JSONObject result = new JSONObject(json);

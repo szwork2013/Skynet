@@ -21,37 +21,32 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.j256.ormlite.logger.LoggerFactory;
 import com.okar.android.ChatActivity;
 import com.okar.android.IChatService;
 import com.okar.android.IndexActivity;
 import com.okar.android.R;
 import com.okar.app.ICZApplication;
 import com.okar.base.IczBaseFragmentList;
-import com.okar.model.ApplyMemberCardRecord;
 import com.okar.po.Body;
 import com.okar.po.Friend;
 import com.okar.po.FriendList;
 import com.okar.po.Packet;
-import com.okar.utils.IczResponseHandler;
 import com.okar.utils.RefreshUtils;
-import com.works.skynet.common.utils.Logger;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import roboguice.inject.InjectView;
 
-import static com.okar.utils.Constants.CHAT_SERVICE;
 import static com.okar.utils.Constants.EXTRA_CONTENT;
 import static com.okar.utils.Constants.EXTRA_ID;
-import static com.okar.utils.Constants.EXTRA_MID;
 import static com.okar.utils.Constants.REV_FRIEND_LIST_FLAG;
-import static com.okar.utils.Constants.REV_MESSAGE_FLAG;
 
 /**
  * Created by wangfengchen on 14/11/21.
  */
 public class FriendListFragment extends IczBaseFragmentList<Friend> {
+
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(FriendListFragment.class);
 
     @InjectView(R.id.friend_list_view)
     PullToRefreshListView pullToRefreshListView;
@@ -71,8 +66,8 @@ public class FriendListFragment extends IczBaseFragmentList<Friend> {
     @Override
     public void init(View view) {
         friendListView = (ListView) RefreshUtils.init(pullToRefreshListView, this);
+        pullToRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
         friendListView.setAdapter(mArrayAdapter);
-
         friendListReceiveBroadCast = new FriendListReceiveBroadCast();
         IntentFilter filter = new IntentFilter();
         filter.addAction(REV_FRIEND_LIST_FLAG);    //只有持有相同的action的接受者才能接收此广播
@@ -81,7 +76,7 @@ public class FriendListFragment extends IczBaseFragmentList<Friend> {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Logger.info(this, DEBUG, "onCreateView ---");
+        log.debug("onCreateView ---");
         return inflater.inflate(R.layout.activity_friend_list, container, false);
     }
 
@@ -163,13 +158,14 @@ public class FriendListFragment extends IczBaseFragmentList<Friend> {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            getRefreshView().onRefreshComplete();
             //得到广播中得到的数据，并显示出来
             Packet<Friend> packet = intent.getParcelableExtra(EXTRA_CONTENT);
             FriendList fl = (FriendList) packet.body;
             ArrayList<Friend> fs = fl.data;
             mArrayAdapter.clear();
             for(Friend f: fs) {
-                Logger.info(FriendListFragment.this, DEBUG, f.toString());
+                log.debug(f.toString());
                 mArrayAdapter.add(f);
             }
         }

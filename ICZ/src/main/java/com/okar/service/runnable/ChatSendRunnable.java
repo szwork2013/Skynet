@@ -1,28 +1,19 @@
 package com.okar.service.runnable;
 
-import android.util.Log;
-
-import com.okar.service.ChatService;
+import com.j256.ormlite.logger.LoggerFactory;
 import com.okar.service.MsgBlockingQueue;
 import com.okar.utils.ChatUtils;
-import com.works.skynet.common.utils.Logger;
 import com.works.skynet.common.utils.Utils;
-
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.Socket;
-import java.nio.charset.Charset;
-import java.util.concurrent.Executor;
 
 /**
  * Created by wangfengchen on 15/1/14.
  */
 public class ChatSendRunnable implements Runnable {
+
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(ChatSendRunnable.class);
 
     private MsgBlockingQueue msgBlockingQueue;
 
@@ -31,8 +22,6 @@ public class ChatSendRunnable implements Runnable {
 //    private Socket client;
 
     private boolean running = true;
-
-    private final static boolean DEBUG = true;
 
     public ChatSendRunnable(Socket client) {
 //        this.client = client;
@@ -47,7 +36,6 @@ public class ChatSendRunnable implements Runnable {
     public void sendMessage(String msg) {
         try {
             msgBlockingQueue.put(msg);
-            Logger.info(this, DEBUG, "put -> " + msg);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -62,23 +50,23 @@ public class ChatSendRunnable implements Runnable {
             writer = null;
             writer = client.getOutputStream();
         } catch (IOException e) {
-            Log.e("send", "write error");
+            log.error("重连send写数据失败！");
         }
     }
 
     @Override
     public void run() {
-        System.out.println("send start ->");
+        System.out.println("发送线程开始执行 ->");
 
         while (running) {
-            Logger.info(this, DEBUG, "send run -> ");
+            log.debug("发送线程执行... ");
             String msg = null;
             try {
                 msg = msgBlockingQueue.take();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Logger.info(this, DEBUG, "msg -> " + msg);
+            log.debug("将要写的数据 -> " + msg);
             if (writer != null && Utils.notBlank(msg)) {
                 try {
                     writer.write(ChatUtils.getMsgBytes(msg));
@@ -86,7 +74,6 @@ public class ChatSendRunnable implements Runnable {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Logger.info(this, DEBUG, "take -> " + msg);
             }
         }
 
@@ -94,7 +81,7 @@ public class ChatSendRunnable implements Runnable {
     }
 
     public void close() {
-        Logger.info(this, DEBUG, "send stop -> ");
+        log.debug("关闭发送线程 -> ");
         running = false;
         if (writer != null) {
             try {

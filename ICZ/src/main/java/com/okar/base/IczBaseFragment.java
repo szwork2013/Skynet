@@ -18,11 +18,11 @@ public abstract class IczBaseFragment extends BaseFragment implements IczLoadDat
 
     public int p;
 
-    public DatabaseHelper databaseHelper;
-
-    public void initDatabaseHelper(){
-        databaseHelper = new DatabaseHelper(baseActivity);
-    }
+//    public DatabaseHelper databaseHelper;
+//
+//    public void initDatabaseHelper(){
+//        databaseHelper = new DatabaseHelper(baseActivity);
+//    }
 
 
 

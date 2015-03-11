@@ -19,16 +19,12 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.j256.ormlite.logger.LoggerFactory;
 import com.okar.base.IczBaseActivity;
 import com.okar.po.Friend;
 import com.okar.po.MsgBody;
 import com.okar.po.Packet;
-import com.okar.service.ChatService;
 import com.okar.utils.RefreshUtils;
-import com.works.skynet.base.BaseActivity;
-import com.works.skynet.common.utils.Logger;
-import com.works.skynet.common.utils.Utils;
-
 import roboguice.inject.InjectView;
 
 import static com.okar.utils.Constants.CHAT_SERVICE;
@@ -41,6 +37,8 @@ import static com.okar.utils.Constants.EXTRA_MID;
  * Created by wangfengchen on 15/1/13.
  */
 public class ChatActivity extends IczBaseActivity<MsgBody> {
+
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(ChatActivity.class);
 
     @InjectView(R.id.chat_msg_list_view)
     PullToRefreshListView pullToRefreshListView;
@@ -112,7 +110,7 @@ public class ChatActivity extends IczBaseActivity<MsgBody> {
                     Packet packet = new Packet(Packet.MESSAGE_TYPE);
                     packet.to = uid;
                     packet.from = mid;
-                    Logger.info(ChatActivity.this, true, "to "+uid);
+                    log.debug("to "+uid);
                     MsgBody body = new MsgBody();
                     body.content = chatEt.getText().toString();
                     body.type = MsgBody.CHAT_TYPE;
@@ -184,7 +182,7 @@ public class ChatActivity extends IczBaseActivity<MsgBody> {
         }
 
         public void doView(MsgBody msg){
-            Logger.info(ChatActivity.this, DEBUG, ""+msg);
+            log.debug(""+msg);
             if(msg.me== MsgBody.NO_ME) {//不是本人
                 orderConLayout.setVisibility(View.VISIBLE);
                 meConLayout.setVisibility(View.GONE);

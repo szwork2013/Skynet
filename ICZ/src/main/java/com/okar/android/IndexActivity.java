@@ -107,9 +107,9 @@ public class IndexActivity extends BaseActivity {
     @Override
     protected void init() {
         setContentView(R.layout.activity_index);
-//        Intent intent = new Intent(CHAT_SERVICE);
-//        bindService(intent, serConn,
-//                Service.BIND_AUTO_CREATE);
+        Intent intent = new Intent(CHAT_SERVICE);
+        bindService(intent, serConn,
+                Service.BIND_AUTO_CREATE);
 
         initJazzyPager(JazzyViewPager.TransitionEffect.Standard);
 
@@ -236,7 +236,7 @@ public class IndexActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        unbindService(serConn);
+        unbindService(serConn);
     }
 
     @Override

@@ -1,28 +1,21 @@
 package com.okar.utils;
 
-import android.content.Context;
-
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.j256.ormlite.logger.LoggerFactory;
 import com.loopj.android.http.TextHttpResponseHandler;
-import com.okar.model.Commodity;
-import com.works.skynet.common.utils.Logger;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by wangfengchen on 14/10/31.
  */
 public abstract class IczResponseHandler extends TextHttpResponseHandler {
+
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(IczResponseHandler.class);
 
     private Object mObject;
 
@@ -55,18 +48,18 @@ public abstract class IczResponseHandler extends TextHttpResponseHandler {
 
     @Override
     public void onStart() {
-        Logger.info(this, DEBUG, "onStart ---");
+        log.debug("onStart ---");
     }
 
     @Override
     public void onFinish() {
-        Logger.info(this, DEBUG, "onFinish ---");
+        log.debug("onFinish ---");
         finishRefresh();//完成结束刷新
     }
 
     void finishRefresh(){
         if(mObject instanceof IczLoadDataInfOps){
-            Logger.info(this, DEBUG, "finishRefresh ---");
+            log.debug("finishRefresh ---");
             IczLoadDataInfOps ldio = (IczLoadDataInfOps) mObject;
             ldio.getRefreshView().onRefreshComplete();
         }

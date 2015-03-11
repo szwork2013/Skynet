@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.j256.ormlite.logger.LoggerFactory;
 import com.okar.base.IczBaseActivity;
 import com.okar.model.ApplyMemberCardRecord;
 import com.okar.po.Body;
@@ -26,26 +27,20 @@ import com.okar.po.FriendList;
 import com.okar.po.Packet;
 import com.okar.po.TextMsg;
 import com.okar.utils.RefreshUtils;
-import com.works.skynet.common.utils.Logger;
-import com.works.skynet.common.utils.Utils;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import roboguice.inject.InjectView;
-
 import static com.okar.utils.Constants.CHAT_SERVICE;
 import static com.okar.utils.Constants.EXTRA_CONTENT;
 import static com.okar.utils.Constants.EXTRA_ID;
 import static com.okar.utils.Constants.EXTRA_MID;
 import static com.okar.utils.Constants.REV_FRIEND_LIST_FLAG;
-import static com.okar.utils.Constants.REV_REGISTER_FLAG;
-import static com.okar.utils.Constants.SUCCESS;
 
 /**
  * Created by wangfengchen on 15/1/21.
  */
 public class FriendListActivity extends IczBaseActivity<Friend> {
+
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(FriendListActivity.class);
 
     @InjectView(R.id.friend_list_view)
     PullToRefreshListView pullToRefreshListView;
@@ -175,7 +170,7 @@ public class FriendListActivity extends IczBaseActivity<Friend> {
             FriendList fl = (FriendList) packet.body;
             ArrayList<Friend> fs = fl.data;
             for(Friend f: fs) {
-                Logger.info(FriendListActivity.this, DEBUG, f.toString());
+                log.debug(f.toString());
                 mArrayAdapter.add(f);
             }
         }

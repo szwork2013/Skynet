@@ -16,13 +16,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.j256.ormlite.logger.Logger;
+import com.j256.ormlite.logger.LoggerFactory;
 import com.okar.po.Body;
 import com.okar.po.Packet;
 import com.okar.po.UserBody;
 import com.okar.receiver.AuthReceiveBroadCast;
 import com.okar.utils.Constants;
 import com.works.skynet.base.BaseActivity;
-import com.works.skynet.common.utils.Logger;
 import com.works.skynet.common.utils.Utils;
 
 import roboguice.inject.InjectView;
@@ -37,6 +38,8 @@ import static com.okar.utils.Constants.SETTINGS;
  * Created by wangfengchen on 15/1/27.
  */
 public class SplashActivity extends BaseActivity {
+
+    private final Logger log = LoggerFactory.getLogger(SplashActivity.class);
 
     private IChatService chatService;
 
@@ -63,7 +66,7 @@ public class SplashActivity extends BaseActivity {
         bindService(intent, serConn,
                 Service.BIND_AUTO_CREATE);
 
-        authReceiveBroadCast = new AuthReceiveBroadCast();
+        authReceiveBroadCast = new AuthReceiveBroadCast(this);
         IntentFilter filter = new IntentFilter();
         filter.addAction(REV_AUTH_FLAG);    //只有持有相同的action的接受者才能接收此广播
         registerReceiver(authReceiveBroadCast, filter);
@@ -81,7 +84,8 @@ public class SplashActivity extends BaseActivity {
         SharedPreferences settings = getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
         String username = settings.getString(I_USERNAME, null);
         String password = settings.getString(I_PASSWORD, null);
-
+        log.debug("username -> "+username);
+        log.debug("password -> "+password);
         if(Utils.isBlank(username)) {//如果username为空，则跳转到登录页
             Intent i = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(i);

@@ -8,7 +8,6 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.works.skynet.base.BaseActivity;
-import com.works.skynet.common.utils.Logger;
 
 import roboguice.inject.InjectView;
 
@@ -46,7 +45,7 @@ public class AnimActivity extends BaseActivity{
         labelTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Logger.info(AnimActivity.this,true,"hahaha");
+                System.out.println("hahaha");
             }
         });
     }

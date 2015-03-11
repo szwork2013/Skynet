@@ -10,22 +10,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.okar.android.R;
-import com.okar.base.IczBaseFragment;
-import com.okar.model.ApplyMemberCardRecord;
-import com.okar.model.Commodity;
-import com.okar.utils.RefreshUtils;
-import com.works.skynet.common.utils.Logger;
+import com.j256.ormlite.logger.LoggerFactory;
 
 import javax.inject.Inject;
-
-import roboguice.inject.InjectView;
 
 /**
  * Created by wangfengchen on 14/11/21.
  */
 public abstract class IczBaseFragmentList<T> extends IczBaseFragment implements PullToRefreshBase.OnRefreshListener{
+
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(IczBaseFragmentList.class);
 
     protected ListView mListView;
 
@@ -39,7 +33,7 @@ public abstract class IczBaseFragmentList<T> extends IczBaseFragment implements 
 
     @Override
     public void onRefresh(PullToRefreshBase refreshView) {
-        Logger.info(this, DEBUG, "get current mode -> " + refreshView.getCurrentMode());
+        log.debug("get current mode -> " + refreshView.getCurrentMode());
         ++p;
         if(getState()==1) p = 0;
         loadData(p);

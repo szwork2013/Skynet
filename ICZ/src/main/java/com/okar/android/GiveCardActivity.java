@@ -5,9 +5,6 @@ import android.widget.ImageView;
 
 import com.okar.android.fragment.GiveCardFragment;
 import com.works.skynet.base.BaseActivity;
-import com.works.skynet.common.utils.Logger;
-
-import roboguice.inject.InjectView;
 
 /**
  * Created by wangfengchen on 14/10/29.

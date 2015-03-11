@@ -3,20 +3,20 @@ package com.okar.app;
 import android.app.Application;
 import android.content.Intent;
 
+import com.j256.ormlite.logger.LoggerFactory;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.okar.android.R;
-import com.okar.service.ChatService;
 import com.okar.utils.Cache;
-import com.works.skynet.app.SkynetApplication;
-import com.works.skynet.common.utils.Logger;
 
 /**
  * Created by wangfengchen on 15/1/13.
  */
 public class ICZApplication extends Application{
+
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(ICZApplication.class);
 
     final static boolean DEBUG = false;
 
@@ -33,7 +33,7 @@ public class ICZApplication extends Application{
     }
 
     private void initImageLoaderConfiguration(){
-        Logger.info(this, DEBUG, "initImageLoaderConfiguration");
+        log.debug("initImageLoaderConfiguration");
         DisplayImageOptions defaultDisplayImageOptions = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.ic_launcher)
                 .build();
