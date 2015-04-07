@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/icz_rbi_content_padding">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/group_name"
+        android:id="@+id/icz_rbi_group_name_label"
+        style="@style/Label"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/icz_rbi_group_name_label"
+        android:id="@+id/icz_rbi_group_name_et"
+        android:layout_marginTop="@dimen/icz_rbi_mt"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/group_brand"
+        android:id="@+id/icz_rbi_group_brand_label"
+        android:layout_below="@+id/icz_rbi_group_name_et"
+        android:layout_marginTop="@dimen/icz_rbi_mt"
+        style="@style/Label"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:id="@+id/icz_login_btn"
+        android:layout_below="@+id/icz_login_mm_con"
+        android:layout_marginTop="@dimen/icz_rbi_mt"
+        android:layout_centerHorizontal="true"
+        style="@style/DefNormalBtnStyle"
+        android:visibility="gone"/>
+
+</RelativeLayout>

@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/icz_login_content_padding">
+
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icz_login_et_content_height"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/icz_login_zh_con">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zh"
+            android:id="@+id/icz_login_zh_txt"
+            android:layout_centerVertical="true"
+            style="@style/Label"
+            android:layout_marginLeft="12dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="52dp"
+            android:id="@+id/icz_login_zh_et"
+            android:inputType="text" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icz_login_et_content_height"
+        android:layout_below="@id/icz_login_zh_con"
+        android:id="@+id/icz_login_mm_con"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            style="@style/Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mm"
+            android:id="@+id/icz_login_mm_txt"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="52dp"
+            android:id="@+id/icz_login_mm_et"
+            android:inputType="textPassword" />
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:id="@+id/icz_login_btn"
+        android:layout_below="@+id/icz_login_mm_con"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true"
+        style="@style/DefNormalBtnStyle"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nozh"
+        android:id="@+id/icz_login_to_zc"
+        android:layout_below="@+id/icz_login_btn"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="8dp"
+        style="@style/DefMessageStyle"/>
+
+</RelativeLayout>

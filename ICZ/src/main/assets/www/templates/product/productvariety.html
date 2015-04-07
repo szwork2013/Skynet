@@ -1,0 +1,67 @@
+<ion-modal-view class="slide-up-modal" ng-class="{'animation':addToCartAnimation}">
+    <div class="bar disable-user-behavior">
+        <div class="buttons buttons-left">
+            <button class="button button-clear icon-back" ng-click="varietyModal.hide()"></button>
+        </div>
+        <h1 class="title">{{modalTitle}}</h1>
+    </div>
+
+    <div class="loading" ng-hide="variety">
+        <i class="loadingicon fffbgicon"></i>
+    </div>
+
+    <ion-content class="product-variety has-modal-header font-small ng-hide" ng-show="variety">
+
+        <div class="product-variety-item">
+            <div class="product-variety-item-img">
+                <img ng-src="{{variety.selectedVariety ? variety.productMap[variety.selectedVariety].picurl : variety.productMap[productId].picurl }}" />
+            </div>
+            <div class="product-variety-item-cont">
+                <p>
+                    {{product.shortName}}
+                </p>
+                <p class="product-variety-item-price">
+                    ￥{{variety.selectedVariety ? variety.productMap[variety.selectedVariety].price : product.buyPrice}}
+                </p>
+            </div>
+        </div>
+
+        <div class="product-variety-main">
+            
+            <div class="product-variety-main-line" ng-repeat="(property, item) in variety.propertyMap">
+                <p class="font-normal">{{property}}</p>
+                <ul>
+                    <li ng-click="variety.changeVariety('{{property}}', '{{value}}')" 
+                        class="{{variety.selectedProperties[property] == value ? 'selectli' : null}} {{variety.checkAvailable(property, value) ? null : 'disabled'}}" 
+                        ng-repeat="(value, available) in item">
+                        {{value}}
+                    </li>
+                </ul>
+            </div>
+
+            <div class="product-variety-main-line">
+                <p>购买数量</p>
+                <div class="product-variety-line-count">
+                    <div class="counter-line">
+                        <cm-counter
+                            ng-model="variety.count"
+                            data-input-name="count"
+                            data-max-num="variety.selectedVariety ? variety.productMap[variety.selectedVariety].count : 0"
+                            data-min-num="0"
+                            data-input-readonly="true">
+                        </cm-counter>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="product-variety-btn">
+            <button ng-disabled="loading || !variety.selectedVariety || !variety.productMap[variety.selectedVariety].sellable || variety.count==0" 
+                    class="button button-confirm font-normal" ng-click="confirmEdit()">
+                {{variety.productMap[variety.selectedVariety].sellable ? (variety.productMap[variety.selectedVariety].count ? '确 定' : '已售罄') : '已下架'}}
+            </button>
+        </div>
+        
+    </ion-content>
+</ion-modal-view>

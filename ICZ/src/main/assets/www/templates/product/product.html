@@ -1,0 +1,17 @@
+<ion-view title="{{product.brand}}">
+
+    <ion-nav-view name="product.tab"></ion-nav-view>
+
+    <div class="bar-footer">
+        <span class="price font-large" ng-show="product.buyPrice">
+            ￥{{product.buyPrice}}
+        </span>
+        <del class="font-small" ng-show="product.marketPrice">
+            ￥{{product.marketPrice}}
+        </del>
+        <button ng-disabled="!product || !productExt" class="button button-confirm font-normal" 
+                ng-click="varietyModal.show($event)">
+            加入购物车
+        </button>
+    </div>
+</ion-view>

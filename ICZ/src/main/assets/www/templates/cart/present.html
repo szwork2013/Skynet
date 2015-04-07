@@ -1,0 +1,45 @@
+<ion-modal-view class="slide-up-modal">
+    <div class="bar disable-user-behavior">
+        <div class="buttons buttons-left">
+            <button class="button button-clear icon-back" ng-click="presentModal.hide()"></button>
+        </div>
+        <h1 class="title">选择赠品</h1>
+    </div>
+    <ion-content class="has-modal-header">
+        <p class="present-remain-temp font-small" ng-click="showPresentSelection(item)">
+            还可选择<span> {{getRemainPresentTotal(product, true)}} </span>件赠品
+        </p>
+        <div class="present-item font-small" ng-repeat="present in product.presents">
+            <div class="present-img selection-base" ng-class="{'selection-correct':present.selectedTemp}"
+                ng-click="togglePresentSelection(product, present)" >
+                <img cm-lazyload="present.pic" />
+            </div>
+            <a href="#/product/{{present.id}}/detail">
+                <div class="present-content">
+                    <p class="name font-small">
+                        {{present.name}}
+                    </p>
+                    <p class="price font-small">
+                        ￥{{present.price}}
+                    </p>
+                </div>
+            </a>
+            <div class="present-counter font-small">
+                <div class="counter-line">
+                    <cm-counter
+                        ng-model="present.selectedTemp"
+                        data-input-name="{{present.id + 'counter'}}"
+                        data-max-num="getRemainPresentCount(product, present)"
+                        data-min-num="0"
+                        data-input-readonly="true">
+                    </cm-counter>
+                </div>
+            </div>
+        </div>
+        <div class="padding">
+            <button class="button button-block button-confirm" ng-click="confirmPresentSelection()">
+                确定
+            </button>
+        </div>
+    </ion-content>
+</ion-modal-view>

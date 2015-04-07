@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ICZ</string>
+    <string name="app_name">爱车阵</string>
     <string name="hello_world">Hello world!</string>
     <string name="register">注册</string>
     <string name="login">登陆</string>
     <string name="send">发送</string>
+    <string name="zh">账号</string>
+    <string name="mm">密码</string>
+    <string name="nozh">还没有账号？</string>
+    <string name="group_name">车友会名称</string>
+    <string name="group_brand">车友会所属品牌车型</string>
 
     <string-array name="jazzy_effects">
         <item>Standard</item>

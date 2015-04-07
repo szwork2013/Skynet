@@ -1,0 +1,23 @@
+<ion-view title="商品尺寸">
+
+    <ion-content class="has-header" scroll="false">
+        <ion-scroll class="product-scroll" zooming="true" direction="xy" min-zoom="0.5" max-zoom="3" scrollbar-x="false" scrollbar-y="false"> 
+
+            <div class="product-size-main" style="width:{{productExt.productSize.colcount * 100 + 20}}px;">
+
+                <div class="product-size-line font-small">
+                    <p class="title font-small" ng-repeat="header in productExt.productSize.header">
+                        <span>{{header}}</span>
+                    </p>
+                </div>
+
+                <div class="product-size-line font-small" ng-repeat="newdata in newsizedata track by $index">
+                    <p class="font-small" ng-repeat="n in newdata track by $index">{{n}}</p>
+                </div>
+
+            </div>
+
+        </ion-scroll>
+    </ion-content>
+    
+</ion-view>

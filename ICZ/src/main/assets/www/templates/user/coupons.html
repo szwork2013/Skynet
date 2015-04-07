@@ -1,0 +1,73 @@
+<ion-view title="优惠券">
+    
+    <ion-content scroll="false" class="mycoupons-cont-bg">
+        <div class="mycoupons-main">
+            
+            <div class="top-button-bar col3">
+                <button class="button {{button.state}} font-small" ng-disabled="loading" 
+                        ng-click="showInfoContent($index)" ng-repeat="button in infoButtons">
+                    {{button.text}}
+                </button>
+            </div>
+            
+            <div class="loading" ng-if="loading">
+                <i class="loadingicon eeebgicon"></i>
+            </div>
+
+            <ion-content class="has-top-button-bar font-small" ng-hide="loading">
+                
+                <div class="mycoupons-main-activate" ng-show="config.type == 0">
+                    <div class="mycoupons-activate-cont">
+                        <div class="input-text-row">
+                            <input type="text" class="input-text font-small" placeholder="请输入优惠劵编号" ng-model="data.couponId" />
+                        </div>
+                        <button class="button button-confirm font-small" ng-click="activateCoupon()">激活</button>
+                    </div>
+                </div>
+                
+                <div class="mycoupons-main-list" ng-hide="coupons.length">
+                    <div class="mycoupons-main-item font-small">                       
+                        暂无符合条件的优惠券
+                    </div>
+                </div>
+
+                <div class="mycoupons-main-list {{isExpired}}" ng-show="coupons.length">
+    
+                    <div class="mycoupons-main-item font-small" ng-repeat="coupon in coupons">                       
+
+                        <p class="font-small">
+                            <span class="fl price">
+                                ￥{{coupon.price}}
+                            </span>
+                            <span class="fr">
+                                {{coupon.card_number}}
+                            </span>
+                        </p>
+
+                        <p class="font-small">
+                            <span class="fl">
+                                {{coupon.use_desc}}
+                            </span>
+                            <span class="fr" ng-if="coupon.order_id">
+                                订单号：{{coupon.order_id}}
+                            </span>
+                        </p>
+
+                        <p class="font-small">
+                            <span class="fl date font-mini">
+                                {{coupon.time_info}}
+                            </span>
+                            <span class="fr">
+                                {{coupon.card_type}}
+                            </span>
+                        </p>
+
+                    </div>
+
+                </div>
+                
+            </ion-content>
+        </div>       
+    </ion-content>
+    
+</ion-view>

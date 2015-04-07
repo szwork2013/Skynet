@@ -1,0 +1,96 @@
++<ion-view title="购物车">
+    
+    <ion-nav-buttons side="right">
+        <button class="button button-clear button-font button-toggle-option ng-hide" cm-show-option 
+                ng-show="cart.cartItems.length && !optionShown">
+            编辑
+        </button>
+        <button class="button button-clear button-font button-toggle-option ng-hide" cm-hide-option 
+                ng-show="cart.cartItems.length && optionShown">
+            完成
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content scroll="false">
+        <div ng-if="!loading && !cart.cartItems.length" class="cart-empty">
+            <div class="logo">
+                <img src="img/icon/cart-empty.png">
+            </div>
+            <p class="title font-normal">
+                购物车已空，请赶快去抢宝贝吧！
+            </p>
+            <button class="button button-block button-confirm" ui-sref="home">
+                去逛逛
+            </button>
+        </div>
+        
+        <div class="loading" ng-if="loading">
+            <i class="loadingicon fffbgicon"></i>
+        </div>
+        
+        <ion-content ng-show="!loading && cart.cartItems.length > 0" class="has-bottom-button-bar font-normal ng-hide">
+            <ion-list can-swipe="true">
+                
+                <div class="item-container" ng-repeat="item in cart.cartItems">
+                    <label class="font-normal">							
+                        <input type="checkbox" class="checkbox-icon-self" ng-model="item.selected" 
+                               ng-change="changeSelected()" />						
+                        <span class="font-small">
+                            {{item.brand.value}}
+                        </span>
+                    </label>
+                    <ion-item class="font-small">
+                        <a href="#/product/{{item.id}}/detail">
+                            <img cm-lazyload="item.pic">
+                            <p>{{item.shortname}}</p>
+                            <p class="font-mini">
+                                <span class="style" ng-repeat="(key,value) in item.styleMap">{{key}}：{{value}}</span>
+                            </p>
+                            <p>
+                                <span class="price">￥{{item.buyPrice}}</span>                               
+                                <del class="font-mini" ng-show="item.marketPrice">
+                                    ￥{{item.marketPrice}}
+                                </del>
+                            </p>
+                            
+                            <i>x{{item.count}}</i>
+                        </a>
+                        <ion-option-button class="button-detail font-small" ng-click="editCartItem(item)">
+                            编辑
+                        </ion-option-button>
+                        <ion-option-button class="button-detail font-small" ng-click="delCartItem(item)">
+                            删除
+                        </ion-option-button>
+
+                    </ion-item>
+                    <p class="present-remain font-mini" ng-click="showPresentSelection(item)"
+                       ng-if="item.presents.length && getRemainPresentTotal(item)">
+                        还可选择<span> {{getRemainPresentTotal(item)}} </span>件赠品
+                    </p>
+                    <ion-scroll direction="x" scrollbar-x="false" class="present-scroll" 
+                                ng-if="item.presents.length" ng-click="showPresentSelection(item)">
+                        <ul cm-auto-width="68">
+                            <li class="selection-base" ng-class="{'selection-correct':present.selected}"
+                                ng-repeat="present in item.presents track by $index">
+                                <img cm-lazyload="present.pic" />
+                            </li>
+                        </ul>
+                    </ion-scroll>
+                </div>
+            </ion-list>
+        </ion-content>
+        
+        <div class="bar-footer ng-hide" ng-show="!loading && cart.cartItems.length > 0">
+            <label class="selectAll font-normal">							
+                <input type="checkbox" class="checkbox-icon-self" ng-model="cart.allSelected" 
+                       ng-change="toggleAllSelected()"/>						
+                <span class="font-small">全选</span>
+            </label>
+            <span class="price sum font-normal">合计：￥{{cart.sumPrice}}</span>
+            <button class="button button-confirm font-normal" ng-disabled="!cart.total" ng-click="checkout()">
+                结算（{{cart.total}}）
+            </button>
+        </div>
+    </ion-content>
+    
+</ion-view>

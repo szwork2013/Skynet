@@ -1,0 +1,61 @@
+<ion-view title="设置">
+    
+    <ion-content scroll="false" class="settings-cont-bg">       
+		<div class="settings-main">
+			
+			<ul class="settings-main-cont">
+				<li class="font-small" ng-click="checkUpdate()">
+					<div class="settings-main-cont-line">
+						新版本检测
+						<span class="fr">
+							{{needUpdate}}
+						</span>
+					</div>
+				</li>
+				<li class="font-small">
+					<div class="settings-main-cont-line toggle-line">
+						节省流量设置
+						<label class="toggle toggle-balanced fr font-small">
+					    	<input type="checkbox" ng-model="saveTraffic" ng-change="toggleSaveTraffic()">
+					    	<div class="track">
+					    		<div class="handle"></div>
+					    	</div>
+					    </label>
+					</div>
+				</li>
+			</ul>
+
+			<ul class="settings-main-cont">
+				<li class="font-small">
+					<div class="settings-main-cont-line" ui-sref="company">
+						公司介绍
+					</div>
+				</li>
+				<li class="font-small">
+					<div class="settings-main-cont-line" ui-sref="about">
+						联系我们
+					</div>
+				</li>
+				<li class="font-small">
+					<div class="settings-main-cont-line" ui-sref="tutorial">
+						使用帮助
+					</div>
+				</li>
+			</ul>
+
+			<ul class="settings-main-cont">
+				<li class="font-small" ng-click="clearCache()">
+					<div class="settings-main-cont-line">
+						清除本地缓存
+					</div>
+				</li>
+			</ul>
+
+			<p class="settings-main-btn">
+				<button class="button button-block button-confirm" ng-click="logout()">退出</button>
+			</p>
+
+		</div>
+    </ion-content>
+    
+</ion-view>

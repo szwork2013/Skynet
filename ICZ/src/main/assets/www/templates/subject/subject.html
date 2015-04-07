@@ -1,0 +1,94 @@
+<ion-view title="{{title}}">
+
+    <div class="loading" ng-if="loading">
+        <i class="loadingicon fffbgicon"></i>
+    </div>
+    
+    <ion-content ng-hide="loading" delegate-handle="subject-scroll">
+        <div class="subject-banner" ng-bind-html="compileHtml(data.headPic)" ></div>
+        <div ng-include="template"></div>
+    </ion-content>
+    
+    <script id="subject-template1.html" type="text/ng-template">
+        <div class="productlist-main" ng-repeat="floor in data.subjectContent track by $index">
+            <div class="productlist-main-item productlist-col2-item" ng-repeat="product in floor.products">
+                <a href="#/product/{{product.id}}/detail" 
+                   cm-count-click click-title="专题页" 
+                   click-object="{{'商品?id=' + product.id}}" 
+                   click-param="{{'id=' + subjectId}}">
+                    <img cm-lazyload="product.pic">
+                    <div class="productlist-col2-item-line productlist-col2-item-brand font-mini">
+                        {{product.brand.value}}
+                    </div>
+                    <div class="productlist-col2-item-line productlist-col2-item-title font-small">
+                        {{product.shortName}}
+                    </div>
+                    <div class="productlist-col2-item-price font-small">
+                        ￥{{product.buyPrice}}                        
+                        <del class="font-small" ng-show="product.marketPrice && product.marketPrice != 0">
+                            ￥{{product.marketPrice}}
+                        </del>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </script>
+    
+    <script id="subject-template2.html" type="text/ng-template">
+        <div class="subject-floor" ng-repeat="floor in data.subjectContent track by $index">
+            <div class="subject-floor-content" ng-repeat="content in floor.contents track by $index" 
+                 ng-bind-html="compileHtml(content)">
+            </div>
+        </div>
+    </script>
+    
+    <script id="subject-template3.html" type="text/ng-template">
+        <div class="subject-floor" ng-repeat="floor in data.subjectContent track by $index">
+            <div class="subject-banner" ng-bind-html="compileHtml(floor.floorTitle)" ></div>
+            
+            <div class="productlist-main">
+                <div class="productlist-main-item productlist-col2-item" ng-repeat="product in floor.products">
+                    <a href="#/product/{{product.id}}/detail" 
+                       cm-count-click click-title="专题页" 
+                       click-object="{{'商品?id=' + product.id}}" 
+                       click-param="{{'id=' + subjectId}}">
+                        <img cm-lazyload="product.pic">
+                        <div class="productlist-col2-item-line productlist-col2-item-brand font-mini">
+                            {{product.brand.value}}
+                        </div>
+                        <div class="productlist-col2-item-line productlist-col2-item-title font-small">
+                            {{product.shortName}}
+                        </div>
+                        <div class="productlist-col2-item-price font-small">
+                            ￥{{product.buyPrice}}                        
+                            <del class="font-small" ng-show="product.marketPrice && product.marketPrice != 0">
+                                ￥{{product.marketPrice}}
+                            </del>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </script>
+    
+    <script id="subject-template4.html" type="text/ng-template">
+        <div class="subject-floor" ng-repeat="floor in data.subjectContent track by $index">
+            <div class="subject-banner" ng-bind-html="compileHtml(floor.floorTitle)" ></div>
+            
+            <div class="subject-floor-wrap">
+                <div class="subject-floor-content" ng-repeat="content in floor.floorContent track by $index" 
+                     ng-bind-html="compileHtml(content)">
+                </div>
+            </div>
+        </div>
+    </script>
+        
+    <div class="float-bar" ng-hide="loading || !data.showToTop">
+        <div class="icon-scroll-top" ng-click="scrollTop()">
+            <i>
+                置顶
+            </i>
+        </div>
+    </div>
+    
+</ion-view>

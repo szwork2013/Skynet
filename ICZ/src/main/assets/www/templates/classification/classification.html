@@ -1,0 +1,66 @@
+<ion-view title="商品分类">
+    
+    <ion-nav-buttons side="right">
+        <a class="button button-clear icon-search" ui-sref="search"></a>
+    </ion-nav-buttons>
+    
+    <ion-content class="has-bottom-button-bar font-small" scroll="false">
+        <div class="loading" ng-if="loading">
+            <i class="loadingicon fffbgicon"></i>
+        </div>
+    
+        <ion-slide-box on-slide-changed="slideChanged($index)" show-pager="false"
+            delegate-handle="category-slide" ng-if="!loading">
+            <ion-slide>
+                <ion-content delegate-handle="slide-0">
+                    <div class="category" ng-repeat="category in data[0].sub_categories">
+                        <div cm-expand class="banner">
+                            <img cm-auto-height="{{1/3}}" cm-lazyload="category.pic" />
+                            <div class="img-mask">
+                                <h1 class="font-large">{{category.cnTitle}}</h1>
+                                <h2 class="font-mini">{{category.enTitle}}</h2>
+                            </div>
+                        </div>
+                        <ul>
+                            <li class="font-small" ng-click="goTo(subcategory, category.id)"
+                                ng-repeat="subcategory in category.sub_categories"
+                                cm-count-click click-title="分类页" 
+                                click-object="{{'分类?id=' + subcategory.id}}" >
+                                {{subcategory.title}}
+                            </li>
+                        </ul>
+                    </div>
+                </ion-content>
+            </ion-slide>
+            
+            <ion-slide>
+                <ion-content delegate-handle="slide-1">
+                    <div class="category" ng-repeat="category in data[1].sub_categories">
+                        <div cm-expand class="banner">
+                            <img cm-auto-height="{{1/3}}" cm-lazyload="category.pic" />
+                            <div class="img-mask">
+                                <h1 class="font-large">{{category.cnTitle}}</h1>
+                                <h2 class="font-mini">{{category.enTitle}}</h2>
+                            </div>
+                        </div>
+                        <ul>
+                            <li class="font-small" ng-click="goTo(subcategory, category.id)"
+                                ng-repeat="subcategory in category.sub_categories"
+                                cm-count-click click-title="分类页" 
+                                click-object="{{'分类?id=' + subcategory.id}}" >
+                                {{subcategory.title}}
+                            </li>
+                        </ul>
+                    </div>
+                </ion-content>
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
+        
+    <div class="bottom-button-bar col2" ng-hide="loading">
+        <button class="button {{button.state}} font-small" ng-click="changeSlide($index)" ng-repeat="button in data">
+            {{button.title}}
+        </button>
+    </div>
+    
+</ion-view>

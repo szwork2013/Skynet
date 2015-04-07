@@ -1,0 +1,46 @@
+<ion-view title="筛选">
+
+    <ion-content  class="has-bottom-button-bar font-small"> 
+
+	    <div class="productlistpick-main">
+
+			<ul class="list productlistpick-list">
+
+				<li class="item font-normal" ng-repeat="key in filterOrder" ng-if="key != 'category' || !disableCategoryFilter">
+					<div class="fl">
+						<label class="font-normal">							
+							<input type="checkbox" class="checkbox-icon-self" ng-model="filters[key].checked" 
+                                   ng-if="type != 'category' || type != key" />						
+							<span class="font-normal">{{filters[key].name}}</span>
+						</label>
+					</div>
+					<div class="fr" ng-click="initFilterSelections('{{key}}')">
+                        <p class="font-normal">
+                            {{filters[key].value ? filters[key].filter[filters[key].value] : '所有'}}
+                        </p>
+					</div>
+				</li>
+
+			</ul>  
+
+			<div class="productlistpick-search font-normal">				
+				<div class="input-text-row font-normal">
+					<input class="input-text font-normal" type="text" ng-model="priceFilter.beginPrice" />
+				</div>
+				<span>元 ~</span>
+				<div class="input-text-row font-normal">
+					<input class="input-text font-normal" type="text" ng-model="priceFilter.endPrice" />
+				</div>
+				<span>元</span>
+			</div> 
+
+		</div> 			
+
+    </ion-content>
+
+    <div class="bottom-button-bar col2">
+        <button class="button button-cancel font-small" ng-click="cancelFilter()">清 除</button>
+        <button class="button button-confirm font-small" ng-click="applyFilter()">完 成</button>
+    </div>
+
+</ion-view>

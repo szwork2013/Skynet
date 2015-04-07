@@ -1,0 +1,37 @@
+<ion-view title="收货时间">
+
+    <ion-content> 
+
+	    <div class="time-of-receipt-main font-normal">
+
+	    	<p class="font-normal">请选择收货时间</p>
+
+			<div class="time-of-receipt-main-item">
+				<label class="font-normal" ui-sref="order.info">
+					<input type="radio" class="radio-icon-self" name="order.timeOfReceipt" 
+                           value="3" ng-model="order.timeOfReceipt" />						
+					<span>所有日期均可送达</span>
+				</label>
+			</div>
+
+			<div class="time-of-receipt-main-item">
+				<label class="font-normal" ui-sref="order.info">
+					<input type="radio" class="radio-icon-self" name="order.timeOfReceipt" 
+                           value="1" ng-model="order.timeOfReceipt" />						
+					<span>工作日送达</span>
+				</label>
+			</div>
+
+			<div class="time-of-receipt-main-item">
+				<label class="font-normal" ui-sref="order.info">
+					<input type="radio" class="radio-icon-self" name="order.timeOfReceipt" 
+                           value="2" ng-model="order.timeOfReceipt" />						
+					<span>休息日送达</span>
+				</label>
+			</div>
+
+		</div> 			
+
+    </ion-content>
+
+</ion-view>

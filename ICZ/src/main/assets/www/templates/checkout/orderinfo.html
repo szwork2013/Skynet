@@ -1,0 +1,240 @@
+<ion-view title="确认订单">
+    
+    <ion-content class="has-bar-footer font-normal">
+
+        <div class="loading" ng-if="loading">
+            <i class="loadingicon fffbgicon"></i>
+        </div>
+    
+    	<div class="checkout-order-main" ng-if="!loading">
+
+            <div class="order-main-consignee" ng-click="editConsignee()" ng-hide="order.consignee">
+                <div class="order-main-consignee-cont">
+                    <p class="font-mini">
+						添加收货人信息
+	    			</p>
+                </div>
+            </div>
+            
+    		<div class="order-main-consignee" ui-sref="order.consignee" ng-show="order.consignee">
+    			<div class="order-main-consignee-cont">
+	    			<p class="font-small">
+	    				<span class="fl">
+	    					收货人：{{order.consignee.name}}
+	    				</span>
+	    				<span class="fr">
+	    					{{order.consignee.mobile}}
+	    				</span>
+	    			</p>
+	    			<p class="font-mini">
+						收货地址：{{order.consignee.address}}
+	    			</p>
+				</div>
+    		</div>
+
+    		<div class="order-main-list">
+				
+				<div class="order-main-list-tit font-small" ng-show="productList.haiwaizhiyou.length">
+					行邮税商品
+				</div>
+                
+                <div class="order-main-list-item font-small" ng-repeat="product in productList.haiwaizhiyou">
+					<div class="order-main-list-item-img">
+						<img cm-lazyload="product.pic" />
+					</div>
+					<div class="order-main-list-item-cont">
+						<p class="order-item-name font-small">
+							{{product.name}}
+						</p>
+						<p class="font-mini">
+							<span ng-repeat="(key,value) in product.styleMap">{{key}}：{{value}}</span>
+						</p>
+						<p class="order-item-price font-small">
+							￥{{product.price}}
+						</p>
+					</div>
+					<div class="order-main-list-item-count font-small">
+						x<span class="font-normal">{{product.amount}}</span>
+					</div>
+				</div>
+
+				<div class="order-main-list-tit font-small" ng-show="productList.normal.length">
+					非行邮税商品
+				</div>
+
+				<div class="order-main-list-item font-small" ng-repeat="product in productList.normal">
+					<div class="order-main-list-item-img">
+						<img cm-lazyload="product.pic" />
+					</div>
+					<div class="order-main-list-item-cont">
+						<p class="order-item-name font-small">
+							{{product.name}}
+						</p>
+						<p class="font-mini">
+							<span ng-repeat="(key,value) in product.styleMap">{{key}}：{{value}}</span>
+						</p>
+						<p class="order-item-price font-small">
+							￥{{product.price}}
+						</p>
+					</div>
+					<div class="order-main-list-item-count font-small">
+						x<span class="font-normal">{{product.amount}}</span>
+					</div>
+				</div>
+                
+                <div class="order-main-list-tit font-small" ng-show="presentList.length">
+					赠品
+				</div>
+
+				<div class="order-main-list-item font-small" ng-repeat="present in presentList">
+					<div class="order-main-list-item-img">
+						<img cm-lazyload="present.pic" />
+					</div>
+					<div class="order-main-list-item-cont">
+						<p class="order-item-name font-small">
+							{{present.name}}
+						</p>
+					</div>
+					<div class="order-main-list-item-count font-small">
+						x<span class="font-normal">{{present.amount}}</span>
+					</div>
+				</div>
+
+    		</div>
+
+    		<div class="order-main-line font-small">
+	    		<dl class="font-small">
+					<dt class="font-small">
+						付款方式：
+						<button class="button button-confirm font-small">在线支付</button>
+					</dt>
+					<dd class="font-small"></dd>
+	    		</dl>
+	    	</div>
+
+	    	<div class="order-main-line font-small" ui-sref="order.timeofreceipt">
+	    		<dl class="font-small">
+					<dt class="font-small">
+						收货时间：
+					</dt>
+					<dd class="font-small has-right-btn">
+						{{timeOfReceiptText[order.timeOfReceipt - 1]}}
+					</dd>
+	    		</dl>
+	    	</div>
+
+			<div class="order-main-line font-small" ui-sref="order.coupon">
+	    		<dl class="font-small">
+					<dt class="font-small">
+						优惠劵
+						<!-- 优惠劵/中免卡： -->
+					</dt>
+					<dd class="font-small has-right-btn">
+						{{order.coupon ? '已使用' : '未使用'}}
+						<!-- /{{order.prepaidCard ? '已使用' : '未使用'}} -->
+					</dd>
+	    		</dl>
+	    	</div>
+
+			<div class="order-main-line font-small">
+	    		<dl class="font-small">
+					<dt class="invoice font-small">
+						<label>
+							<input type="checkbox" class="checkbox-icon-self" 
+                                   ng-model="order.invoice" ng-change="toggleInvoice()" />
+							<span class="font-small">开发票</span>
+						</label>
+					</dt>
+					<dd class="font-small">
+						<a class="order-main-line-link" ui-sref="order.invoicedetail">发票说明</a>
+					</dd>
+	    		</dl>
+			</div>
+
+			<div class="order-main-comment input-text-row">
+				<input type="text" class="input-text font-small" maxlength="45" ng-model="order.remark" placeholder="给中免留言（限45字内）" />
+			</div>
+            
+            <div class="order-main-comment input-text-row" ng-show="productList.haiwaizhiyou.length">
+				<input type="text" class="input-text font-small" maxlength="25" ng-model="order.idCardNumber" placeholder="身份证号码" />
+			</div>
+
+			<div class="order-main-total font-small">
+
+				<p>
+					<span class="fl">
+						商品金额：
+					</span>
+					<span class="fr">
+						￥{{order.total}}
+					</span>
+				</p>
+
+				<p>
+					<span class="fl">
+						总运费：
+					</span>
+					<span class="fr">
+						+￥{{order.freight}}
+					</span>
+				</p>
+
+				<p ng-show="false">
+					<span class="fl">
+						行邮税运费：
+					</span>
+					<span class="fr">
+						+￥100
+					</span>
+				</p>
+
+				<p ng-show="false">
+					<span class="fl">
+						非行邮税运费：
+					</span>
+					<span class="fr">
+						+￥100
+					</span>
+				</p>
+
+                <p ng-show="order.orderDiscount != 0">
+					<span class="fl">
+						订单优惠：
+					</span>
+					<span class="fr">
+						-￥{{order.orderDiscount}}
+					</span>
+				</p>
+                
+				<p ng-show="order.couponDiscount != 0">
+					<span class="fl">
+						优惠劵：
+					</span>
+					<span class="fr">
+						-￥{{order.couponDiscount}}
+					</span>
+				</p>
+
+				<p ng-show="order.cardDiscount != 0">
+					<span class="fl">
+						中免卡：
+					</span>
+					<span class="fr">
+						-￥{{order.cardDiscount}}
+					</span>
+				</p>
+
+			</div>
+	    	
+    	</div>
+        
+    </ion-content>
+
+    <div class="bar-footer">
+        <span class="price font-large">总计：￥{{order.result}}</span>
+        <button class="button button-confirm font-normal" ng-disabled="loading || !order.consignee.id" ng-click="submitOrder()">
+            提交订单
+        </button>
+    </div>
+    
+</ion-view>

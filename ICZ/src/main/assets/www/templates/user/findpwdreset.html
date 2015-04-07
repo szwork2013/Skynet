@@ -1,0 +1,48 @@
+<ion-view title="重置密码">
+    
+    <ion-content scroll="false" >
+        <div class="find-pwd-main pwd-reset-phone">
+            
+            <div class="reset-phone-cont">
+
+            	<form name="form" novalidate>
+            		<dl>
+            			<dt class="font-small" cm-validate 
+                            required-tip="请输入新密码"
+                            pattern-tip="密码格式为8-16位且最少包含2个字符和2个数字">
+            				<input name="password" class="font-small" type="password" 
+                                   ng-model="data.password" placeholder="请输入新密码" 
+                                   ng-pattern="getRegExp('password')" required />
+            			</dt>
+            			<dd class="font-small opacity-hide">
+            			</dd>
+            		</dl>
+
+            		<dl>
+            			<dt class="font-small" cm-validate 
+                            required-tip="请输入确认密码"
+                            pattern-tip="密码格式为8-16位且最少包含2个字符和2个数字"
+                            compare-target="password"
+                            compare-tip="两次输入的密码不同">
+            				<input name="repassword" class="font-small" type="password" 
+                                   ng-model="data.repassword" placeholder="确认新密码" 
+                                   ng-pattern="getRegExp('password')" required />
+            			</dt>
+            			<dd class="font-small {{valide}}">
+            			</dd>
+            		</dl>
+                    
+                    <div class="reset-phone-btn">
+                        <button class="button button-block button-confirm font-normal"
+                                ng-disabled="submitBtn.disabled || form.$invalid" ng-click="submit()">
+                            {{submitBtn.text}}
+                        </button>
+                    </div>
+            	</form>
+            	
+            </div>
+            
+        </div>
+    </ion-content>
+    
+</ion-view>

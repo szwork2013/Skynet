@@ -1,0 +1,70 @@
+<ion-view title="我的订单">
+    
+    <ion-content scroll="false" class="myorder-bg-color"> 
+        <div class="myorder-main">
+            
+            <div class="top-button-bar col4">
+                <button class="button {{button.state}} font-small" ng-disabled="loading" 
+                        ng-click="showInfoContent($index)" ng-repeat="button in infoButtons">
+                    {{button.text}}
+                </button>
+            </div>
+
+            <div class="loading" ng-if="loading">
+                <i class="loadingicon eeebgicon"></i>
+            </div>
+
+            <ion-content class="has-top-button-bar font-small myorder-empty" ng-hide="loading || orderList.length">
+
+                <!-- 如果是没有购买过商品，则需父级ion-content添加class名称 myorder-empty -->
+                <div class="myorder-main-empty">
+                    <div class="logo">
+                        <img src="img/icon/order-empty.png">
+                    </div>
+                    <p class="title font-normal">
+                        {{messages[config.type]}}
+                    </p>
+                    <button class="button button-block button-confirm" ui-sref="home">
+                        去逛逛
+                    </button>
+                </div>
+
+            </ion-content>
+
+            <ion-content class="has-top-button-bar font-small"  ng-hide="loading || !orderList.length"> 
+                
+                <div class="myorder-main-list" ng-repeat="order in orderList">
+                    <div class="myorder-main-list-tit font-small">
+                        <a class="button button-detail font-mini" ng-if="order.status=='未处理'" href="#/pay/{{order.orderId}}">
+                            立即付款
+                        </a>
+                        订单状态：<span>{{order.status}}</span>
+                    </div>
+                    <a href="#/orderdetail/{{order.orderId}}">
+                        <div class="myorder-main-list-detail font-small">
+                            订单号：{{order.showid}} <br />
+                            订单金额：<span>{{order.price}}</span> <br />
+                            下单时间：{{order.time}}
+                        </div>
+                    </a>
+                    <div class="myorder-main-list-image">
+                        <ion-scroll direction="x" scrollbar-x="false" class="product-scroll">
+                            <ul class="myorder-list-scorll" cm-auto-width="67" >
+                                <a href="#/product/{{product.pid}}/detail" ng-repeat="product in order.orderproducts">
+                                    <li>
+                                        <img ng-src="{{product.pic}}" />
+                                    </li>
+                                </a>
+                            </ul>
+                        </ion-scroll>
+                    </div>
+                </div>
+
+                <ion-infinite-scroll ng-if="moreData" on-infinite="loadOrderList(false)" distance="1%"></ion-infinite-scroll>
+
+            </ion-content>
+            
+        </div>
+    </ion-content>
+
+</ion-view>

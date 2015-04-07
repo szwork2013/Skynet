@@ -1,0 +1,68 @@
+<ion-view title="{{editingConsignee.id ? '编辑收货地址' : '添加收货地址' }}">
+    
+    <ion-content>     
+
+        <div class="consignee-edit-main font-small">
+
+	        <form>      		
+				
+				<dl class="font-small">
+					<dt class="font-small">
+						收&nbsp;货&nbsp;人&nbsp;：
+					</dt>
+					<dd class="input-text-row">
+						<input type="text" class="input-text font-small" ng-model="editingConsignee.name" />
+					</dd>
+				</dl>
+
+				<dl class="font-small">
+					<dt class="font-small">
+						手机号码：
+					</dt>
+					<dd class="input-text-row">
+						<input type="text" class="input-text font-small" ng-model="editingConsignee.mobilephone" />
+					</dd>
+				</dl>
+
+				<dl class="font-small">
+					<dt class="font-small">
+						所在地区：
+					</dt>
+					<dd class="input-text-row select-row font-small" ng-if="area.length" ng-repeat="area in areaInfo.area track by $index" ng-show="area.length">
+						<select ng-model="areaInfo.selected[$index]" ng-options="item.id as item.name for item in area"
+                                ng-change="changeArea($index)" class="font-small">
+                            <option value="">-- 请选择 --</option>
+                        </select>
+                        <i class="select-icon"></i>
+					</dd>
+				</dl>
+
+				<dl class="font-small">
+					<dt class="font-small">
+						详细地址：
+					</dt>
+					<dd class="input-text-row">
+						<input type="text" class="input-text font-small" ng-model="editingConsignee.address" />
+					</dd>
+				</dl>
+
+				<dl class="font-small">
+					<dt class="font-small">
+						邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编：
+					</dt>
+					<dd class="input-text-row">
+						<input type="text" class="input-text font-small" ng-model="editingConsignee.postcode" />
+					</dd>
+				</dl>
+
+			</form>
+
+			<div class="consignee-edit-main-btn">
+				<button class="button button-confirm font-normal" ng-click="submitConsignee()" >保存并使用</button>
+			</div>
+
+        </div>
+
+    </ion-content>
+    
+</ion-view>

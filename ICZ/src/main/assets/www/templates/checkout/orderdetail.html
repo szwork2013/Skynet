@@ -1,0 +1,113 @@
+<ion-view title="订单详情">
+
+    <ion-nav-buttons side="right">
+        <button class="button button-clear button-font" ng-click="cancelOrder()"
+                ng-if="order.orderdetail_info.order_status=='未处理'">
+        	取消订单
+        </button>
+    </ion-nav-buttons>
+    
+    <ion-content class="myorder-bg-color">   
+		<div class="myorder-detail-main">
+
+            <div class="myorder-detail-main-order">
+      
+                <p class="font-small">
+                    <a class="button button-detail font-mini" 
+                       ng-if="order.orderdetail_info.order_status=='未处理'" 
+                       href="#/pay/{{order.orderid}}">
+                        立即付款
+                    </a>
+                    订单状态：<span>{{order.orderdetail_info.order_status}}</span> <br />
+                    订单号：{{order.orderdetail_info.order_aliascode}}<br />
+                    下单时间：{{order.orderdetail_info.order_creattime}}
+                </p>
+            
+                <dl class="font-small">
+                    <dt>
+                        商品金额：
+                    </dt>
+                    <dd>
+                        {{total}}
+                    </dd>
+                </dl>
+
+                <dl class="font-small">
+                    <dt>
+                        运费：
+                    </dt>
+                    <dd>
+                        {{freight}}
+                    </dd>
+                </dl>
+
+                <dl class="font-small" ng-show="freightDiscount && freightDiscount != '￥0.00'">
+                    <dt>
+                        运费优惠：
+                    </dt>
+                    <dd>
+                        {{freightDiscount}}
+                    </dd>
+                </dl>
+                
+                <dl class="font-small" ng-show="couponDiscount && couponDiscount != '￥0.00'">
+                    <dt>
+                        卡券优惠：
+                    </dt>
+                    <dd>
+                        {{couponDiscount}}
+                    </dd>
+                </dl>
+
+                <dl class="font-small" ng-show="freightDiscount && orderDiscount != '￥0.00'">
+                    <dt>
+                        订单优惠：
+                    </dt>
+                    <dd>
+                        {{orderDiscount}}
+                    </dd>
+                </dl>
+
+                <dl class="font-small">
+                    <dt>
+                        订单金额：
+                    </dt>
+                    <dd class="price">
+                        {{result}}
+                    </dd>
+                </dl>
+
+            </div>
+
+            <div class="myorder-detail-main-list">
+        
+                <div class="myorder-detail-list-item" ng-repeat="product in order.orderdetail_productlist">
+                    <img cm-lazyload="product.pro_pic" />
+                    <div class="fl">                    
+                        <h2 class="font-small">{{product.pro_name}}</h2>
+                        <p class="font-small">{{product.trade_price.value}}</p>
+                    </div>
+                    <div class="fr font-small">
+                        x<span class="font-normal">{{product.product_amount}}</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="myorder-detail-main-consignee font-small">
+                <p class="font-small">
+                    <span class="fr">{{consignee.phone}}</span>
+                    {{consignee.name}}
+                </p>
+                <p class="font-mini">
+                    {{consignee.address}}
+                </p>
+                <p class="font-small">
+                    {{consignee.send_time}}
+                </p>
+            </div>
+
+        </div>
+    </ion-content>
+    
+</ion-view>

@@ -1,0 +1,108 @@
+<ion-view title="中免卡">
+
+    <form name="form" ng-submit="applyPrepaidCard()" novalidate>
+
+    <ion-content class="has-bottom-button-bar font-small" scroll="false"> 
+        <div class="top-button-bar col2">
+            <button class="button button-cancel font-small" ui-sref="order.coupon">
+                优惠券
+            </button>
+            <button class="button button-confirm font-small">
+                中免卡
+            </button>
+        </div>
+        
+        <ion-content class="has-top-button-bar font-small"> 
+        
+            <div class="loading" ng-if="loading">
+                <i class="loadingicon fffbgicon"></i>
+            </div>
+
+            <div class="checkout-prepaid-card" ng-hide="loading" ng-if="prepaidCard.status == 'available'">
+
+                <div class="title-block">
+                    <p class="checkout-coupon-main-form-checkbox font-small" >
+                        <label class="fl font-small">
+                            <span class="correct-icon" ng-show="order.prepaidCard"></span>					
+                            <span>使用中免卡</span>
+                        </label>
+                        <label class="fr font-small">
+                            余额：
+                            <span class="price">￥{{prepaidCard.amount}}</span>
+                        </label>
+                    </p>
+                </div>
+                
+                <div class="prepaid-card-form">
+
+                    <dl class="font-small">
+                        <dt class="font-small">
+                            本次使用：
+                        </dt>
+                        <dd class="input-text-row">
+                            <input type="text" class="input-text font-small" ng-model="prepaidCard.value" ng-pattern="/[1-9]\d*/" required />
+                            <span class="mini-help-block">
+                                <span class="text" ng-if="form.cardNo.$error.required">
+                                    请输入使用金额
+                                </span>
+                                <span class="text" ng-if="form.cardNo.$error.pattern">
+                                    中免卡金额格式错误
+                                </span>
+                            </span>
+                        </dd>
+                    </dl>
+
+                    <dl class="font-small">
+                        <dt class="font-small">
+                            支付密码：
+                        </dt>
+                        <dd class="input-text-row">
+                            <input type="password" class="input-password font-small" ng-model="prepaidCard.password" ng-pattern="/(?=.*[A-z]{2})(?=.*\d{2}).{8,}/" required />
+                        </dd>
+                    </dl>
+
+                </div>
+                
+            </div>
+
+            <div class="checkout-prepaid-card" ng-hide="loading" ng-if="prepaidCard.status == 'nophone'">
+                <div class="title-block">
+                    <label class="fl font-small">
+                        <p>您还未绑定手机</p>
+                    </label>
+                </div>
+                <div class="padding">
+                    <button class="button button-confirm button-block" ui-sref="modifyphone">
+                        立即设置
+                    </button>
+                </div>
+            </div>
+
+            <div class="checkout-prepaid-card" ng-hide="loading" ng-if="prepaidCard.status == 'nopassword'">
+                <div class="title-block">
+                    <label class="fl font-small">
+                        <p>您还未设置支付密码</p>
+                    </label>
+                </div>
+                <div class="padding">
+                    <button class="button button-confirm button-block" ui-sref="modifyphone">
+                        立即设置
+                    </button>
+                </div>
+            </div>
+
+        </ion-content>
+    </ion-content>
+
+    <div class="bottom-button-bar col2">
+        <button class="button button-cancel font-small" ng-click="cancelPrepaidCard()" 
+                ng-disabled="loading">取 消</button>
+        <button type="submit" class="button button-confirm font-small" 
+                ng-disabled="form.$invalid || loading || prepaidCard.status != 'available'">
+            确定使用
+        </button>
+    </div>
+
+    </form>
+
+</ion-view>

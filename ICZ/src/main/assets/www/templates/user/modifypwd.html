@@ -1,0 +1,51 @@
+<ion-view title="修改密码">
+    
+    <ion-content scroll="false">
+
+        <div class="loading" ng-if="loading">
+            <i class="loadingicon fffbgicon"></i>
+        </div>
+
+        <div class="modify-pwd-main" ng-hide="loading">
+
+            <div class="modify-pwd-form">
+                <form>
+                
+                    <dl class="font-small">
+                        <dt class="input-text-row font-small">
+                            <input type="password" class="input-text font-small" ng-model="data.oldPassword" placeholder="请输入当前密码" /> 
+                        </dt>
+                        <dd class="font-small false-tips opacity-hide">
+                            密码格式有误，请输入6-16位英文字符、数字、符号。
+                        </dd>
+                    </dl>
+
+                    <dl class="font-small">
+                        <dt class="input-text-row font-small">
+                            <input type="password" class="input-password font-small" ng-model="data.newPassword" placeholder="请输入新密码" />                       
+                        </dt>
+                        <dd class="font-small {{valid.newPassword}}">
+                            请输入6-16位英文字符、数字、符号。
+                        </dd>
+                    </dl>
+
+                    <dl class="font-small">
+                        <dt class="input-text-row font-small">
+                            <input type="password" class="input-password font-small" ng-model="data.confirm" placeholder="确认新密码" />                      
+                        </dt>
+                        <dd class="font-small {{valid.confirm}}">
+                            两次输入的密码不一致！
+                        </dd>
+                    </dl>
+
+                </form>
+            </div>
+
+            <div class="modify-pwd-btn">
+                <button class="button button-confirm font-normal" ng-click="submit()">提交修改</button>
+            </div>
+
+        </div>       
+    </ion-content>
+    
+</ion-view>

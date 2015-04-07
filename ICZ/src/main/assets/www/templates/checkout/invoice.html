@@ -1,0 +1,43 @@
+<ion-view title="发票信息">
+    
+    <ion-content class="has-bottom-button-bar font-small">
+
+    	<div class="checkout-invoice-main font-small">
+
+            <form>
+
+                <p class="invoice-main-title font-small">
+                    发票抬头{{title}}
+                </p>
+
+        		<p class="invoice-main-input input-text-row font-small">                                      
+                    <input class="input-text font-small" type="text" placeholder="个人/单位名称" ng-model="invoice.title" />                    
+                </p>
+
+                <p class="invoice-main-title font-small">
+                    发票类型
+                </p>
+
+                <ul class="invoice-main-type">
+                    <li ng-repeat="content in invoice.contentList track by $index">
+                        <label class="font-small">
+                            <input type="radio" class="radio-icon-self" name="invoice.content" ng-model="invoice.content" value="{{content}}" />
+                            <span>{{content}}</span>
+                        </label>
+                    </li>
+                </ul>
+
+            </form>	
+	    	
+    	</div>
+        
+    </ion-content> 
+
+    <div class="bottom-button-bar col1">        
+        <button class="button button-confirm font-small" ng-click="addInvoice()"
+                ng-disabled="!invoice.title">
+            确定
+        </button>
+    </div>
+    
+</ion-view>

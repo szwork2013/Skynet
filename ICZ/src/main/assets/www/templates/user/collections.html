@@ -1,0 +1,48 @@
+<ion-view title="我的收藏">
+
+    <ion-nav-buttons side="right">
+        <button class="button button-clear button-font ng-hide" ng-show="collections.length"
+                ng-click="clearCollections()">
+            清空
+        </button>
+    </ion-nav-buttons>
+    
+    <ion-content scroll="false" class="collections-cont-bg">
+        <div class="loading" ng-if="loading">
+            <i class="loadingicon eeebgicon"></i>
+        </div>
+
+        <ion-list class="collections-main" ng-hide="loading">
+
+            <div class="collections-main-empty" ng-hide="collections.length">
+                <img ng-src="img/icon/logo.png" /> <br />
+                <span class="font-small">还没有收藏</span>
+            </div> 
+
+            <ion-item class="collections-main-item" ng-repeat="collection in collections track by $index" ng-show="collections.length">
+
+                <a href="#/product/{{collection.id}}/detail">
+                    <img cm-lazyload="collection.pic" />
+                    <div class="fr">
+                        <p class="font-small">{{collection.shortName}}</p>
+                        <p class="font-small">
+                            <span class="price" ng-show="collection.buyPrice">
+                                ￥{{collection.buyPrice}}
+                            </span>                           
+                            <del class="font-mini" ng-show="collection.marketPrice">
+                                ￥{{collection.marketPrice}}
+                            </del>
+                        </p>
+                    </div>
+                </a>
+
+                <ion-option-button class="button-detail font-small" ng-click="removeCollection($index)">
+                    删除
+                </ion-option-button>
+                
+            </ion-item>
+
+        </ion-list>
+    </ion-content>
+    
+</ion-view>

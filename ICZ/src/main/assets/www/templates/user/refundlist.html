@@ -1,0 +1,142 @@
+<ion-view title="客户服务">
+
+	<ion-nav-buttons side="right">
+        <button class="button button-clear button-font" ui-sref="service">
+            退货说明
+        </button>
+    </ion-nav-buttons>
+    
+    <ion-content scroll="false" class="myorder-bg-color refund-bg-color"> 
+    	<div class="myorder-main refund-main">
+    		
+			<div class="top-button-bar col2">
+	            <button class="button {{button.state}} font-small" ng-click="showInfoContent($index)" ng-repeat="button in infoButtons">
+	                {{button.text}}
+	            </button>
+	        </div> 
+
+	        <ion-content class="has-top-button-bar font-small" ng-show="config.type == 0"> 
+				
+				<div class="myorder-main-list refund-main-list">
+
+	            	<div class="myorder-main-list-detail refund-main-list-detail font-small">					
+						订单号：33302940 <br />
+						订单金额：<span>￥235.00</span> <br />
+						下单时间：2014-07-02  14:20:34
+						<a class="button button-detail font-mini" href="#/refundapply">申请退货</a>				
+	            	</div>
+
+					<div class="myorder-main-list-image">
+                        <ion-scroll direction="x" scrollbar-x="false" class="product-scroll">
+                            <ul class="myorder-list-scorll" cm-auto-width>
+                                <a href="#">
+                                    <li>
+                                        <img ng-src="img/temp/product-img1.jpg" />
+                                    </li>
+                                </a>
+                            </ul>
+                        </ion-scroll>
+                    </div>
+
+	            </div>
+
+	            <div class="myorder-main-list refund-main-list">
+
+	            	<div class="myorder-main-list-detail refund-main-list-detail font-small">					
+						订单号：33302940 <br />
+						订单金额：<span>￥235.00</span> <br />
+						下单时间：2014-07-02  14:20:34
+						<a class="button button-detail font-mini" href="#/refundapply">申请退货</a>				
+	            	</div>
+
+	            	<div class="myorder-main-list-image">
+                        <ion-scroll direction="x" scrollbar-x="false" class="product-scroll">
+                            <ul class="myorder-list-scorll" cm-auto-width>
+                                <a href="#">
+                                    <li>
+                                        <img ng-src="img/temp/product-img1.jpg" />
+                                    </li>
+                                </a>
+                            </ul>
+                        </ion-scroll>
+                    </div>
+
+	            </div>
+
+	        </ion-content>
+
+	        <ion-content class="has-top-button-bar font-small" ng-show="config.type == 1"> 
+				
+				<div class="myorder-main-list refund-main-list">
+
+	            	<div class="myorder-main-list-detail refund-main-list-detail font-small">					
+						订单号：33302940 <br />
+						订单金额：<span>￥235.00</span> <br />
+						下单时间：2014-07-02  14:20:34
+						<a class="button button-detail font-mini" href="#/refunddetail">查看</a>
+						<i class="font-small">已完成</i>				
+	            	</div>
+
+	            	<div class="myorder-main-list-image">
+                        <ion-scroll direction="x" scrollbar-x="false" class="product-scroll">
+                            <ul class="myorder-list-scorll" cm-auto-width>
+                                <a href="#">
+                                    <li>
+                                        <img ng-src="img/temp/product-img1.jpg" />
+                                    </li>
+                                </a>
+                            </ul>
+                        </ion-scroll>
+                    </div>
+
+	            </div>
+
+	            <div class="myorder-main-list refund-main-list">
+
+	            	<div class="myorder-main-list-detail refund-main-list-detail font-small">					
+						订单号：33302940 <br />
+						订单金额：<span>￥235.00</span> <br />
+						下单时间：2014-07-02  14:20:34
+						<a class="button button-detail font-mini" href="#/refunddetail">查看</a>
+						<i class="font-small">处理中</i>				
+	            	</div>
+
+	            	<div class="myorder-main-list-image">
+                        <ion-scroll direction="x" scrollbar-x="false" class="product-scroll">
+                            <ul class="myorder-list-scorll" cm-auto-width>
+                                <a href="#">
+                                    <li>
+                                        <img ng-src="img/temp/product-img1.jpg" />
+                                    </li>
+                                </a>
+                            </ul>
+                        </ion-scroll>
+                    </div>
+                    
+	            </div>
+
+	        </ion-content>
+
+			<!-- 无记录页面
+	        <ion-content class="has-top-button-bar font-small myorder-empty" ng-show="config.type == 1">
+	        
+	        	 如果是没有购买过商品，则需父级ion-content添加class名称 return-empty 
+	            <div class="myorder-main-empty">
+	            	<div class="logo">
+		                <img src="img/icon/order-empty.png">
+		            </div>
+		            <p class="title font-normal">
+		                您最近还没有购买过商品~
+		            </p>
+		            <button class="button button-block button-confirm" ui-sref="home">
+		                去逛逛
+		            </button>
+	            </div>
+
+	        </ion-content>
+	        -->
+	        
+    	</div>		
+    </ion-content>
+
+</ion-view>

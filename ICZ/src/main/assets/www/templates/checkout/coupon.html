@@ -1,0 +1,69 @@
+<ion-view title="优惠券">
+    
+    <ion-content class="has-bottom-button-bar font-small" scroll="false"> 
+        <!-- <div class="top-button-bar col2">
+            <button class="button button-confirm font-small">
+                优惠券
+            </button>
+            <button class="button button-cancel font-small" ui-sref="order.prepaidcard">
+                中免卡
+            </button>
+        </div> -->
+
+        <ion-content class="font-small"> 
+        
+            <div class="loading" ng-if="loading">
+                <i class="loadingicon fffbgicon"></i>
+            </div>
+
+            <div class="checkout-coupon-main" ng-hide="loading">
+
+                <div class="checkout-coupon-main-form">
+                    <p class="checkout-coupon-main-form-checkbox font-small" >
+                        <label class="font-small">
+                            <span class="correct-icon" ng-show="order.coupon"></span>					
+                            <span>使用优惠券</span>
+                        </label>
+                    </p>
+                    <p class="checkout-coupon-main-form-btn font-small">
+                        <i>激活码：</i>
+                        <span class="input-text-row font-small">
+                            <input type="text" class="input-text font-small" ng-model="coupon.activate" />
+                        </span>
+                        <button class="button button-confirm font-small" ng-click="activateCoupon()">确认激活</button>
+                    </p>
+                </div>
+                
+                <div class="checkout-coupon-main-list">
+
+                    <label class="checkout-coupon-main-list-item" ng-hide="coupon.list.length">
+                        <p class="font-small">
+                            没有可用优惠券
+                        </p>
+                    </label>
+                
+                    <label class="checkout-coupon-main-list-item" ng-repeat="item in coupon.list">
+                        <p class="font-small">
+                            类型：{{item.card_type}} <br />
+                            使用说明：{{item.use_desc}}
+                        </p>
+                        <p class="font-mini">
+                            有效期：{{item.time_info}}
+                        </p>
+                        <input type="radio" class="radio-icon-self" name="coupon.selected"
+                               value="{{item.couponcard_id}}" ng-model="coupon.selected"/>
+                    </label>
+
+                </div>
+                
+            </div>
+
+        </ion-content>
+    </ion-content>
+    
+    <div class="bottom-button-bar col2">
+        <button class="button button-cancel font-small" ng-click="cancelCoupon()">取 消</button>
+        <button class="button button-confirm font-small" ng-click="applyCoupon()">确定使用</button>
+    </div>
+
+</ion-view>

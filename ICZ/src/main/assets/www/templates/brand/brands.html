@@ -1,0 +1,40 @@
+<ion-view title="品牌">
+    
+    <ion-content delegate-handle="brand-scroll">
+        <div class="loading" ng-if="loading">
+            <i class="loadingicon fffbgicon"></i>
+        </div>
+    
+        <div class="brands-main" ng-if="!loading">
+            <p class="title font-small">热门品牌</p>
+            <div class="hot-brands">
+                <a href="{{commend.href}}" ng-repeat="commend in data.commends" 
+                   cm-count-click click-title="品牌页" 
+                   click-object="{{'推荐?id=' + commend.brandId}}" >
+                    <img cm-auto-height="{{5/9}}" cm-lazyload="commend.picUrl" />
+                </a>
+            </div>
+            
+            <dl class="brand-list" ng-repeat="item in data.brands">
+                <dt class="font-huge" id="alphabet-{{item.letter}}">{{item.letter}}</dt>
+                <dd>
+                    <a href="{{brand.href}}" ng-repeat="brand in item.brands"
+                       cm-count-click click-title="品牌页" 
+                       click-object="{{'品牌?id=' + brand.id}}" >
+                        <span class="font-normal">
+                            {{brand.name}}
+                        </span>
+                    </a>
+                </dd>
+            </dl>
+            
+        </div>
+    </ion-content>
+    
+    <ul class="alphabet" ng-hide="loading" cm-alphabet-touch>
+        <li class="font-normal" ng-repeat="item in data.brands" cm-alphabet-link letter="alphabet-{{item.letter}}">
+            {{item.letter}}
+        </li>
+    </ul>
+    
+</ion-view>

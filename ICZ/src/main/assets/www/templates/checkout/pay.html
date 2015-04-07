@@ -1,0 +1,52 @@
+<ion-view title="支付页面">
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon-back" ng-click="goBack()">
+        </button>
+    </ion-nav-buttons>
+    
+    <ion-content>
+
+        <div class="loading" ng-if="loading">
+            <i class="loadingicon fffbgicon"></i>
+        </div>
+
+    	<div class="checkout-pay-main" ng-hide="loading">
+
+    		<p class="pay-main-line font-small">支付方式</p>
+
+    		<ul class="pay-main-payment">
+    			<li><img ng-src="img/payment/pay-img1.jpg" ng-click="pay('alipayWap')" /></li>
+    			<li><img ng-src="img/payment/pay-img2.jpg" ng-click="pay('unionpayWap')" /></li>
+    			<!--<li><img ng-src="img/payment/pay-img3.jpg" /></li>-->
+    		</ul>
+    		
+            <!--
+	        <div class="top-button-bar col2">
+	            <button class="button {{button.state}} font-small" ng-click="showInfoContent($index)" ng-repeat="button in infoButtons">
+	                {{button.text}}
+	            </button>
+	        </div>  
+
+	        <ul class="pay-main-list" ng-show="infoState == 0">
+	            <li><img ng-src="img/temp/pay-img1.jpg" /></li>
+    			<li><img ng-src="img/temp/pay-img2.jpg" /></li>
+    			<li><img ng-src="img/temp/pay-img1.jpg" /></li>
+    			<li><img ng-src="img/temp/pay-img2.jpg" /></li>
+    			<li><img ng-src="img/temp/pay-img1.jpg" /></li>
+    			<li><img ng-src="img/temp/pay-img2.jpg" /></li>
+	        </ul>
+
+	        <ul class="pay-main-list" ng-show="infoState == 1">
+	            <li><img ng-src="img/temp/pay-img3.jpg" /></li>
+    			<li><img ng-src="img/temp/pay-img3.jpg" /></li>
+    			<li><img ng-src="img/temp/pay-img3.jpg" /></li>
+    			<li><img ng-src="img/temp/pay-img3.jpg" /></li>
+    			<li><img ng-src="img/temp/pay-img3.jpg" /></li>
+    			<li><img ng-src="img/temp/pay-img3.jpg" /></li>
+	        </ul>-->
+	    	
+    	</div>
+        
+    </ion-content>
+
+</ion-view>

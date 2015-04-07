@@ -1,0 +1,54 @@
+<ion-view title="支付成功">
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon-back" ng-click="goBack()">
+        </button>
+    </ion-nav-buttons>
+    
+    <ion-content class="has-bottom-button-bar font-small" scroll="false">
+
+    	<div class="checkout-order-success-main font-small">
+
+    		<p class="font-huge">    			
+    			<span>
+    				支付成功
+    				<i></i>
+    			</span>
+    		</p>
+
+    		<p class="font-small">
+    			<span class="fl">
+    				订单号：
+    			</span>
+    			<span class="fr">
+    				{{order.orderdetail_info.order_aliascode}}
+    			</span>
+    		</p>
+
+    		<p class="font-small">
+    			<span class="fl">
+    				应付金额：
+    			</span>
+    			<span class="price fr">
+    				{{order.total_amount}}元
+    			</span>
+    		</p>
+
+    		<p class="font-small">
+    			<span class="fl">
+    				客服电话：
+    			</span>
+    			<span class="fr">
+    				4008 599599
+    			</span>
+    		</p>
+	    	
+    	</div>
+        
+    </ion-content> 
+
+    <div class="bottom-button-bar col2">
+        <button class="button button-cancel font-small" ui-sref="orderlist">查看订单</button>
+        <button class="button button-confirm font-small" ui-sref="home">继续购物</button>
+    </div> 
+    
+</ion-view>

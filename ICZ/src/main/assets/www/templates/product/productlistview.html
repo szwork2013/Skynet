@@ -1,0 +1,73 @@
+<ion-view title="{{title}}">
+
+    <ion-nav-buttons side="right">
+        <a class="button button-clear icon-search" ui-sref="search"></a>
+    </ion-nav-buttons>
+    
+    <ion-content scroll="false"> 
+        <div class="top-button-bar col2">
+            <button class="button button-confirm font-small" ng-click="initFilterSelections('order')">
+                {{order.name}}：{{order.filter[data.order]}}
+            </button>
+            <button class="button button-cancel font-small" ng-click="initFilter()">
+                筛 选
+            </button>
+        </div>
+        
+        <div class="loading" ng-if="inSearch">
+            <i class="loadingicon fffbgicon"></i>
+        </div>
+        
+        <ion-content class="productlist-main has-top-button-bar font-small ng-hide" cm-pinch-switch ng-show="!inSearch">
+            <ion-refresher ng-if="!loading" pulling-text="更新" on-refresh="search(true, false, true)"></ion-refresher>
+            
+            <div class="productlist-empty" ng-if="!products.length">
+                <img ng-src="img/icon/logo.png" /> <br />
+                <span class="font-small">未搜索到商品</span>
+            </div>
+            
+            <div class="productlist-col2 ng-hide" ng-show="products.length">
+                <div class="productlist-main-item productlist-col2-item" ng-repeat="product in products">
+                    <a href="#/product/{{product.product_id}}/detail" 
+                       cm-count-click click-title="{{pageType}}" 
+                       click-object="{{'商品?id=' + product.product_id}}" >
+                        <img cm-lazyload="product.pic">
+                        <div class="productlist-col2-item-line productlist-col2-item-brand font-mini">
+                            {{product.brand.value}}
+                        </div>
+                        <div class="productlist-col2-item-line productlist-col2-item-title font-small">
+                            {{product.shortname}}
+                        </div>
+                        <div class="productlist-col2-item-price font-small">
+                            ￥{{product.buyPrice.value}}                           
+                            <del class="font-small" ng-show="product.marketPrice && product.marketPrice.value != 0">
+                                ￥{{product.marketPrice.value}}
+                            </del>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="productlist-col3 hidden ng-hide" ng-show="products.length">
+                <div class="productlist-main-item productlist-col3-item" ng-repeat="product in products">
+                    <a href="#/product/{{product.product_id}}/detail" 
+                       cm-count-click click-title="{{pageType}}" 
+                       click-object="{{'商品?id=' + product.product_id}}" >
+                        <img cm-lazyload="product.pic">
+                    </a>
+                </div>
+            </div>
+            
+            <ion-infinite-scroll ng-if="moreData" on-infinite="search(false)" distance="1%"></ion-infinite-scroll>
+            
+        </ion-content>
+        
+        <div class="float-bar">
+            <a href="#/cart">
+                <div class="icon-cart-float">
+                    <i>{{cart.total}}</i>
+                </div>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

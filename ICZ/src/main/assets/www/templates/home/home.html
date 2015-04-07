@@ -1,0 +1,149 @@
+<ion-view title="{{title}}">
+    <ion-nav-buttons side="left">
+    <!--<a class="button button-clear icon-scan" href="#/scan"></a>-->
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a class="button button-clear icon-search" href="#/search"></a>
+    </ion-nav-buttons>
+    
+    <ion-content class="has-tabs" scroll="false">
+        <div class="loading" ng-if="loading">
+            <i class="loadingicon fffbgicon"></i>
+        </div>
+    
+        <ion-slide-box on-slide-changed="slideChanged($index)" class="home-slide" ng-if="!loading" show-pager="false">
+            <ion-slide>
+                <ion-content>
+                    <ion-refresher ng-if="!loading" pulling-text="更新" on-refresh="update()"></ion-refresher>
+                
+                    <div class="home-main">
+
+                        <div class="home-carousel" cm-auto-height="0.625" cm-catch-propagation>
+                            <ion-slide-box ng-if="showCarousel" does-continue="true" auto-play="autoPlay" 
+                                           show-pager="true" slide-interval="3000" delegate-handle="carousel">
+                                <ion-slide ng-repeat="carousel in data.carousels">
+                                    <img cm-lazyload="carousel.pic" ng-click="goTo(carousel)" 
+                                         cm-count-click click-title="首页" click-object="{{'轮播?type=' + carousel.type + '&id=' + carousel.value}}" />
+                                </ion-slide>
+                            </ion-slide-box>
+                        </div>
+
+                        <div class="padding home-activity" ng-repeat="activity in $parent.data.special_third"
+                             ng-click="goTo(activity)" cm-count-click click-title="首页" 
+                             click-object="{{'活动?type=' + activity.type + '&id=' + activity.value}}" >
+                            <div class="home-activity-img">
+                                <img cm-auto-height="{{7/15}}" cm-lazyload="activity.pic" />
+                            </div>
+                            <div class="home-activity-title">
+                                {{activity.title}}
+                            </div>
+                        </div>
+
+                        <div class="home-brand">                   
+                            <div class="padding" ng-repeat="brand in $parent.data.special_fifth"
+                                 ng-click="goTo(brand)" cm-count-click click-title="首页" 
+                                 click-object="{{'品牌?type=' + brand.type + '&id=' + brand.value}}" >
+                                <div class="home-brand-img">
+                                    <img cm-auto-height="{{7/15}}" cm-lazyload="brand.pic" />
+                                </div>
+                                <div class="home-brand-title">
+                                    <div class="hbtitle-line">
+                                        <a class="font-normal">
+                                            {{brand.title}}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </ion-content>
+            </ion-slide>
+            
+            <ion-slide>
+                <ion-content>
+                    <ion-refresher pulling-text="更新" on-refresh="update()"></ion-refresher>
+                    
+                    <div class="sales-main" ng-hide="loading">
+                        <ul class="sales-main-list">
+                            <li ng-repeat="product in data.combination_product">
+                                <a href="#/product/{{product.productid}}/detail" 
+                                   cm-count-click click-title="首页" 
+                                   click-object="{{'商品?id=' + product.productid}}" >
+                                    <div class="sales-main-list-img">
+                                        <img cm-lazyload="product.product_banner[0].pic" />
+                                    </div>
+
+                                    <div class="sales-main-list-brand sales-list-line font-mini">
+                                        {{product.brand}}
+                                    </div>
+
+                                    <div class="sales-main-list-title sales-list-line font-small">
+                                        {{product.shortName}}
+                                    </div>
+
+                                    <div class="sales-main-list-price font-small">
+                                        ￥{{product.product_simpledesc.prices[0].value}}                                        
+                                        <del class="font-small" ng-show="product.product_simpledesc.prices[1].value != 0">
+                                            ￥{{product.product_simpledesc.prices[1].value}}
+                                        </del>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </ion-content>
+            </ion-slide>
+        </ion-slide-box>
+        
+        <div class="pager-wrap" ng-if="!loading">
+            <div class="home-slide-pager">
+                <span class="slider-pager-page" ng-class="{'active':pagerIndex == 1}"></span>
+            </div>
+        </div>
+    </ion-content>
+    
+    <div class="tabs tabs-icon-top">
+
+        <a class="tab-item tab-item-active" ui-sref="home" >
+            <i class="icon icon-home">
+            </i>
+            <span class="tab-title">
+                首页
+            </span>
+        </a>
+        
+        <a class="tab-item" ui-sref="brands" >
+            <i class="icon icon-brand">
+            </i>
+            <span class="tab-title">
+                品牌
+            </span>
+        </a>
+        
+        <a class="tab-item" ui-sref="classification" >
+            <i class="icon icon-classification">
+            </i>
+            <span class="tab-title">
+                商品
+            </span>
+        </a>
+        
+        <a class="tab-item" ui-sref="cart" >
+            <i class="icon icon-cart">
+            </i>
+            <span class="tab-title">
+                购物车
+            </span>
+        </a>
+        
+        <a class="tab-item" ng-click="goToUser()" >
+            <i class="icon icon-user">
+            </i>
+            <span class="tab-title">
+                我的
+            </span>
+        </a>
+
+    </div>
+</ion-view>

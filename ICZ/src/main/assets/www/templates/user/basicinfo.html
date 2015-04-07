@@ -1,0 +1,108 @@
+<ion-view title="基本资料">
+    
+    <ion-content class="has-bottom-button-bar myaccount-cont-bg font-small">
+        
+        <div class="loading" ng-if="loading">
+            <i class="loadingicon eeebgicon"></i>
+        </div>
+
+        <div class="basicinfo-main" ng-hide="loading">
+            
+            <div class="basicinfo-main-username font-normal">
+                用户名：{{data.username}}
+            </div>
+
+            <div class="basicinfo-main-form">
+                <form>
+
+                    <div class="basicinfo-form-line">
+                        <div class="input-text-row input-text-left">
+                            <input type="text" class="input-text font-small" ng-model="data.email" placeholder="电子邮箱" />
+                        </div>
+                        <button class="button button-detail font-small" ng-click="updateEmail()">验 证</button>
+                    </div>
+
+                    <div class="basicinfo-form-line">
+                        <div class="input-text-row input-text-left">
+                            <input type="text" class="input-text font-small" ng-model="data.mobilephone" placeholder="手机号码" disabled />
+                        </div>
+                        <button class="button button-detail font-small" ui-sref="modifyphone">修 改</button>
+                    </div>
+
+                    <div class="basicinfo-form-line input-text-row">
+                        <input type="text" class="input-text font-small" ng-model="data.realname" placeholder="真实姓名" />
+                    </div>
+
+                    <div class="basicinfo-form-line"> 
+
+                        <label class="font-small">
+                            <input type="radio" class="radio-icon-self" name="data.gender"
+                                   value="0" ng-model="data.gender" />
+                            <span>男</span>
+                        </label> 
+
+                        <label class="font-small">
+                            <input type="radio" class="radio-icon-self" name="data.gender"
+                                   value="1" ng-model="data.gender" />
+                            <span>女</span>
+                        </label> 
+
+                    </div>
+
+                    <div class="basicinfo-form-line input-text-row">
+                        <input type="text" class="input-text font-small" ng-model="data.postcode" placeholder="邮政编码" />
+                    </div>
+
+                    <div class="basicinfo-form-line input-text-row select-row">
+                        <select class="font-small" name="data.idcardtype" ng-model="data.idcardtype">
+                            <option value="-1">证件类型</option>
+                            <option value="1">身份证</option>
+                            <option value="2">护照</option>
+                            <option value="3">军官证</option>
+                        </select>
+                        <i class="select-icon"></i>
+                    </div>
+
+                    <div class="basicinfo-form-line input-text-row">
+                        <input type="text" class="input-text font-small" ng-model="data.idcardno" placeholder="证件号码" />
+                    </div>
+
+                    <div class="basicinfo-form-line input-text-row select-row">
+                        <select class="font-small" name="data.education" ng-model="data.education">
+                            <option value="-1">教育程度</option>
+                            <option value="3">高中</option>
+                            <option value="4">大专</option>
+                            <option value="5">本科</option>
+                            <option value="6">研究生</option>
+                            <option value="7">博士生</option>
+                            <option value="8">博士生以上</option>
+                        </select>
+                        <i class="select-icon"></i>
+                    </div>
+
+                    <div class="basicinfo-form-line input-text-row select-row">
+                        <select class="font-small" name="data.income" ng-model="data.income">
+                            <option value="-1">月收入水平</option>
+                            <option value="1">8000以下</option>
+                            <option value="2">8000-15000</option>
+                            <option value="3">15000以上</option>
+                        </select>
+                        <i class="select-icon"></i>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>       
+    </ion-content>
+
+    <div class="bottom-button-bar col2">
+        <button class="button button-cancel font-small" ng-click="$parent.goBack()">
+            取 消
+        </button>
+        <button class="button button-confirm font-small" ng-click="confirmEdit()">
+            确 定
+        </button>
+    </div>
+    
+</ion-view>

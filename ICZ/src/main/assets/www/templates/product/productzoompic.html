@@ -1,0 +1,14 @@
+<ion-view title="图片详情">
+    
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon-back" ng-click="$parent.goBack()">
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header" scroll="false">
+        <ion-scroll class="product-scroll" zooming="true" direction="xy" min-zoom="0.5" max-zoom="3" scrollbar-x="false" scrollbar-y="false">
+            <img ng-src="{{src}}" />            
+        </ion-scroll>
+    </ion-content>
+
+</ion-view>

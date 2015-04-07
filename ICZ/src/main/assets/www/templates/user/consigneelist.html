@@ -1,0 +1,62 @@
+<ion-view title="收货地址">
+
+    <ion-nav-buttons side="right">
+        <button class="button button-clear button-font button-toggle-option ng-hide" cm-show-option 
+                ng-show="consigneeList.length && !optionShown">
+            编辑
+        </button>
+        <button class="button button-clear button-font button-toggle-option ng-hide" cm-hide-option 
+                ng-show="consigneeList.length && optionShown">
+            完成
+        </button>
+    </ion-nav-buttons>
+    
+    <ion-content>
+    
+        <div class="loading" ng-if="loading">
+            <i class="loadingicon fffbgicon"></i>
+        </div>
+
+        <div class="consignee-main" ng-if="!loading">
+        	<button class="button button-block button-confirm font-normal" ng-click="editConsignee()">
+                +新建收货地址
+            </button>
+
+        	<ion-list>
+
+	        	<ion-item class="consignee-main-list" ng-repeat="consignee in consigneeList">
+                    
+                    <div class="consignee-main-item-line" ng-click="selectConsignee($index)">						
+						<div class="consignee-main-item-checked" ng-show="consignee.isDefault"></div>
+						<div class="consignee-main-item-cont">
+							<div class="consignee-main-item-line font-small">
+								<span class="fl">
+									收货人：{{consignee.name}}
+								</span>
+								<span class="fr">
+									{{consignee.mobilephone}}
+								</span>
+							</div>
+							<div class="consignee-main-item-line font-mini">
+								收货地址：{{consignee.address}}
+							</div>
+						</div>
+					</div>
+
+					<ion-option-button class="button-detail font-small" ng-click="editConsignee($index)">
+      					修改
+    				</ion-option-button>
+
+    				<ion-option-button class="button-detail font-small" ng-click="delConsignee($index)">
+				    	删除
+				    </ion-option-button>
+
+				</ion-item>
+
+			</ion-list>
+
+        </div>
+
+    </ion-content>
+    
+</ion-view>

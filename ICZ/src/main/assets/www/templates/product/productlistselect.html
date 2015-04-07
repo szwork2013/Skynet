@@ -1,0 +1,30 @@
+<ion-view title="{{filterSelection.filterKey == 'order' ? order.name : filters[filterSelection.filterKey].name}}">
+
+    <ion-content class="has-bottom-button-bar font-small">
+
+	    <div class="productlistpick-main">  
+
+			<ul class="list productlistpick-list">
+
+				<li class="item font-normal" ng-repeat="(id, name) in filterSelection.selections">
+					<div class="fl productlistpick-list-item-line">
+						<label class="font-normal">
+							<input type="radio" class="radio-icon-self" name="filterSelection.selected"
+                                   value="{{id}}" ng-model="filterSelection.selected"/>
+							<span class="font-normal">{{name}}</span>
+						</label>
+					</div>					
+				</li>
+
+			</ul>
+
+		</div>
+
+    </ion-content>
+
+    <div class="bottom-button-bar col2">
+        <button class="button button-cancel font-small" ng-click="cancelFilterSelection()">清 除</button>
+        <button class="button button-confirm font-small" ng-click="applyFilterSelection()">完 成</button>
+    </div>
+
+</ion-view>

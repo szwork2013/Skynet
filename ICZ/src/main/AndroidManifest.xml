@@ -8,18 +8,19 @@
     <application
         android:name="com.okar.app.ICZApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icz_logo"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar">
         <activity
-            android:name=".SplashActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name=".SplashActivity">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ICZLoginActivity">
+
+        </activity>
+
         <activity
             android:name=".IndexActivity"
             android:theme="@style/IczActionBar">
@@ -39,7 +40,11 @@
         </activity>
         <activity android:name=".ICZWebActivity"
             android:theme="@style/IczActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <!-- 测试数据库 -->
         <activity android:name=".TestDao">

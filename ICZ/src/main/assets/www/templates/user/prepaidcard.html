@@ -1,0 +1,291 @@
+<ion-view title="中免卡">
+    
+    <ion-content scroll="false" class="prepaid-card-main">
+            
+        <div class="top-button-bar col4">
+            <button class="button {{button.state}} font-small" ng-disabled="loading" 
+                    ng-click="showInfoContent($index)" ng-repeat="button in infoButtons">
+                {{button.text}}
+            </button>
+        </div>
+        
+        <div class="loading" ng-if="loading">
+            <i class="loadingicon eeebgicon"></i>
+        </div>
+
+        <ion-content class="has-top-button-bar font-small" ng-hide="loading">
+
+            <div class="prepaid-card-purchase" ng-show="config.type == 0">
+
+                <div class="amount block">
+                    <p class="font-small">
+                        您的卡余额为：
+                        <span class="price">{{data.amount}}<span>
+                    </p>
+                </div>
+                
+                <div class="recharge block">
+                    <form>
+                        
+                        <dl class="font-small">
+                            <dt class="font-small">卡&nbsp;&nbsp;&nbsp;号：</dt>
+                            <dd class="font-small">
+                                <div class="input-text-row">
+                                    <input type="text" class="input-text font-small" />
+                                </div>
+                            </dd>
+                        </dl>
+
+                        <dl class="font-small">
+                            <dt class="font-small">密&nbsp;&nbsp;&nbsp;码：</dt>
+                            <dd class="font-small">
+                                <div class="input-text-row">
+                                    <input type="password" class="input-password font-small" />
+                                </div>
+                            </dd>
+                        </dl>
+
+                        <dl class="font-small">
+                            <dt class="font-small">验证码：</dt>
+                            <dd class="font-small">
+                                <div class="input-text-row code-input">
+                                    <input type="text" class="input-text font-small" />
+                                </div>
+                                <div class="code-img font-small" ng-click="refreshCode()">
+                                    <img ng-src="{{validateCodeLink}}{{dumy}}" />
+                                    <a class="code-refresh"></a>
+                                </div>
+                            </dd>
+                        </dl>                       
+
+                        <div class="recharge-method">
+                            <div class="font-small">选择充卡方式：</div>
+                            <p class="fl font-small">
+                                <button class="button button-block font-small" 
+                                        ng-class="{'button-confirm': confirm, 'button-cancel': cancel}" 
+                                        ng-click="changeMethod(1)">
+                                    发送卡密至已认证手机
+                                </button>
+                            </p>
+                            <p class="fr font-small">
+                                <button class="button button-block font-small" 
+                                        ng-class="{'button-confirm': cancel, 'button-cancel': confirm}" 
+                                        ng-click="changeMethod(2)">
+                                    自动充值至本账户
+                                </button>
+                            </p>
+                        </div>
+
+                        <ul class="recharge-value">
+                            <li>
+                                <div class="selection-base selection-correct">
+                                    <img ng-src="11.jpg" cm-auto-height="{{2/3}}" />
+                                </div>
+                                <div class="counter-line">
+                                    <button>-</button>
+                                    <input type="text" value="1" disabled/>
+                                    <button>+</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="selection-base">
+                                    <img ng-src="11.jpg" cm-auto-height="{{2/3}}" />
+                                </div>
+                                <div class="counter-line">
+                                    <button>-</button>
+                                    <input type="text" value="22" disabled/>
+                                    <button>+</button>
+                                </div>
+                            </li> 
+                            <li>
+                                <div class="selection-base">
+                                    <img ng-src="11.jpg" cm-auto-height="{{2/3}}" />
+                                </div>
+                                <div class="counter-line">
+                                    <button>-</button>
+                                    <input type="text" value="999" disabled/>
+                                    <button>+</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="selection-base">
+                                    <img ng-src="11.jpg" cm-auto-height="{{2/3}}" />
+                                </div>
+                                <div class="counter-line">
+                                    <button>-</button>
+                                    <input type="text" value="999" disabled/>
+                                    <button>+</button>
+                                </div>
+                            </li>                        
+                        </ul>
+
+                        <div class="recharge-btn">
+                            <button class="button button-confirm button-block font-normal">充值</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="prepaid-card-list" ng-show="config.type == 1">
+
+                <div class="block">
+                    <div class="fl">
+                        <p class="font-small">
+                            <span class="font-normal">￥4000.00</span>
+                            x1                       
+                        </p>
+                        <p class="font-small">
+                            <span class="font-normal">￥500.00</span>
+                            x3
+                        </p>
+                        <p class="font-small">
+                            订单号：398510984  
+                        </p>
+                        <p class="font-small">
+                            <span class="font-mini">充值时间：2014.1.4  08：20</span>                       
+                        </p>
+                        <p class="font-small">
+                            订单金额：5000.00
+                        </p>
+                    </div>
+
+                    <div class="fr">
+                        <a href="#">去支付</a>
+                        <a href="#" class="cancel-link font-small">取消</a>
+                    </div>
+
+                     <div class="bottom font-small">
+                         中免卡
+                     </div>
+                </div>
+
+                <div class="block">
+                    <div class="fl">
+                        <p class="font-small">
+                            <span class="font-normal">￥4000.00</span>                  
+                        </p>
+                        <p class="font-small">
+                            订单号：398510984  
+                        </p>
+                        <p class="font-small">
+                            <span class="font-mini">充值时间：2014.1.4  08：20</span>                       
+                        </p>
+                        <p class="font-small">
+                            订单金额：5000.00
+                        </p>
+                    </div>
+
+                    <div class="fr">
+                        <button class="button button-detail font-mini">发送卡密</button>
+                    </div>
+
+                    <div class="bottom font-small">
+                         中免卡
+                     </div>
+                </div>
+
+            </div>
+
+            <div class="prepaid-card-list" ng-show="config.type == 2">
+                
+                <div class="block">
+                    <div class="fl">                  
+                        <p class="font-small">
+                            订单号：398510984  
+                        </p>
+                        <p class="font-small">
+                            <span class="font-mini">充值时间：2014.1.4  08：20</span>                       
+                        </p>
+                        <p class="font-small">
+                            订单金额：5000.00
+                        </p>
+                    </div>
+
+                    <div class="fr detail-btn">
+                        <button class="button button-detail font-mini">消费说明</button> 
+                    </div>
+                </div>
+
+                <div class="block">
+                    <div class="fl">                  
+                        <p class="font-small">
+                            订单号：398510984  
+                        </p>
+                        <p class="font-small">
+                            <span class="font-mini">充值时间：2014.1.4  08：20</span>                       
+                        </p>
+                        <p class="font-small">
+                            订单金额：5000.00
+                        </p>
+                    </div>
+
+                    <div class="fr detail-btn">
+                        <button class="button button-detail font-mini">消费说明</button> 
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="prepaid-card-list" ng-show="config.type == 3">
+                
+                <div class="block">                    
+                    <div class="fl">
+                        <p class="font-small">
+                            <span class="font-normal">￥4000.00</span>
+                            x1
+                        </p>
+                        <p class="font-small">
+                            订单号：398510984                        
+                        </p>
+                        <p class="font-small">
+                            <span class="font-mini">充值时间：2014.1.4  08：20</span>                       
+                        </p>
+                        <p class="font-small">
+                            订单金额：5000.00
+                        </p>
+                    </div>
+
+                    <div class="fr active-font">
+                        已激活
+                    </div>
+
+                    <div class="bottom font-small">
+                         中免卡
+                     </div>
+                </div>
+
+                <div class="block">                    
+                    <div class="fl">
+                        <p class="font-small">
+                            <span class="font-normal">￥4000.00</span>
+                            x1
+                        </p>
+                        <p class="font-small">
+                            订单号：398510984                        
+                        </p>
+                        <p class="font-small">
+                            <span class="font-mini">充值时间：2014.1.4  08：20</span>                       
+                        </p>
+                        <p class="font-small">
+                            订单金额：5000.00
+                        </p>
+                    </div>
+
+                    <div class="fr active-font">
+                        已激活
+                    </div>
+
+                    <div class="bottom font-small">
+                         中免卡
+                     </div>
+                </div>
+
+            </div>
+
+        </ion-content>
+
+    </ion-content>
+    
+</ion-view>

@@ -1,0 +1,123 @@
+<ion-view title="注册">
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon-back" ng-click="goBack()">
+        </button>
+    </ion-nav-buttons>
+    
+    <ion-content scroll="false">
+	    <div class="register-main">
+	    	<form name="form" novalidate>
+	    		<div class="register-form">
+                    <!-- {state: start} -->
+					<div class="register-form-line font-small" ng-if="state == states[0]">
+						<span>手机号</span>
+						<div class="register-line-input register-phone" cm-validate 
+							 disable-icon="true" 
+							 required-tip="请输入手机号"
+							 pattern-tip="手机号格式错误">
+							<input name="phone" class="font-small" type="text" ng-model="data.phone" placeholder="请输入手机号" 
+							ng-pattern="getRegExp('mobile')" required />
+						</div>
+					</div>
+                    
+					<div class="register-form-line font-small" ng-if="state == states[0]">
+						<span>验证码</span>
+						<div class="register-line-input register-code" cm-validate 
+							 disable-icon="true" 
+							 required-tip="请输入验证码"
+							 pattern-tip="验证码格式错误">
+							<input name="picValidateCode" class="font-small" type="text" ng-model="data.picValidateCode" placeholder="右侧验证码" 
+							ng-pattern="getRegExp('validateCode')" required />
+						</div>
+						<div class="register-line-code" ng-click="picValidate.refresh()" >
+							<img ng-src="{{picValidate.link()}}" />
+							<a class="code-refresh"></a>
+						</div>
+					</div>
+                    <!-- {state: start} end -->
+                    <!-- {state: code} -->
+                    <div class="register-form-phone font-normal" ng-if="state == states[1]">
+						<p class="register-phone-tips font-normal">我们已发送短信验证码到这个号码</p>
+						<p class="register-phone-num font-normal">{{data.phone}}</p>
+					</div>
+
+					<div class="register-form-line font-small" ng-if="state == states[1]">
+						<span>验证码</span>
+						<div class="register-line-input register-code" cm-validate 
+							 disable-icon="true"
+							 required-tip="请输入验证码"
+							 pattern-tip="验证码格式错误">
+							<input name="validateCode" class="font-small" type="text" ng-model="data.validateCode" placeholder="短信验证码" 
+							ng-pattern="getRegExp('mobileCode')" required />
+						</div>
+						<div class="register-line-code font-small" ng-show="counter != 0">
+                            {{counter}}秒后重发
+                        </div>
+                        <div class="register-line-code font-small" ng-show="counter == 0">
+                            <div class="button button-confirm font-small" ng-click="sendRegisterVcode()">
+                                重新发送
+                            </div>
+                        </div>
+					</div>
+                    <!-- {state: code} end -->
+                    <!-- {state: finish} -->
+                    <div class="register-form-line font-small" ng-if="state == states[2]">
+						<span>手机号</span>
+						<div class="register-line-input register-phone">
+							<input class="font-small" type="text" value="{{data.phone}}" disabled />
+						</div>					
+					</div>
+					<div class="register-form-line font-small" ng-if="state == states[2]">
+						<span>密码</span>
+						<div class="register-line-input register-phone" cm-validate 
+							 required-tip="请输入密码"
+							 pattern-tip="密码格式为8-16位且最少包含2个字符和2个数字">
+							<input name="password" class="font-small" type="password" ng-model="data.password" placeholder="密码" 
+							ng-pattern="getRegExp('password')" required />
+						</div>					
+					</div>  
+					<div class="register-form-line font-small" ng-if="state == states[2]">
+						<span>确认密码</span>
+						<div class="register-line-input register-phone" cm-validate 
+							 required-tip="请输入确认密码"
+							 pattern-tip="密码格式为8-16位且最少包含2个字符和2个数字"
+							 compare-target="password"
+							 compare-tip="两次输入的密码不同">
+							<input name="repassword" class="font-small" type="password" ng-model="data.repassword" placeholder="确认密码" 
+							ng-pattern="getRegExp('password')" required />
+						</div>					
+					</div>
+                    <!-- {state: finish} end -->
+					<div class="register-form-button font-normal">
+						<button type="button" class="button button-block button-confirm font-normal" 
+                                ng-disabled="form.$invalid ||!data.accept || submitBtn.disabled" 
+                                ng-click="submit()">{{submitBtn.text}}</button>
+					</div>
+
+					<div class="register-form-protocol font-small">
+						<label class="font-small">
+							<input type="checkbox" ng-model="data.accept" class="checkbox-icon-self" />	
+			                我已阅读并同意遵守			                		                
+						</label> <br />
+						<span ui-sref="protocol">《中免商城用户服务协议》</span>
+					</div>
+	            </div>
+            </form>
+
+			<!--
+			<div class="quick-login">
+                <div class="left-line"></div>
+                <div class="line-text font-small">快速登录</div>
+                <div class="right-line"></div>
+                
+                <div class="buttons">
+                    <i class="icon icon-login-wechat" ui-sref="home"></i>
+                    <i class="icon icon-login-qq" ui-sref="home"></i>
+                    <i class="icon icon-login-weibo" ui-sref="home"></i>
+                    <i class="icon icon-login-alipay" ui-sref="home"></i>
+                </div>
+            </div>
+            -->   	
+    	</div>
+    </ion-content>
+</ion-view>

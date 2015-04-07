@@ -1,0 +1,61 @@
+<ion-view title="验证身份">
+    
+    <ion-content scroll="false" >
+        <div class="find-pwd-main pwd-verify-phone">
+            
+            <div class="verify-phone-cont">
+            	<p class="verify-phone-num font-small">已验证手机：{{data.phone}}</p>
+
+            	<form name="form" novalidate>
+            		<dl class="font-small">
+            			<dt class="font-small" cm-validate 
+                            disable-icon="true" 
+                            required-tip="请输入验证码"
+                            pattern-tip="验证码格式错误">
+            				<span>验证码</span>
+            				<p class="font-small">
+            					<input name="picValidateCode" class="font-small" type="text" 
+                                       ng-model="data.picValidateCode" placeholder="右侧验证码" 
+                                       ng-pattern="getRegExp('validateCode')" required />
+            				</p>
+            			</dt>
+            			<dd class="font-small" ng-click="picValidate.refresh()"> 
+            				<img ng-src="{{picValidate.link()}}" />
+            				<a></a>
+            			</dd>
+            		</dl>
+            		<dl class="font-small">
+            			<dt class="font-small" cm-validate 
+                            disable-icon="true" 
+                            required-tip="请输入短信验证码"
+                            pattern-tip="短信验证码格式错误">            				
+            				<input name="validateCode" class="font-small" type="text" 
+                                   ng-model="data.validateCode" placeholder="请输入短信验证码" 
+                                   ng-pattern="getRegExp('mobileCode')" required  />
+            			</dt>
+            			<dd class="font-small" ng-show="counter == 0"> 
+            				<button class="button button-block button-confirm font-mini" 
+                                    ng-disabled="form.picValidateCode.$invalid || submitBtn.disabled" 
+                                    ng-click="sendFindpwdVcode()">
+                                获取短信验证码
+                            </button>
+            			</dd>
+                        <dd class="font-small" ng-show="counter != 0"> 
+                            {{counter}}秒后重发
+                        </dd>
+            		</dl>
+                    
+                    <div class="verify-phone-btn">
+                        <button class="button button-block button-confirm font-normal"
+                                ng-disabled="submitBtn.disabled || !sentCode || form.validateCode.$invalid" 
+                                ng-click="submit()">
+                            {{submitBtn.text}}
+                        </button>
+                    </div>
+            	</form>
+            </div>
+            
+        </div>
+    </ion-content>
+    
+</ion-view>

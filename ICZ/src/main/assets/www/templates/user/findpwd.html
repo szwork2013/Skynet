@@ -1,0 +1,20 @@
+<ion-view title="找回密码">
+    
+    <ion-content scroll="false" >
+        <div class="find-pwd-main find-password"> 
+
+            <form>
+	            <p class="find-pwd-line font-small">          	
+					<input class="find-pwd-input font-small" type="text" ng-model="data.target" placeholder="请输入手机号码/邮箱" />
+				</p>
+                
+                <button class="button button-block button-confirm font-normal"
+                        ng-disabled="submitBtn.disabled" ng-click="submit()">
+                    {{submitBtn.text}}
+                </button>
+            </form>
+            
+        </div>
+    </ion-content>
+    
+</ion-view>

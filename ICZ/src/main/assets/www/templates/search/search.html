@@ -1,0 +1,25 @@
+<ion-view hide-nav-bar="true">
+    
+    <ion-header-bar cm-search-bar >
+        <div class="header-search">
+            <form class="search-form" ng-submit="searchSubmit()">
+                <div class="input-search-row">
+                    <input class="input-search" type="search" placeholder="请输入搜索词" ng-model="searchKeyword" />
+                </div>
+            </form>
+            
+            <button class="button button-confirm button-search" ng-click="$parent.goBack()">取消</button>
+        </div>
+    </ion-header-bar>
+    
+    <ion-content class="search-history">
+        <p class="search-history-empty" ng-hide="data.history.length">
+            暂无搜索历史
+        </p>
+        <ion-list ng-show="data.history.length">
+            <ion-item ng-repeat="history in data.history track by $index" ng-click="searchByHistory($index)">
+                {{history}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

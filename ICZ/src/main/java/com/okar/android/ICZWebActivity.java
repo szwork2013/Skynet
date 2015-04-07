@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -46,7 +47,7 @@ public class ICZWebActivity extends BaseActivity{
         setContentView(R.layout.activity_icz_web);
         log.info("init");
         initActionBar();
-        initIWWebView();
+        initWebView();
     }
 
     private void initActionBar() {
@@ -62,9 +63,10 @@ public class ICZWebActivity extends BaseActivity{
     }
 
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
-    private void initIWWebView() {
-        iwWebView.loadUrl("http://wxmp.ichezhen.com");
-
+    private void initWebView() {
+//        iwWebView.loadUrl("file:///android_asset/www1/index.html");
+//        iwWebView.loadUrl("file:///android_asset/www1/app/UIRoute3.html");
+        iwWebView.loadUrl("http://mp.ichezhen.com/index/index.htm?accountId=146");
         WebSettings webSettings = iwWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 

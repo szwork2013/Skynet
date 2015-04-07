@@ -1,0 +1,80 @@
+<ion-view title="我的">
+
+    <ion-nav-buttons side="right">
+        <button class="button button-clear icon-gear" ui-sref="settings">
+        </button>
+    </ion-nav-buttons>
+    
+    <ion-content scroll="false">       
+		<div class="user-main">
+			<div class="user-main-info">
+                <div>
+                    <img ng-src="img/profile.png" />
+                </div>
+				<span class="font-normal">
+					{{user.username}}
+				</span>
+			</div>
+
+			<div class="user-main-module">
+
+				<div class="user-main-module-cont">
+				
+					<div class="user-main-module-item">
+						<a href="#/orderlist">							
+							<i class="icon icon-user-order"></i>
+							<span class="font-normal">
+								我的订单
+							</span>							
+						</a>
+					</div>
+					<div class="user-main-module-item">
+						<a href="#/collections">
+							<i class="icon icon-user-collect"></i>
+							<span class="font-normal">
+								我的收藏
+							</span>
+						</a>
+					</div>				
+					<div class="user-main-module-item">
+						<a href="#/accountmanagement">
+							<i class="icon icon-user-account"></i>
+							<span class="font-normal">
+								账户管理
+							</span>
+						</a>
+					</div>
+					<div class="user-main-module-item">
+						<a href="#/coupons">
+							<i class="icon icon-user-coupon"></i>
+							<span class="font-normal">
+								优惠券
+								<!-- 优惠券/中免卡 -->
+							</span>
+						</a>
+					</div>	
+					<div class="user-main-module-item">
+						<a href="#/service">
+							<i class="icon icon-user-service"></i>
+							<span class="font-normal">
+								退货说明
+							</span>
+						</a>
+					</div>
+					<div class="user-main-module-item">
+						<a href="#/message">
+							<i class="icon icon-user-message"></i>
+							<span class="font-normal">
+								消息中心
+							</span>
+						</a>
+					</div>
+
+				</div>				
+				
+			</div>
+
+		</div>
+    </ion-content>
+    
+</ion-view>

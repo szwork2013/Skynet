@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="63.0dp"
     android:id="@+id/actionbarLayoutId"
-    android:background="@color/base_black">
+    style="@style/IczTitleBar">
     <Button
         style="@style/TopBtn"
         android:id="@+id/index_top_left"

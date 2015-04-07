@@ -1,0 +1,56 @@
+<ion-view title="更改手机">
+    
+    <ion-content scroll="false">
+        <div class="modify-phone-main">
+
+            <div class="modify-phone-form">
+                <form>
+                
+                    <dl class="font-small">
+                        <dt class="input-text-row font-small">
+                            <input type="text" class="input-text font-small" ng-model="data.phone" placeholder="输入新手机号码" /> 
+                        </dt>
+                        <dd class="font-small"></dd>
+                    </dl>
+
+                    <dl class="font-small">
+                        <dt class="input-text-row font-small">
+                            <input type="text" class="input-text font-small" ng-model="data.picValidateCode" placeholder="右侧验证码" />
+                        </dt>
+                        <dd class="font-small">
+                            <div class="imgcode font-small" ng-click="refreshCode()">
+                                <img ng-src="{{validateCodeLink}}{{dumy}}" />
+                                <a class="code-refresh"></a>
+                            </div>
+                        </dd>
+                    </dl>
+
+                    <dl class="font-small">
+                        <dt class="input-text-row font-small">
+                            <input type="text" class="input-text font-small" ng-model="data.validateCode" placeholder="输入短信验证码" />                       
+                        </dt>
+                        <dd class="font-small" ng-show="counter == 0">
+                            <button class="button button-confirm font-small" 
+                                    ng-disabled="submitBtn.disabled" ng-click="sendFindpwdVcode()">
+                                获取短信验证码
+                            </button>
+                        </dd>
+                        <dd class="font-small" ng-show="counter != 0"> 
+                            {{counter}}秒后重发
+                        </dd>
+                    </dl>
+
+
+                    <div class="modify-phone-btn">
+                        <button class="button button-confirm font-normal"
+                                ng-disabled="submitBtn.disabled" ng-click="submit()">
+                            提 交
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>       
+    </ion-content>
+    
+</ion-view>

@@ -1,0 +1,39 @@
+<ion-view>
+
+    <ion-nav-title>
+        {{product.brand}}
+    </ion-nav-title>
+
+    <ion-nav-buttons side="right">
+        <a class="button button-clear icon-cart" href="#/cart"><i>{{cart.total}}</i></a>
+    </ion-nav-buttons>
+    
+    <ion-content scroll="false" class="product-detail-main has-bar-footer font-normal">
+
+        <div class="product-top">
+            <div class="product-top-title">
+                {{product.name}}
+                <a class="button button-detail font-mini" href="#/product/{{product.productid}}/info">
+                    商品介绍
+                </a>
+            </div>
+            <div class="product-top-line">
+                <!--<i class="product-top-line-share" umeng-share ></i>-->
+                <i ng-hide="product.collect" class="product-top-line-collect-none ng-hide" ng-click="addToCollection()" 
+                   cm-count-click click-title="商品详情页" click-object="收藏" click-param="{{'id=' + productId}}"></i>
+                <i ng-show="product.collect" class="product-top-line-collect ng-hide" ng-click="removeCollection()"></i>
+                <!-- <span class="font-mini">{{product.promotions_info[0].value}}</span> -->
+            </div>
+        </div>
+        
+        <div class="product-img" >
+            <ion-slide-box ng-if="product" does-continue="{{product.product_banner.length != 2}}">
+                <ion-slide ng-repeat="productadv in product.product_banner">
+                    <img cm-zoom-pic cm-lazyload="productadv.pic2" />
+                </ion-slide>
+            </ion-slide-box>
+            <i ng-show="product.number === 0" class="product-sellout ng-hide"></i>
+        </div>
+                           
+    </ion-content>
+</ion-view>

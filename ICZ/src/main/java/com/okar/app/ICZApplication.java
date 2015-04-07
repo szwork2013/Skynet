@@ -19,8 +19,6 @@ public class ICZApplication extends Application{
 
     private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(ICZApplication.class);
 
-    final static boolean DEBUG = false;
-
     public static int MID = 0;
 
     public static final Cache C = new Cache();
@@ -29,7 +27,7 @@ public class ICZApplication extends Application{
     public void onCreate() {
         super.onCreate();
         initImageLoaderConfiguration();
-        startService(new Intent(this, ChatService.class));
+//        startService(new Intent(this, ChatService.class));
 //        initRobo();
     }
 
@@ -50,6 +48,6 @@ public class ICZApplication extends Application{
     @Override
     public void onTerminate() {
         super.onTerminate();
-        stopService(new Intent(this, ChatService.class));
+//        stopService(new Intent(this, ChatService.class));
     }
 }
