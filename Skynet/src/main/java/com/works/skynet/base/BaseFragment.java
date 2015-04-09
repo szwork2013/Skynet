@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.ResponseHandlerInterface;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.works.skynet.common.http.HttpClient;
 
 import roboguice.fragment.RoboFragment;
 
@@ -17,7 +18,7 @@ public class BaseFragment extends RoboFragment {
 
     protected ImageLoader il;
 
-    protected AsyncHttpClient client;
+    protected HttpClient client;
 
     @Override
     public void onAttach(Activity activity) {

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.works.skynet.common.http.HttpClient;
 
 import javax.inject.Inject;
 
@@ -19,7 +20,7 @@ import roboguice.activity.RoboFragmentActivity;
  */
 public abstract class BaseActivity extends RoboFragmentActivity implements View.OnClickListener {
 
-    protected AsyncHttpClient client = new AsyncHttpClient();
+    protected HttpClient client = HttpClient.get();
 
     protected ImageLoader il = ImageLoader.getInstance();
 
@@ -62,8 +63,8 @@ public abstract class BaseActivity extends RoboFragmentActivity implements View.
         return null;
     }
 
-    public void showToast(Context context, String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+    public void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
 }

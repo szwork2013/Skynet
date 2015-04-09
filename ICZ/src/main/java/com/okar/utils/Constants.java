@@ -24,4 +24,6 @@ public class Constants {
     public static final String I_ID = "mid";
 
     public static final String SETTINGS = "settings";
+
+    public static final String TYPE = "type";
 }

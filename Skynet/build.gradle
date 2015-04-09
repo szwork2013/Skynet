@@ -1,8 +1,8 @@
 //apply plugin: 'com.android.application'
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 android {
-    compileSdkVersion 15
-    buildToolsVersion '20.0.0'
+    compileSdkVersion 21
+    buildToolsVersion '21.1.2'
     defaultConfig {
         applicationId 'com.works.skynet'
         minSdkVersion 11
@@ -22,12 +22,12 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    //    compile 'com.android.support:appcompat-v7:19.+'
-    compile group: 'com.github.rtyley', name: 'roboguice-sherlock', version: '1.4'
+//    compile group: 'com.github.rtyley', name: 'roboguice-sherlock', version: '1.4'
+    compile group: 'org.roboguice', name: 'roboguice', version: '2.0'
     compile group: 'com.google.code.gson', name: 'gson', version: '2.2.4'
     compile group: 'com.loopj.android', name: 'android-async-http', version: '1.4.4'
     compile group: 'com.nostra13.universalimageloader', name: 'universal-image-loader', version: '1.9.2'
     compile group: 'com.j256.ormlite', name: 'ormlite-android', version: '4.48'
-    compile group: 'de.greenrobot', name: 'eventbus', version: '2.4.0'
+//    compile group: 'de.greenrobot', name: 'eventbus', version: '2.4.0'
     compile group: 'com.nineoldandroids', name: 'library', version: '2.4.0'
 }

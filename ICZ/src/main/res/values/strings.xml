@@ -11,6 +11,8 @@
     <string name="nozh">还没有账号？</string>
     <string name="group_name">车友会名称</string>
     <string name="group_brand">车友会所属品牌车型</string>
+    <string name="qx">取消</string>
+    <string name="qd">确定</string>
 
     <string-array name="jazzy_effects">
         <item>Standard</item>

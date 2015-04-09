@@ -6,7 +6,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.internal.JsonReaderInternalAccess;
+import com.j256.ormlite.logger.LoggerFactory;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
+import com.okar.utils.Constants;
+import com.okar.utils.URI;
 import com.works.skynet.base.BaseActivity;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import roboguice.inject.InjectView;
 
@@ -14,6 +25,8 @@ import roboguice.inject.InjectView;
  * Created by wangfengchen on 15/3/16.
  */
 public class ICZLoginActivity extends BaseActivity{
+
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(ICZWebActivity.class);
 
     @InjectView(R.id.icz_login_zh_et)
     private EditText zhEt;
@@ -81,11 +94,31 @@ public class ICZLoginActivity extends BaseActivity{
     }
 
     void login() {
-        showToast(this, "登陆成功");
+        String username = zhEt.getText().toString();
+        String password = mmEt.getText().toString();
+        RequestParams params = new RequestParams();
+        params.put("username", username);
+        params.put("password", password);
+        client.post(URI.LOGIN, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                super.onSuccess(response);
+                if(response!=null) {
+                    log.info("login result "+response);
+                    String type = response.optString(Constants.TYPE);
+                    if(Constants.SUCCESS.equals(type)) {
+                        showToast("登陆成功");
+
+                    }else {
+                        showToast("账号或密码错误，请重试！");
+                    }
+                }
+            }
+        });
     }
 
     void toRegister() {
-        showToast(this, "注册去");
+        showToast("注册去");
     }
 
     @Override

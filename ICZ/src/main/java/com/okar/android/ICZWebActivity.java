@@ -42,6 +42,8 @@ public class ICZWebActivity extends BaseActivity{
 
     private Button iwTopLeft;
 
+    private AlertDialog myDialog = null;
+
     @Override
     protected void init() {
         setContentView(R.layout.activity_icz_web);
@@ -142,18 +144,35 @@ public class ICZWebActivity extends BaseActivity{
             //处理javascript中的alert
             public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
                 //构建一个Builder来显示网页中的对话框
-                AlertDialog.Builder builder = new AlertDialog.Builder(ICZWebActivity.this);
-                builder.setTitle("提示");
-                builder.setMessage(message);
-                builder.setPositiveButton(android.R.string.ok,
-                        new AlertDialog.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(ICZWebActivity.this);
+//                builder.setTitle("提示");
+//                builder.setMessage(message);
+//                builder.setPositiveButton(android.R.string.ok,
+//                        new AlertDialog.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                result.confirm();
+//                            }
+//                        });
+//                builder.setCancelable(false);
+//                builder.create();
+//                builder.show();
+                myDialog = new AlertDialog.Builder(ICZWebActivity.this).create();
+                myDialog.show();
+                myDialog.getWindow().setContentView(R.layout.mydialog);
+                TextView txt = (TextView) myDialog.getWindow()
+                        .findViewById(R.id.my_dialog_cont);
+                txt.setText(message);
+                myDialog.getWindow()
+                        .findViewById(R.id.my_dialog_btn_qd).setVisibility(View.GONE);
+                myDialog.getWindow()
+                        .findViewById(R.id.my_dialog_btn_qx)
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
                                 result.confirm();
+                                myDialog.dismiss();
                             }
                         });
-                builder.setCancelable(false);
-                builder.create();
-                builder.show();
                 return true;
             }
 //            public void onConsoleMessage(String message, int lineNumber, String sourceID) {

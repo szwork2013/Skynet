@@ -18,7 +18,11 @@
 
         <activity
             android:name=".ICZLoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -40,11 +44,11 @@
         </activity>
         <activity android:name=".ICZWebActivity"
             android:theme="@style/IczActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+
+        <activity android:name=".AnimActivity">
+
         </activity>
         <!-- 测试数据库 -->
         <activity android:name=".TestDao">
