@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_ly"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <view
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        class="com.okar.icz.view.swipe.SwipeRefreshLayout"
+        android:id="@+id/test_swipe_ly" >
+        <view xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/test_swipe_rcv"
+            class="android.support.v7.widget.RecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        </view>
+
+</LinearLayout>
