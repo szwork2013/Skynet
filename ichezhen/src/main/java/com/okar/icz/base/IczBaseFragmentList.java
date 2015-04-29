@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.okar.icz.view.swipe.SwipeRefreshLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,16 @@ public abstract class IczBaseFragmentList<T> extends BaseFragment {
     public int p;
 
     public abstract void loadData(int p);
+
+    public abstract SwipeRefreshLayout getRefreshLayout();
+
+    public RecyclerView.Adapter getAdapter() {
+        return adapter;
+    }
+
+    public List<T> getItems() {
+        return items;
+    }
 
     protected RecyclerView.Adapter<ViewHolder> adapter = new RecyclerView.Adapter<ViewHolder>() {
         @Override
@@ -38,13 +50,13 @@ public abstract class IczBaseFragmentList<T> extends BaseFragment {
 
     public abstract ViewHolder createViewHolder(ViewGroup viewGroup, int i);
 
-    protected void add(T item) {
+    public void add(T item) {
         int position = items.size();
         if(items.add(item))
             adapter.notifyItemInserted(position);
     }
 
-    protected void remove(int position) {
+    public void remove(int position) {
         items.remove(position);
         adapter.notifyItemRemoved(position);
     }
