@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.okar.icz.base.IczBaseFragmentList;
+import com.okar.icz.model.ApplyMemberCardRecord;
 import com.okar.icz.po.Bean;
 import com.okar.icz.tasks.GiveCardListTask;
 import com.okar.icz.view.swipe.SwipeRefreshLayout;
@@ -22,7 +23,7 @@ import roboguice.inject.InjectView;
 /**
  * Created by wangfengchen on 15/4/20.
  */
-public class GiveCardFragmentList extends IczBaseFragmentList<Bean>
+public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRecord>
         implements SwipeRefreshLayout.OnRefreshListener{
 
     @InjectView(R.id.give_card_list_swipe_ly)
@@ -36,6 +37,8 @@ public class GiveCardFragmentList extends IczBaseFragmentList<Bean>
 
     };
 
+    private GiveCardListTask giveCardListTask;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return layoutInflater.inflate(R.layout.fragmentlist_give_card, container, false);
@@ -45,8 +48,7 @@ public class GiveCardFragmentList extends IczBaseFragmentList<Bean>
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-        GiveCardListTask giveCardListTask = new GiveCardListTask();
-        giveCardListTask.execute();
+        loadData(p);
     }
 
 
@@ -60,7 +62,6 @@ public class GiveCardFragmentList extends IczBaseFragmentList<Bean>
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
 
-        loadData(0);
     }
 
     @Override
@@ -70,22 +71,18 @@ public class GiveCardFragmentList extends IczBaseFragmentList<Bean>
 
     @Override
     public void onRefresh() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        }, 5000);
+       loadData(p);
     }
 
     @Override
     public void loadData(int p) {
+            giveCardListTask = new GiveCardListTask(this);
+            giveCardListTask.execute(1, 146, p);
+    }
 
-        for(int i=0;i<10;i++) {
-            Bean bean = new Bean();
-            bean.setText("fdsfdsfsd "+i);
-            add(bean);
-        }
+    @Override
+    public SwipeRefreshLayout getRefreshLayout() {
+        return swipeRefreshLayout;
     }
 
     @Override
@@ -107,8 +104,9 @@ public class GiveCardFragmentList extends IczBaseFragmentList<Bean>
         }
 
         @Override
-        public void setView(Bean item) {
-            text.setText(item.getText());
+        public void setView(ApplyMemberCardRecord item) {
+//            il.displayImage(item.getMember().getHead(), image);
+            text.setText(""+item.getId());
         }
     }
 }
