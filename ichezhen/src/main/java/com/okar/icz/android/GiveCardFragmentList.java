@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.okar.icz.base.IczBaseFragmentList;
 import com.okar.icz.po.Bean;
+import com.okar.icz.tasks.GiveCardListTask;
 import com.okar.icz.view.swipe.SwipeRefreshLayout;
 
 import roboguice.inject.InjectView;
@@ -44,6 +45,8 @@ public class GiveCardFragmentList extends IczBaseFragmentList<Bean>
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
+        GiveCardListTask giveCardListTask = new GiveCardListTask();
+        giveCardListTask.execute();
     }
 
 
