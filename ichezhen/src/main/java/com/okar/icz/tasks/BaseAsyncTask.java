@@ -23,10 +23,7 @@ public abstract class BaseAsyncTask<T> extends AsyncTask<Object, Integer, PageRe
     @Override
     protected void onPostExecute(PageResult<T> pageResult) {
         super.onPostExecute(pageResult);
-        SwipeRefreshLayout swipeRefreshLayout = fragmentList.getRefreshLayout();
-        if(swipeRefreshLayout!=null) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
+        stopRefresh();
         if(pageResult!=null) {
             List<T> list = pageResult.getData();
             if (list != null && !list.isEmpty()) {
@@ -39,6 +36,13 @@ public abstract class BaseAsyncTask<T> extends AsyncTask<Object, Integer, PageRe
                     fragmentList.add(t);
                 }
             }
+        }
+    }
+
+    public void stopRefresh() {
+        SwipeRefreshLayout swipeRefreshLayout = fragmentList.getRefreshLayout();
+        if(swipeRefreshLayout!=null) {
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 }

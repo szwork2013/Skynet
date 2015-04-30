@@ -4,13 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
+        android:name="com.okar.icz.app.ICZApplication"
         android:allowBackup="true"
         android:icon="@drawable/icz_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
             android:theme="@style/IczActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

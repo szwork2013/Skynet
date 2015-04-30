@@ -36,7 +36,7 @@ public class GiveCardListTask extends BaseAsyncTask<ApplyMemberCardRecord> {
         try {
             accountService = RemoteServiceFactory.getAccountService();
             return accountService.getApplyMemberRecords(new Account(accountId), p, 10);
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

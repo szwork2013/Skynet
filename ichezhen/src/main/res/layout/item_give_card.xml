@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="9dp">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/item_give_card_head"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/BaseText.ItemTitleStyle"
+        android:id="@+id/item_give_card_wxname"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/item_give_card_head"
+        android:singleLine="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/BaseText.ItemTitleStyle.ItemTitleGrayStyle"
+        android:id="@+id/item_give_card_mobile"
+        android:layout_marginTop="1dp"
+        android:layout_below="@+id/item_give_card_wxname"
+        android:layout_alignLeft="@+id/item_give_card_wxname"
+        android:layout_alignStart="@+id/item_give_card_wxname" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="姓名"
+        style="@style/BaseText.ItemTitleStyle.ItemTitleGrayStyle"
+        android:layout_marginTop="8dp"
+        android:id="@+id/item_give_card_nameLabel"
+        android:layout_below="@+id/item_give_card_head"
+        android:layout_alignLeft="@+id/item_give_card_head"
+        android:layout_alignStart="@+id/item_give_card_head" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_give_card_name"
+        style="@style/BaseText.ItemTitleStyle"
+        android:layout_marginLeft="100dp"
+        android:layout_alignTop="@+id/item_give_card_nameLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:singleLine="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="车牌号"
+        android:layout_marginTop="8dp"
+        style="@style/BaseText.ItemTitleStyle.ItemTitleGrayStyle"
+        android:id="@+id/item_give_card_carnumberlabel"
+        android:layout_below="@+id/item_give_card_nameLabel"
+        android:layout_alignLeft="@+id/item_give_card_nameLabel"
+        android:layout_alignStart="@+id/item_give_card_nameLabel" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_give_card_carnumber"
+        style="@style/BaseText.ItemTitleStyle"
+        android:layout_alignLeft="@+id/item_give_card_name"
+        android:layout_alignStart="@+id/item_give_card_name"
+        android:layout_alignTop="@+id/item_give_card_carnumberlabel"
+        android:singleLine="true" />
+
+    <ImageView
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:id="@+id/item_give_card_gender"
+        android:layout_alignTop="@id/item_give_card_head"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="同意"
+        android:height="40dp"
+        style="@style/DefNormalBtnStyle"
+        android:id="@+id/item_give_card_tongyi"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="拒绝"
+        android:height="40dp"
+        style="@style/DefNormalBtnStyle.NoSelectNtnStyle"
+        android:id="@+id/item_give_card_jujue"
+        android:layout_below="@+id/item_give_card_tongyi"
+        android:layout_alignLeft="@+id/item_give_card_tongyi"
+        android:layout_alignStart="@+id/item_give_card_tongyi" />
+</RelativeLayout>

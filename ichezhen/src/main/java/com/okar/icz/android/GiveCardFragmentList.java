@@ -9,14 +9,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.okar.icz.base.IczBaseFragmentList;
+import com.okar.icz.model.Account;
 import com.okar.icz.model.ApplyMemberCardRecord;
+import com.okar.icz.model.Member;
+import com.okar.icz.model.MemberCar;
 import com.okar.icz.po.Bean;
+import com.okar.icz.service.AccountService;
 import com.okar.icz.tasks.GiveCardListTask;
+import com.okar.icz.utils.RemoteServiceFactory;
+import com.okar.icz.view.InputDialogFragment;
 import com.okar.icz.view.swipe.SwipeRefreshLayout;
+
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import roboguice.inject.InjectView;
 
@@ -24,7 +35,7 @@ import roboguice.inject.InjectView;
  * Created by wangfengchen on 15/4/20.
  */
 public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRecord>
-        implements SwipeRefreshLayout.OnRefreshListener{
+        implements SwipeRefreshLayout.OnRefreshListener, InputDialogFragment.OnInputDialogClickListener {
 
     @InjectView(R.id.give_card_list_swipe_ly)
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -87,26 +98,66 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
 
     @Override
     public ViewHolder createViewHolder(ViewGroup viewGroup, int i) {
-        View v = layoutInflater.inflate(R.layout.item_swipe, viewGroup, false);
+        View v = layoutInflater.inflate(R.layout.item_give_card, viewGroup, false);
         return new MyViewHolder(v);
+    }
+
+    @Override
+    public void onDialogDone(boolean cancelled, List<String> messages) {
+        if(cancelled) {
+            showToast(messages.get(0));
+        }
     }
 
     class MyViewHolder extends ViewHolder {
 
-        public ImageView image;
+        public ImageView headIV;
 
-        public TextView text;
+        public TextView wxNameTV,nameTV,carNumberTV;
+
+        Button tyBtn,jjBtn;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            image = (ImageView) itemView.findViewById(R.id.item_swipe_image);
-            text = (TextView) itemView.findViewById(R.id.item_swipe_text);
+            headIV = (ImageView) itemView.findViewById(R.id.item_give_card_head);
+            wxNameTV = (TextView) itemView.findViewById(R.id.item_give_card_wxname);
+            nameTV = (TextView) itemView.findViewById(R.id.item_give_card_name);
+            carNumberTV = (TextView) itemView.findViewById(R.id.item_give_card_carnumber);
+            tyBtn = (Button) itemView.findViewById(R.id.item_give_card_tongyi);
+            jjBtn = (Button) itemView.findViewById(R.id.item_give_card_jujue);
         }
 
         @Override
         public void setView(ApplyMemberCardRecord item) {
-//            il.displayImage(item.getMember().getHead(), image);
-            text.setText(""+item.getId());
+            final Member member = item.getMember();
+            if(member!=null) {
+                il.displayImage(member.getHead(), headIV);
+                wxNameTV.setText(member.getWxNickname());
+                nameTV.setText(member.getNickname());
+                List<MemberCar> memberCarList = member.getCars();
+                if(memberCarList!=null&&!memberCarList.isEmpty()) {
+                    carNumberTV.setText(memberCarList.get(0).getCarNumber());
+                }else {
+                    carNumberTV.setText("无");
+                }
+
+                tyBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ArrayList<String> labels = new ArrayList<String>();
+                        labels.add("卡号");
+                        InputDialogFragment inputDialogFragment = InputDialogFragment.newInstance("提示", labels);
+                        inputDialogFragment.setOnInputDialogClickListener(GiveCardFragmentList.this);
+                        inputDialogFragment.show( getFragmentTransaction(),"tag");
+                    }
+                });
+                jjBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
         }
     }
 }
