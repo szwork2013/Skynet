@@ -43,7 +43,7 @@ public class InputDialogFragment extends DialogFragment implements View.OnClickL
 
     List<EditText> editTextList = new ArrayList<EditText>();
 
-    public static InputDialogFragment newInstance(String title, ArrayList<String> list) {
+    public static InputDialogFragment newInstance(String title, ArrayList<String> list,Object ... params) {
         InputDialogFragment adf = new InputDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putString("dialog_title", title);
@@ -120,6 +120,6 @@ public class InputDialogFragment extends DialogFragment implements View.OnClickL
     }
 
     public interface OnInputDialogClickListener {
-        public void onDialogDone(boolean cancelled, int type, List<String> messages);
+        public void onDialogDone(boolean cancelled, int type, List<String> messages, Object ... params);
     }
 }
