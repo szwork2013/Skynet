@@ -2,11 +2,13 @@ package com.okar.icz.app;
 
 import android.app.Application;
 import android.content.Intent;
+import android.graphics.Bitmap;
 
 import com.j256.ormlite.logger.LoggerFactory;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.okar.icz.android.R;
 
@@ -29,6 +31,10 @@ public class ICZApplication extends Application{
         log.info("initImageLoaderConfiguration");
         DisplayImageOptions defaultDisplayImageOptions = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.whitesmoke)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .imageScaleType(ImageScaleType.IN_SAMPLE_INT)//oom
                 .build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 this).threadPriority(Thread.NORM_PRIORITY - 2)
