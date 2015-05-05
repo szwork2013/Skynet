@@ -18,7 +18,7 @@ public class HttpClient {
         client.setTimeout(11000);   //设置链接超时，如果不设置，默认为10s
     }
 
-    public static HttpClient get() {
+    public static HttpClient getInstance() {
         if (instance == null) {
             synchronized (HttpClient.class) {
                 if (instance == null) {

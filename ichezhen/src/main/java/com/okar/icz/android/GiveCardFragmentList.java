@@ -13,13 +13,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.okar.icz.base.IczBaseFragmentList;
+import com.okar.icz.common.uiimage.AnimateFirstDisplayListener;
 import com.okar.icz.model.Account;
 import com.okar.icz.model.ApplyMemberCardRecord;
 import com.okar.icz.model.Member;
 import com.okar.icz.model.MemberCar;
+import com.okar.icz.model.PageResult;
 import com.okar.icz.po.Bean;
 import com.okar.icz.service.AccountService;
+import com.okar.icz.tasks.BaseAsyncTask;
 import com.okar.icz.tasks.GiveCardListTask;
 import com.okar.icz.utils.RemoteServiceFactory;
 import com.okar.icz.view.InputDialogFragment;
@@ -35,7 +39,9 @@ import roboguice.inject.InjectView;
  * Created by wangfengchen on 15/4/20.
  */
 public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRecord>
-        implements SwipeRefreshLayout.OnRefreshListener, InputDialogFragment.OnInputDialogClickListener {
+        implements SwipeRefreshLayout.OnRefreshListener, InputDialogFragment.OnInputDialogClickListener, BaseAsyncTask.TaskExecute {
+
+    private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 
     @InjectView(R.id.give_card_list_swipe_ly)
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -47,8 +53,6 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
     Handler handler = new Handler() {
 
     };
-
-    private GiveCardListTask giveCardListTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -87,13 +91,8 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
 
     @Override
     public void loadData(int p) {
-            giveCardListTask = new GiveCardListTask(this);
-            giveCardListTask.execute(1, 146, p);
-    }
-
-    @Override
-    public SwipeRefreshLayout getRefreshLayout() {
-        return swipeRefreshLayout;
+         GiveCardListTask giveCardListTask = new GiveCardListTask(this);
+         giveCardListTask.execute(1, 146, p);
     }
 
     @Override
@@ -116,6 +115,8 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
             }
         }
     }
+
+
 
     class MyViewHolder extends ViewHolder {
 
@@ -140,7 +141,7 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
         public void setView(ApplyMemberCardRecord item) {
             final Member member = item.getMember();
             if(member!=null) {
-                il.displayImage(member.getHead(), headIV);
+                il.displayImage(member.getHead(), headIV, animateFirstListener);
                 wxNameTV.setText(member.getWxNickname());
                 mobileTV.setText(member.getMobile());
                 nameTV.setText(member.getNickname());
@@ -175,5 +176,32 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
                 });
             }
         }
+    }
+
+    @Override
+    public void onPreExecute() {
+
+    }
+
+    @Override
+    public void onPostExecute(Object o) {
+        if(swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+            clearItems();
+        }
+        PageResult<ApplyMemberCardRecord> result = (PageResult<ApplyMemberCardRecord>) o;
+        for(ApplyMemberCardRecord item : result.getData()) {
+            add(item);
+        }
+    }
+
+    @Override
+    public void onCancelled(Object o) {
+
+    }
+
+    @Override
+    public void onProgressUpdate(Object... values) {
+
     }
 }

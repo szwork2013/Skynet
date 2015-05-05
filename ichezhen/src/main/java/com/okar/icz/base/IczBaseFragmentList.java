@@ -21,16 +21,6 @@ public abstract class IczBaseFragmentList<T> extends BaseFragment {
 
     public abstract void loadData(int p);
 
-    public abstract SwipeRefreshLayout getRefreshLayout();
-
-    public RecyclerView.Adapter getAdapter() {
-        return adapter;
-    }
-
-    public List<T> getItems() {
-        return items;
-    }
-
     protected RecyclerView.Adapter<ViewHolder> adapter = new RecyclerView.Adapter<ViewHolder>() {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -59,6 +49,14 @@ public abstract class IczBaseFragmentList<T> extends BaseFragment {
     public void remove(int position) {
         items.remove(position);
         adapter.notifyItemRemoved(position);
+    }
+
+    public void clearItems() {
+        if(items!=null) {
+            for(int i=0;i<items.size();i++) {
+                remove(i);
+            }
+        }
     }
 
     public abstract class ViewHolder extends RecyclerView.ViewHolder {

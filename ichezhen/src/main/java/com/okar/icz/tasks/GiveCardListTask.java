@@ -19,17 +19,16 @@ import java.util.List;
 /**
  * Created by wangfengchen on 15/4/28.
  */
-public class GiveCardListTask extends BaseAsyncTask<ApplyMemberCardRecord> {
+public class GiveCardListTask extends BaseAsyncTask {
 
-    public GiveCardListTask(IczBaseFragmentList<ApplyMemberCardRecord> fragmentList) {
-        super(fragmentList);
+    public GiveCardListTask(TaskExecute taskExecute) {
+        super(taskExecute);
     }
 
     @Override
     protected PageResult<ApplyMemberCardRecord> doInBackground(Object... params) {
-        refresh = (Integer) params[0];
-        Integer accountId = (Integer) params[1];
-        Integer p = (Integer) params[2];
+        Integer accountId = (Integer) params[0];
+        Integer p = (Integer) params[1];
         System.out.println("accountId "+accountId);
         System.out.println(p);
         AccountService accountService;
@@ -40,10 +39,5 @@ public class GiveCardListTask extends BaseAsyncTask<ApplyMemberCardRecord> {
             e.printStackTrace();
         }
         return null;
-    }
-
-    @Override
-    protected void onPostExecute(PageResult<ApplyMemberCardRecord> pageResult) {
-        super.onPostExecute(pageResult);
     }
 }

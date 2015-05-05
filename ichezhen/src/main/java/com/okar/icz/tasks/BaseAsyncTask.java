@@ -10,39 +10,49 @@ import java.util.List;
 /**
  * Created by wangfengchen on 15/4/29.
  */
-public abstract class BaseAsyncTask<T> extends AsyncTask<Object, Integer, PageResult<T>> {
+public abstract class BaseAsyncTask extends AsyncTask<Object, Object, Object> {
 
-    protected int refresh;
+    protected BaseAsyncTask(TaskExecute taskExecute) {
+        this.taskExecute = taskExecute;
+    }
 
-    protected IczBaseFragmentList<T> fragmentList;
+    private TaskExecute taskExecute;
 
-    public BaseAsyncTask(IczBaseFragmentList<T> fragmentList) {
-        this.fragmentList = fragmentList;
+    public void setTaskExecute(TaskExecute taskExecute) {
+        this.taskExecute = taskExecute;
     }
 
     @Override
-    protected void onPostExecute(PageResult<T> pageResult) {
-        super.onPostExecute(pageResult);
-        stopRefresh();
-        if(pageResult!=null) {
-            List<T> list = pageResult.getData();
-            if (list != null && !list.isEmpty()) {
-                if(refresh==1) {
-                    for (int i = 0;i<fragmentList.getItems().size();i++) {
-                        fragmentList.remove(i);
-                    }
-                }
-                for(T t : list) {
-                    fragmentList.add(t);
-                }
-            }
-        }
+    protected void onPreExecute() {
+        taskExecute.onPreExecute();
     }
 
-    public void stopRefresh() {
-        SwipeRefreshLayout swipeRefreshLayout = fragmentList.getRefreshLayout();
-        if(swipeRefreshLayout!=null) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
+    @Override
+    protected void onPostExecute(Object o) {
+        super.onPostExecute(o);
+        taskExecute.onPostExecute(o);
+    }
+
+    @Override
+    protected void onCancelled(Object o) {
+        super.onCancelled(o);
+        taskExecute.onCancelled(o);
+    }
+
+    @Override
+    protected void onProgressUpdate(Object... values) {
+        taskExecute.onProgressUpdate(values);
+    }
+
+    public interface TaskExecute {
+
+        void onPreExecute();
+
+        void onPostExecute(Object o);
+
+        void onCancelled(Object o);
+
+        void onProgressUpdate(Object... values);
+
     }
 }

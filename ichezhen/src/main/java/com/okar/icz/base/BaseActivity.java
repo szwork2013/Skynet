@@ -23,7 +23,7 @@ import roboguice.activity.RoboFragmentActivity;
  */
 public abstract class BaseActivity extends RoboFragmentActivity implements View.OnClickListener {
 
-    protected HttpClient client = HttpClient.get();
+    protected HttpClient client = HttpClient.getInstance();
 
     protected ImageLoader il = ImageLoader.getInstance();
 
