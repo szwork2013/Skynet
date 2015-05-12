@@ -13,6 +13,7 @@
     <string name="group_brand">车友会所属品牌车型</string>
     <string name="qx">取消</string>
     <string name="qd">确定</string>
+    <string name="loading_more">正在加载</string>
 
     <string-array name="jazzy_effects">
         <item>Standard</item>

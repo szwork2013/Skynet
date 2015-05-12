@@ -50,9 +50,10 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
     @InjectView(R.id.give_card_list_swipe_rcv)
     private RecyclerView recyclerView;
 
-    Handler handler = new Handler() {
+    public RecyclerView getRecView() {
+        return recyclerView;
+    }
 
-    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,11 +64,12 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-        loadData(p);
+        loadData(getP());
     }
 
 
     void init() {
+        initLoadingMore(recyclerView);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorScheme(R.color.holo_blue_bright,
                 R.color.holo_green_light, R.color.holo_orange_light,
@@ -86,13 +88,14 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
 
     @Override
     public void onRefresh() {
-       loadData(p);
+        loadData(getP());
     }
 
     @Override
     public void loadData(int p) {
-         GiveCardListTask giveCardListTask = new GiveCardListTask(this);
-         giveCardListTask.execute(1, 146, p);
+        super.loadData(p);
+        GiveCardListTask giveCardListTask = new GiveCardListTask(this);
+        giveCardListTask.execute(146, p);
     }
 
     @Override
@@ -102,12 +105,12 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
     }
 
     @Override
-    public void onDialogDone(boolean cancelled, int type, List<String> messages, Object ... params) {
-        if(cancelled) {
+    public void onDialogDone(boolean cancelled, int type, List<String> messages, Object... params) {
+        if (cancelled) {
 
             switch (type) {
                 case 1:
-                    showToast("发卡成功 "+messages.get(0));
+                    showToast("发卡成功 " + messages.get(0));
                     break;
                 case 2:
                     showToast(messages.get(0));
@@ -117,14 +120,13 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
     }
 
 
-
     class MyViewHolder extends ViewHolder {
 
         public ImageView headIV;
 
-        public TextView wxNameTV, mobileTV,nameTV,carNumberTV;
+        public TextView wxNameTV, mobileTV, nameTV, carNumberTV;
 
-        Button tyBtn,jjBtn;
+        Button tyBtn, jjBtn;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -140,15 +142,15 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
         @Override
         public void setView(ApplyMemberCardRecord item) {
             final Member member = item.getMember();
-            if(member!=null) {
+            if (member != null) {
                 il.displayImage(member.getHead(), headIV, animateFirstListener);
                 wxNameTV.setText(member.getWxNickname());
                 mobileTV.setText(member.getMobile());
                 nameTV.setText(member.getNickname());
                 List<MemberCar> memberCarList = member.getCars();
-                if(memberCarList!=null&&!memberCarList.isEmpty()) {
+                if (memberCarList != null && !memberCarList.isEmpty()) {
                     carNumberTV.setText(memberCarList.get(0).getCarNumber());
-                }else {
+                } else {
                     carNumberTV.setText("无");
                 }
 
@@ -160,7 +162,7 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
                         InputDialogFragment inputDialogFragment = InputDialogFragment.newInstance("发卡", labels);
                         inputDialogFragment.setOnInputDialogClickListener(GiveCardFragmentList.this);
                         inputDialogFragment.setType(1);
-                        inputDialogFragment.show( getFragmentTransaction(),"tag");
+                        inputDialogFragment.show(getFragmentTransaction(), "tag");
                     }
                 });
                 jjBtn.setOnClickListener(new View.OnClickListener() {
@@ -171,7 +173,7 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
                         InputDialogFragment inputDialogFragment = InputDialogFragment.newInstance("拒绝", labels);
                         inputDialogFragment.setOnInputDialogClickListener(GiveCardFragmentList.this);
                         inputDialogFragment.setType(2);
-                        inputDialogFragment.show( getFragmentTransaction(),"tag");
+                        inputDialogFragment.show(getFragmentTransaction(), "tag");
                     }
                 });
             }
@@ -185,13 +187,16 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
 
     @Override
     public void onPostExecute(Object o) {
-        if(swipeRefreshLayout.isRefreshing()) {
-            swipeRefreshLayout.setRefreshing(false);
-            clearItems();
-        }
-        PageResult<ApplyMemberCardRecord> result = (PageResult<ApplyMemberCardRecord>) o;
-        for(ApplyMemberCardRecord item : result.getData()) {
-            add(item);
+        onRefreshComplete(swipeRefreshLayout);
+        if(o!=null) {
+            PageResult<ApplyMemberCardRecord> result = (PageResult<ApplyMemberCardRecord>) o;
+            System.out.println(result.getCount());
+            setP(result.getNp());
+            setPageSize(result.getpCount());
+            result.getSize();
+            for (ApplyMemberCardRecord item : result.getData()) {
+                add(item);
+            }
         }
     }
 

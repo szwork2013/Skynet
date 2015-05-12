@@ -13,7 +13,7 @@ import java.util.List;
 public abstract class BaseAsyncTask extends AsyncTask<Object, Object, Object> {
 
     protected BaseAsyncTask(TaskExecute taskExecute) {
-        this.taskExecute = taskExecute;
+        setTaskExecute(taskExecute);
     }
 
     private TaskExecute taskExecute;
