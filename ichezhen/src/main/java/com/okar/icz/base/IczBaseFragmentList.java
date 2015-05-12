@@ -121,10 +121,12 @@ public abstract class IczBaseFragmentList<T> extends BaseFragment {
                         Log.d("", "pageSize -> "+pageSize);
                         if(p < pageSize - 1) {
                             Log.d("", "loading more!");
+                            showToast("正在加载...");
 //                            getRecView().addView(loadingView);
                             loadData(p);//这里多线程也要手动控制isLoadingMore
                         }else {
                             Log.d("", "no more!");
+                            showToast("没有更多啦");
                         }
                     }
                 }
