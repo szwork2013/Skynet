@@ -236,7 +236,7 @@ public class HessianProxy implements InvocationHandler {
       }
         
         /**
-         * Method that allows subclasses to add request headers such as cookies.
+         * Method that allows subclasses to addRecyclerItem request headers such as cookies.
          * Default implementation is empty.
          */
         protected void addRequestHeaders(URLConnection conn) {

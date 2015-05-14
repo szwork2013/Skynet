@@ -18,15 +18,13 @@ import java.util.List;
 /**
  * Created by wangfengchen on 14/10/31.
  */
-public abstract class IczBaseFragmentList<T> extends BaseFragment {
+public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
 
-    private List<T> items = new ArrayList<T>();
+
 
     private int p;
     private int pageSize;
     private boolean isLoading;
-
-    private View loadingView;
 
     public void setP(int p) {
         this.p = p;
@@ -50,57 +48,11 @@ public abstract class IczBaseFragmentList<T> extends BaseFragment {
 
     public abstract RecyclerView getRecView();
 
+    public abstract ArrayRecyclerAdapter getArrayRecyclerAdapter();
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initLoadingView();
-    }
-
-    protected RecyclerView.Adapter<ViewHolder> adapter = new RecyclerView.Adapter<ViewHolder>() {
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            return IczBaseFragmentList.this.createViewHolder(viewGroup, i);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder viewHolder, int i) {
-            viewHolder.setView(items.get(i));
-        }
-
-        @Override
-        public int getItemCount() {
-            return items.size();
-        }
-    };
-
-    public abstract ViewHolder createViewHolder(ViewGroup viewGroup, int i);
-
-    public void add(T item) {
-        int position = items.size();
-        if (items.add(item))
-            adapter.notifyItemInserted(position);
-    }
-
-    public void remove(int position) {
-        items.remove(position);
-        adapter.notifyItemRemoved(position);
-    }
-
-    public void clearItems() {
-        if (items != null) {
-            for (int i = 0; i < items.size(); i++) {
-                remove(i);
-            }
-        }
-    }
-
-    public abstract class ViewHolder extends RecyclerView.ViewHolder {
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-        }
-
-        public abstract void setView(T item);
     }
 
     public void initLoadingMore(RecyclerView recyclerView) {
@@ -123,10 +75,12 @@ public abstract class IczBaseFragmentList<T> extends BaseFragment {
                             Log.d("", "loading more!");
                             showToast("正在加载...");
 //                            getRecView().addView(loadingView);
+                            getArrayRecyclerAdapter().showLoading(true);
                             loadData(p);//这里多线程也要手动控制isLoadingMore
                         }else {
                             Log.d("", "no more!");
                             showToast("没有更多啦");
+                            getArrayRecyclerAdapter().showNoMore();
                         }
                     }
                 }
@@ -134,18 +88,16 @@ public abstract class IczBaseFragmentList<T> extends BaseFragment {
         });
     }
 
-    private void initLoadingView() {
-        loadingView = layoutInflater.inflate(R.layout.view_loading, null);
-    }
-
     public void onRefreshComplete(SwipeRefreshLayout swipeRefreshLayout) {
         setLoading(false);
         if (swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
-            clearItems();
+            getArrayRecyclerAdapter().clear();
         } else {
             Log.d("", "loading more complete!");
 //            getRecView().removeView(loadingView);
+            getArrayRecyclerAdapter().showLoading(false);
+            isLoading = false;
         }
     }
 

@@ -19,6 +19,17 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.okar.icz.test.ListActivity"
+            android:theme="@style/IczActionBar">
+
+        </activity>
+
+        <activity
+            android:name=".IndexActivity"
+            android:theme="@style/IczActionBar">
+
+        </activity>
 
     </application>
 

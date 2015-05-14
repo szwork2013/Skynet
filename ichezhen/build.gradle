@@ -29,4 +29,5 @@ dependencies {
     compile group: 'com.nineoldandroids', name: 'library', version: '2.4.0'
     compile group: 'com.j256.ormlite', name: 'ormlite-android', version: '4.48'
     compile group: 'com.google.code.gson', name: 'gson', version: '2.2.4'
+    compile 'com.malinskiy:superrecyclerview:1.1.0'
 }

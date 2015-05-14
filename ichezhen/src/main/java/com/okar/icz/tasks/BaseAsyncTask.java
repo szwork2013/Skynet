@@ -1,11 +1,6 @@
 package com.okar.icz.tasks;
 
 import android.os.AsyncTask;
-import com.okar.icz.base.IczBaseFragmentList;
-import com.okar.icz.model.PageResult;
-import com.okar.icz.view.swipe.SwipeRefreshLayout;
-
-import java.util.List;
 
 /**
  * Created by wangfengchen on 15/4/29.

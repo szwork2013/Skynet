@@ -397,7 +397,7 @@ abstract public class AbstractHessianOutput {
    * R b32 b24 b16 b8
    * </pre></code>
    *
-   * @param object the object to add as a reference.
+   * @param object the object to addRecyclerItem as a reference.
    *
    * @return true if the object has already been written.
    */

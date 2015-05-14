@@ -1,7 +1,6 @@
 package com.okar.icz.android;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,22 +13,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.okar.icz.base.IczBaseFragmentList;
+import com.okar.icz.base.ArrayRecyclerAdapter;
+import com.okar.icz.base.BaseSwipeRecyclerFragmentList;
 import com.okar.icz.common.uiimage.AnimateFirstDisplayListener;
-import com.okar.icz.model.Account;
 import com.okar.icz.model.ApplyMemberCardRecord;
 import com.okar.icz.model.Member;
 import com.okar.icz.model.MemberCar;
 import com.okar.icz.model.PageResult;
-import com.okar.icz.po.Bean;
-import com.okar.icz.service.AccountService;
 import com.okar.icz.tasks.BaseAsyncTask;
 import com.okar.icz.tasks.GiveCardListTask;
-import com.okar.icz.utils.RemoteServiceFactory;
 import com.okar.icz.view.InputDialogFragment;
 import com.okar.icz.view.swipe.SwipeRefreshLayout;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +33,7 @@ import roboguice.inject.InjectView;
 /**
  * Created by wangfengchen on 15/4/20.
  */
-public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRecord>
+public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
         implements SwipeRefreshLayout.OnRefreshListener, InputDialogFragment.OnInputDialogClickListener, BaseAsyncTask.TaskExecute {
 
     private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
@@ -50,6 +45,28 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
     @InjectView(R.id.give_card_list_swipe_rcv)
     private RecyclerView recyclerView;
 
+    private ArrayRecyclerAdapter<ApplyMemberCardRecord> mRecyclerAdapter =
+            new ArrayRecyclerAdapter<ApplyMemberCardRecord>() {
+
+        @Override
+        public RecyclerView.ViewHolder create(ViewGroup viewGroup, int i) {
+            View v = layoutInflater.inflate(R.layout.item_give_card, viewGroup, false);
+            return new MyViewHolder(v);
+        }
+
+        @Override
+        public void bind(RecyclerView.ViewHolder viewHolder, int i) {
+            MyViewHolder myViewHolder = (MyViewHolder) viewHolder;
+            myViewHolder.setView(getItem(i));
+        }
+    };
+
+    @Override
+    public ArrayRecyclerAdapter getArrayRecyclerAdapter() {
+        return mRecyclerAdapter;
+    }
+
+    @Override
     public RecyclerView getRecView() {
         return recyclerView;
     }
@@ -74,7 +91,7 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
         swipeRefreshLayout.setColorScheme(R.color.holo_blue_bright,
                 R.color.holo_green_light, R.color.holo_orange_light,
                 R.color.icz_green);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(mRecyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
@@ -88,7 +105,8 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
 
     @Override
     public void onRefresh() {
-        loadData(getP());
+        setP(0);
+        loadData(0);
     }
 
     @Override
@@ -96,12 +114,6 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
         super.loadData(p);
         GiveCardListTask giveCardListTask = new GiveCardListTask(this);
         giveCardListTask.execute(146, p);
-    }
-
-    @Override
-    public ViewHolder createViewHolder(ViewGroup viewGroup, int i) {
-        View v = layoutInflater.inflate(R.layout.item_give_card, viewGroup, false);
-        return new MyViewHolder(v);
     }
 
     @Override
@@ -120,7 +132,7 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
     }
 
 
-    class MyViewHolder extends ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView headIV;
 
@@ -139,7 +151,6 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
             jjBtn = (Button) itemView.findViewById(R.id.item_give_card_jujue);
         }
 
-        @Override
         public void setView(ApplyMemberCardRecord item) {
             final Member member = item.getMember();
             if (member != null) {
@@ -195,8 +206,11 @@ public class GiveCardFragmentList extends IczBaseFragmentList<ApplyMemberCardRec
             setPageSize(result.getpCount());
             result.getSize();
             for (ApplyMemberCardRecord item : result.getData()) {
-                add(item);
+                System.out.println("adddddd");
+                mRecyclerAdapter.addRecyclerItem(new ArrayRecyclerAdapter
+                        .RecyclerItem<ApplyMemberCardRecord>(ArrayRecyclerAdapter.RecyclerItem.NORMAL, item));
             }
+            mRecyclerAdapter.notifyDataSetChanged();
         }
     }
 
