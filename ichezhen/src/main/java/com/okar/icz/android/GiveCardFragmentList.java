@@ -81,7 +81,7 @@ public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-        loadData(getP());
+        loadData();
     }
 
 
@@ -106,14 +106,14 @@ public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
     @Override
     public void onRefresh() {
         setP(0);
-        loadData(0);
+        loadData();
     }
 
     @Override
-    public void loadData(int p) {
-        super.loadData(p);
+    public void loadData() {
+        super.loadData();
         GiveCardListTask giveCardListTask = new GiveCardListTask(this);
-        giveCardListTask.execute(146, p);
+        giveCardListTask.execute(146, getP());
     }
 
     @Override

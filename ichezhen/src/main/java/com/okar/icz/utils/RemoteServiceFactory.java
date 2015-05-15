@@ -11,7 +11,7 @@ import java.net.MalformedURLException;
  */
 public class RemoteServiceFactory {
 
-    private static final String REMOTE_SERVICE_URL = "http://192.168.6.9:9080";
+    private static final String REMOTE_SERVICE_URL = "http://192.168.6.5:9080";
 
     public static AccountService getAccountService() throws MalformedURLException {
         HessianProxyFactory factory = new HessianProxyFactory();

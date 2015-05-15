@@ -132,8 +132,8 @@ public abstract class ArrayRecyclerAdapter<T> extends RecyclerView.Adapter<Recyc
         }
     }
 
-    public void showLoading(boolean display) {
-//        System.out.println("showLoading "+display);
+    public void setLoading(boolean display) {
+//        System.out.println("setLoading "+display);
 //        System.out.println("getItemCount() " + getItemCount());
         if(display) {
             if(getItemCount()>0) {

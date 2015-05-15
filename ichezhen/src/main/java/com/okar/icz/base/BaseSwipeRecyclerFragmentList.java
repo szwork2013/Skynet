@@ -5,15 +5,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 
-import com.okar.icz.android.R;
 import com.okar.icz.view.swipe.SwipeRefreshLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by wangfengchen on 14/10/31.
@@ -42,7 +36,7 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
         this.isLoading = isLoading;
     }
 
-    public void loadData(int p) {
+    public void loadData() {
         isLoading = true;
     }
 
@@ -71,12 +65,13 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
                     } else {
                         Log.d("", "p -> "+p);
                         Log.d("", "pageSize -> "+pageSize);
+                        setP(p++);
                         if(p < pageSize - 1) {
                             Log.d("", "loading more!");
                             showToast("正在加载...");
 //                            getRecView().addView(loadingView);
-                            getArrayRecyclerAdapter().showLoading(true);
-                            loadData(p);//这里多线程也要手动控制isLoadingMore
+                            getArrayRecyclerAdapter().setLoading(true);
+                            loadData();//这里多线程也要手动控制isLoadingMore
                         }else {
                             Log.d("", "no more!");
                             showToast("没有更多啦");
@@ -96,7 +91,7 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
         } else {
             Log.d("", "loading more complete!");
 //            getRecView().removeView(loadingView);
-            getArrayRecyclerAdapter().showLoading(false);
+            getArrayRecyclerAdapter().setLoading(false);
             isLoading = false;
         }
     }

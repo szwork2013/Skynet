@@ -71,12 +71,12 @@ public class Fragment1 extends BaseSwipeRecyclerFragmentList implements SwipeRef
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-        loadData(getP());
+        loadData();
     }
 
     @Override
-    public void loadData(int p) {
-        super.loadData(p);
+    public void loadData() {
+        super.loadData();
         for(int i=0;i<10;i++) {
             mRecyclerAdapter.addRecyclerItem(new ArrayRecyclerAdapter
                     .RecyclerItem<String>(ArrayRecyclerAdapter.RecyclerItem.NORMAL, "aaaaa"));
