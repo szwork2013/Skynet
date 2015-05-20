@@ -1,5 +1,6 @@
 package com.okar.icz.android;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,12 +17,13 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.okar.icz.base.ArrayRecyclerAdapter;
 import com.okar.icz.base.BaseSwipeRecyclerFragmentList;
 import com.okar.icz.common.uiimage.AnimateFirstDisplayListener;
+import com.okar.icz.model.Account;
 import com.okar.icz.model.ApplyMemberCardRecord;
 import com.okar.icz.model.Member;
 import com.okar.icz.model.MemberCar;
 import com.okar.icz.model.PageResult;
-import com.okar.icz.tasks.BaseAsyncTask;
-import com.okar.icz.tasks.GiveCardListTask;
+import com.okar.icz.service.AccountService;
+import com.okar.icz.utils.RemoteServiceFactory;
 import com.okar.icz.view.InputDialogFragment;
 import com.okar.icz.view.swipe.SwipeRefreshLayout;
 
@@ -34,7 +36,7 @@ import roboguice.inject.InjectView;
  * Created by wangfengchen on 15/4/20.
  */
 public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
-        implements SwipeRefreshLayout.OnRefreshListener, InputDialogFragment.OnInputDialogClickListener, BaseAsyncTask.TaskExecute {
+        implements SwipeRefreshLayout.OnRefreshListener, InputDialogFragment.OnInputDialogClickListener {
 
     private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 
@@ -112,8 +114,7 @@ public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
     @Override
     public void loadData() {
         super.loadData();
-        GiveCardListTask giveCardListTask = new GiveCardListTask(this);
-        giveCardListTask.execute(146, getP());
+        new GiveCardTask().execute();
     }
 
     @Override
@@ -191,36 +192,38 @@ public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
         }
     }
 
-    @Override
-    public void onPreExecute() {
+    class GiveCardTask extends AsyncTask {
 
-    }
 
-    @Override
-    public void onPostExecute(Object o) {
-        onRefreshComplete(swipeRefreshLayout);
-        if(o!=null) {
-            PageResult<ApplyMemberCardRecord> result = (PageResult<ApplyMemberCardRecord>) o;
-            System.out.println(result.getCount());
-            setP(result.getNp());
-            setPageSize(result.getpCount());
-            result.getSize();
-            for (ApplyMemberCardRecord item : result.getData()) {
-                System.out.println("adddddd");
-                mRecyclerAdapter.addRecyclerItem(new ArrayRecyclerAdapter
-                        .RecyclerItem<ApplyMemberCardRecord>(ArrayRecyclerAdapter.RecyclerItem.NORMAL, item));
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            AccountService accountService;
+            try {
+                accountService = RemoteServiceFactory.getAccountService();
+                return accountService.getApplyMemberRecords(new Account(146), getP(), 10);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            mRecyclerAdapter.notifyDataSetChanged();
+            return null;
         }
+
+        @Override
+        public void onPostExecute(Object o) {
+            onRefreshComplete(swipeRefreshLayout);
+            if(o!=null) {
+                PageResult<ApplyMemberCardRecord> result = (PageResult<ApplyMemberCardRecord>) o;
+                System.out.println(result.getCount());
+                setP(result.getNp());
+                setPageSize(result.getpCount());
+                result.getSize();
+                for (ApplyMemberCardRecord item : result.getData()) {
+                    System.out.println("adddddd");
+                    mRecyclerAdapter.add(item);
+                }
+                mRecyclerAdapter.notifyDataSetChanged();
+            }
+        }
+
     }
 
-    @Override
-    public void onCancelled(Object o) {
-
-    }
-
-    @Override
-    public void onProgressUpdate(Object... values) {
-
-    }
 }

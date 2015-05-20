@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.okar.icz.android.R;
+import com.okar.icz.model.ApplyMemberCardRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,11 @@ public abstract class ArrayRecyclerAdapter<T> extends RecyclerView.Adapter<Recyc
     public void addRecyclerItem(RecyclerItem<T> item) {
         items.add(item);
         notifyItemInserted(items.size()-1);
+    }
+
+    public void add(T item) {
+        addRecyclerItem(new ArrayRecyclerAdapter
+                .RecyclerItem<T>(ArrayRecyclerAdapter.RecyclerItem.NORMAL, item));
     }
 
     public void remove(int position) {
