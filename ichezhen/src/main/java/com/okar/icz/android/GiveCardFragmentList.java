@@ -69,12 +69,6 @@ public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
     }
 
     @Override
-    public RecyclerView getRecView() {
-        return recyclerView;
-    }
-
-
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return layoutInflater.inflate(R.layout.fragmentlist_give_card, container, false);
     }

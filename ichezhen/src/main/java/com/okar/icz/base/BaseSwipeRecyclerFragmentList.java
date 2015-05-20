@@ -40,8 +40,6 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
         isLoading = true;
     }
 
-    public abstract RecyclerView getRecView();
-
     public abstract ArrayRecyclerAdapter getArrayRecyclerAdapter();
 
     @Override
