@@ -66,13 +66,13 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
                         setP(p++);
                         if(p < pageSize - 1) {
                             Log.d("", "loading more!");
-                            showToast("正在加载...");
+//                            showToast("正在加载...");
 //                            getRecView().addView(loadingView);
                             getArrayRecyclerAdapter().setLoading(true);
                             loadData();//这里多线程也要手动控制isLoadingMore
                         }else {
                             Log.d("", "no more!");
-                            showToast("没有更多啦");
+//                            showToast("没有更多啦");
                             getArrayRecyclerAdapter().showNoMore();
                         }
                     }

@@ -191,9 +191,8 @@ public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
 
         @Override
         protected Object doInBackground(Object[] objects) {
-            AccountService accountService;
             try {
-                accountService = RemoteServiceFactory.getAccountService();
+                AccountService accountService = RemoteServiceFactory.createAccountService();
                 return accountService.getApplyMemberRecords(new Account(146), getP(), 10);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -211,7 +210,6 @@ public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
                 setPageSize(result.getpCount());
                 result.getSize();
                 for (ApplyMemberCardRecord item : result.getData()) {
-                    System.out.println("adddddd");
                     mRecyclerAdapter.add(item);
                 }
                 mRecyclerAdapter.notifyDataSetChanged();
