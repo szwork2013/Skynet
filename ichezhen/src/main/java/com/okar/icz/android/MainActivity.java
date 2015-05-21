@@ -16,9 +16,12 @@ public class MainActivity extends BaseActivity {
 
     public static final String FRAG_GIVE_CARD_LIST = "give_card_list_frag";
 
+    public static final String MERCHANT_CARD_LIST = "merchant_list_frag";
+
     public static final String FRAG_TEXT = "text_frag";
 
     GiveCardFragmentList giveCardFragmentList;
+    MerchantFragmentList merchantFragmentList;
 
     TextView titleTv;
 
@@ -29,7 +32,7 @@ public class MainActivity extends BaseActivity {
         initFragment();
         initActionBar();
         fragmentManager = getSupportFragmentManager();
-        showFragments(R.id.main_content, FRAG_GIVE_CARD_LIST, false);
+        showFragments(R.id.main_content, MERCHANT_CARD_LIST, false);
     }
 
     void initActionBar() {
@@ -44,13 +47,16 @@ public class MainActivity extends BaseActivity {
 
 
     void initFragment() {
-       giveCardFragmentList = new GiveCardFragmentList();
+        giveCardFragmentList = new GiveCardFragmentList();
+        merchantFragmentList = new MerchantFragmentList();
     }
 
     @Override
     public Fragment getFragmentByTag(String tag) {
         if(FRAG_GIVE_CARD_LIST.equals(tag)) {
             return giveCardFragmentList;
+        }else if(MERCHANT_CARD_LIST.equals(tag)) {
+            return merchantFragmentList;
         }
         return null;
     }

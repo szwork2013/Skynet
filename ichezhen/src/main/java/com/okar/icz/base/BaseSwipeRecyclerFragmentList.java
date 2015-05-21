@@ -11,6 +11,7 @@ import com.okar.icz.view.swipe.SwipeRefreshLayout;
 
 /**
  * Created by wangfengchen on 14/10/31.
+ * 分页加载数据fragment的显示 swipe + recycler + fragment
  */
 public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
 
