@@ -202,7 +202,7 @@ public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
 
         @Override
         public void onPostExecute(Object o) {
-            onRefreshComplete(swipeRefreshLayout);
+            onLoadMoreComplete();
             if(o!=null) {
                 PageResult<ApplyMemberCardRecord> result = (PageResult<ApplyMemberCardRecord>) o;
                 System.out.println(result.getCount());

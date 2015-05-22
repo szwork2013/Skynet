@@ -64,13 +64,12 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
                     } else {
                         Log.d("", "p -> "+p);
                         Log.d("", "pageSize -> "+pageSize);
-                        setP(p++);
                         if(p < pageSize - 1) {
                             Log.d("", "loading more!");
 //                            showToast("正在加载...");
 //                            getRecView().addView(loadingView);
-                            getArrayRecyclerAdapter().setLoading(true);
                             loadData();//这里多线程也要手动控制isLoadingMore
+                            getArrayRecyclerAdapter().setLoading(true);
                         }else {
                             Log.d("", "no more!");
 //                            showToast("没有更多啦");
@@ -82,14 +81,9 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
         });
     }
 
-    public void onRefreshComplete(SwipeRefreshLayout swipeRefreshLayout) {
-        setLoading(false);
-        if (swipeRefreshLayout.isRefreshing()) {
-            swipeRefreshLayout.setRefreshing(false);
-            getArrayRecyclerAdapter().clear();
-        } else {
+    public void onLoadMoreComplete() {
+        if(isLoading) {
             Log.d("", "loading more complete!");
-//            getRecView().removeView(loadingView);
             getArrayRecyclerAdapter().setLoading(false);
             isLoading = false;
         }

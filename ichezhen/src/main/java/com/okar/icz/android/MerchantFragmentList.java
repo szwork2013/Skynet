@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.j256.ormlite.logger.LoggerFactory;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -33,6 +34,7 @@ import roboguice.inject.InjectView;
  */
 public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList implements SwipeRefreshLayout.OnRefreshListener{
 
+    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(MerchantFragmentList.class);
 
     private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 
@@ -99,14 +101,18 @@ public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList implemen
         RequestParams params = new RequestParams();
         params.add("p", String.valueOf(getP()));
         params.add("accountId", String.valueOf(146));
+        params.add("uid", String.valueOf(20624));
+        System.out.println("p ------->" + getP());
         client.get(Config.URI.MERCHANT_LIST_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                onLoadMoreComplete();
+                log.info(response.toString());
                 try {
                     System.out.println(response.opt("count"));
-                    setP(response.optInt("op"));
-                    setPageSize(response.optInt("pcount"));
+                    setP(response.optInt("np"));
+                    setPageSize(response.optInt("pCount"));
                     JSONArray dataArray = response.getJSONArray("data");
                     if (dataArray != null && dataArray.length() > 0) {
                         for (int i = 0; i < dataArray.length(); i++) {
@@ -122,14 +128,18 @@ public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList implemen
             @Override
             public void onFinish() {
                 super.onFinish();
-                onRefreshComplete(swipeRefreshLayout);
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                    getArrayRecyclerAdapter().clear();
+                }
             }
         });
     }
 
     @Override
     public void onRefresh() {
-
+        setP(0);
+        loadData();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

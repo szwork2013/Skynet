@@ -153,8 +153,10 @@ public abstract class ArrayRecyclerAdapter<T> extends RecyclerView.Adapter<Recyc
         }else {
             if(getItemCount()>0) {
                 RecyclerItem item = getRecyclerItem(getItemCount()-1);
+                System.out.println("last item " + item.type);
                 if(item.type==RecyclerItem.LOADING) {
                     remove(getItemCount()-1);
+                    System.out.println("remove item " + (getItemCount()-1));
                 }
             }
         }
