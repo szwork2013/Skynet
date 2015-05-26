@@ -99,7 +99,7 @@ public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList implemen
     public void loadData() {
         super.loadData();
         RequestParams params = new RequestParams();
-        params.add("p", String.valueOf(getP()));
+        params.add("p", String.valueOf(getNp()));
         params.add("accountId", String.valueOf(146));
         params.add("uid", String.valueOf(20624));
         System.out.println("p ------->" + getP());
@@ -111,7 +111,8 @@ public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList implemen
                 log.info(response.toString());
                 try {
                     System.out.println(response.opt("count"));
-                    setP(response.optInt("np"));
+                    setP(response.optInt("p"));
+                    setNp(response.optInt("np"));
                     setPageSize(response.optInt("pCount"));
                     JSONArray dataArray = response.getJSONArray("data");
                     if (dataArray != null && dataArray.length() > 0) {
@@ -138,7 +139,7 @@ public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList implemen
 
     @Override
     public void onRefresh() {
-        setP(0);
+        reset();
         loadData();
     }
 

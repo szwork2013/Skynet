@@ -17,7 +17,7 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
 
 
 
-    private int p;
+    private int p,np;
     private int pageSize;
     private boolean isLoading;
 
@@ -27,6 +27,14 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
 
     public int getP() {
         return p;
+    }
+
+    public int getNp() {
+        return np;
+    }
+
+    public void setNp(int np) {
+        this.np = np;
     }
 
     public void setPageSize(int pageSize) {
@@ -63,8 +71,9 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
                         Log.d("", "ignore manually update!");
                     } else {
                         Log.d("", "p -> "+p);
+                        Log.d("", "np -> "+np);
                         Log.d("", "pageSize -> "+pageSize);
-                        if(p < pageSize - 1) {
+                        if(p != np) {
                             Log.d("", "loading more!");
 //                            showToast("正在加载...");
 //                            getRecView().addView(loadingView);
@@ -87,6 +96,10 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
             getArrayRecyclerAdapter().setLoading(false);
             isLoading = false;
         }
+    }
+
+    public void reset() {
+        p = np = pageSize = 0;
     }
 
 }
