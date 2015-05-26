@@ -13,7 +13,7 @@ import com.okar.icz.view.swipe.SwipeRefreshLayout;
  * Created by wangfengchen on 14/10/31.
  * 分页加载数据fragment的显示 swipe + recycler + fragment
  */
-public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
+public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
 
 
@@ -51,11 +51,6 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
 
     public abstract ArrayRecyclerAdapter getArrayRecyclerAdapter();
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
     public void initLoadingMore(RecyclerView recyclerView) {
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -70,16 +65,16 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
                     if (isLoading) {
                         Log.d("", "ignore manually update!");
                     } else {
-                        Log.d("", "p -> "+p);
-                        Log.d("", "np -> "+np);
-                        Log.d("", "pageSize -> "+pageSize);
-                        if(p != np) {
+                        Log.d("", "p -> " + p);
+                        Log.d("", "np -> " + np);
+                        Log.d("", "pageSize -> " + pageSize);
+                        if (p != np) {
                             Log.d("", "loading more!");
 //                            showToast("正在加载...");
 //                            getRecView().addView(loadingView);
                             loadData();//这里多线程也要手动控制isLoadingMore
                             getArrayRecyclerAdapter().setLoading(true);
-                        }else {
+                        } else {
                             Log.d("", "no more!");
 //                            showToast("没有更多啦");
                             getArrayRecyclerAdapter().showNoMore();
@@ -98,8 +93,23 @@ public abstract class BaseSwipeRecyclerFragmentList extends BaseFragment {
         }
     }
 
-    public void reset() {
+    private void reset() {
         p = np = pageSize = 0;
     }
+
+    @Override
+    public void onRefresh() {
+        reset();
+        loadData();
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        init();
+        loadData();
+    }
+
+    protected abstract void init();
 
 }

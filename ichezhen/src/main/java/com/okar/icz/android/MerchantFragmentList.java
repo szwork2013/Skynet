@@ -32,7 +32,7 @@ import roboguice.inject.InjectView;
 /**
  * Created by wangfengchen on 15/5/21.
  */
-public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList implements SwipeRefreshLayout.OnRefreshListener{
+public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList {
 
     private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(MerchantFragmentList.class);
 
@@ -70,14 +70,9 @@ public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList implemen
         return layoutInflater.inflate(R.layout.fragmentlist_merchant, container, false);
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        init();
-        loadData();
-    }
 
-    void init() {
+
+    protected void init() {
         initLoadingMore(recyclerView);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorScheme(R.color.holo_blue_bright,
@@ -135,12 +130,6 @@ public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList implemen
                 }
             }
         });
-    }
-
-    @Override
-    public void onRefresh() {
-        reset();
-        loadData();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
