@@ -16,6 +16,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.okar.icz.base.ArrayRecyclerAdapter;
+import com.okar.icz.base.BaseSuperRecyclerFragment;
 import com.okar.icz.base.BaseSwipeRecyclerFragmentList;
 import com.okar.icz.common.uiimage.AnimateFirstDisplayListener;
 import com.okar.icz.po.Merchant;
@@ -37,18 +38,11 @@ import roboguice.inject.InjectView;
 /**
  * Created by wangfengchen on 15/5/21.
  */
-public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList {
+public class MerchantFragmentList extends BaseSuperRecyclerFragment {
 
     private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(MerchantFragmentList.class);
 
     private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
-
-    @InjectView(R.id.merchant_list_swipe_ly)
-    private SwipeRefreshLayout swipeRefreshLayout;
-
-
-    @InjectView(R.id.merchant_list_swipe_rcv)
-    private RecyclerView recyclerView;
 
     private ArrayRecyclerAdapter<JSONObject> mRecyclerAdapter = new ArrayRecyclerAdapter<JSONObject>() {
 
@@ -72,22 +66,9 @@ public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return layoutInflater.inflate(R.layout.fragmentlist_merchant, container, false);
-    }
-
-
-
-    protected void init() {
-        initLoadingMore(recyclerView);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorScheme(R.color.holo_blue_bright,
-                R.color.holo_green_light, R.color.holo_orange_light,
-                R.color.icz_green);
-        recyclerView.setAdapter(mRecyclerAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
-
+        rootView = layoutInflater.inflate(R.layout.fragmentlist_merchant, container, false);
+        initSuperRecyclerView(rootView);
+        return rootView;
     }
 
     @Override
@@ -131,8 +112,8 @@ public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList {
             @Override
             public void onFinish() {
                 super.onFinish();
-                if (swipeRefreshLayout.isRefreshing()) {
-                    swipeRefreshLayout.setRefreshing(false);
+                if (mRecycler.getSwipeToRefresh().isRefreshing()) {
+                    mRecycler.getSwipeToRefresh().setRefreshing(false);
                     getArrayRecyclerAdapter().clear();
                 }
             }

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<view xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/merchant_list_swipe_ly"
-    class="com.okar.icz.view.swipe.SwipeRefreshLayout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/white">
-
-    <view xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/merchant_list_swipe_rcv"
-        class="android.support.v7.widget.RecyclerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</view>
+<com.malinskiy.superrecyclerview.SuperRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:id="@+id/list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_empty="@layout/emptyview"
+    app:layout_moreProgress="@layout/view_more_progress"
+    app:mainLayoutId="@layout/layout_custom_recyclerview"
+    app:recyclerClipToPadding="false"
+    app:scrollbarStyle="insideInset" />
