@@ -1,9 +1,8 @@
 package com.okar.icz.android;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +43,10 @@ public class MerchantFragmentList extends BaseSuperRecyclerFragment {
 
     private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 
+    public static final String CATEGORY_TAG = "category";
+
+    private int category;
+
     private ArrayRecyclerAdapter<JSONObject> mRecyclerAdapter = new ArrayRecyclerAdapter<JSONObject>() {
 
         @Override
@@ -66,9 +69,33 @@ public class MerchantFragmentList extends BaseSuperRecyclerFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = layoutInflater.inflate(R.layout.fragmentlist_merchant, container, false);
-        initSuperRecyclerView(rootView);
+        if(rootView==null) {
+            log.info("create root view");
+            rootView = layoutInflater.inflate(R.layout.fragmentlist_merchant, container, false);
+        }
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(rootView != null) {
+            log.info("remove root view");
+            ((ViewGroup)rootView.getParent()).removeView(rootView);
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        getArgs();
+    }
+
+    void getArgs() {
+        Bundle args = getArguments();
+        if(args!=null) {
+            category = args.getInt(CATEGORY_TAG);
+        }
     }
 
     @Override
@@ -85,6 +112,9 @@ public class MerchantFragmentList extends BaseSuperRecyclerFragment {
         params.add("p", String.valueOf(getNp()));
         params.add("accountId", String.valueOf(146));
         params.add("uid", String.valueOf(20624));
+        if(category!=0) {
+            params.add("category", String.valueOf(category));
+        }
         System.out.println("p ------->" + getP());
         client.get(Config.URI.MERCHANT_LIST_URL, params, new JsonHttpResponseHandler() {
             @Override

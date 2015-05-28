@@ -66,7 +66,6 @@ public class EventFragmentList extends BaseSuperRecyclerFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = layoutInflater.inflate(R.layout.fragmentlist_event, container, false);
-        initSuperRecyclerView(rootView);
         return rootView;
     }
 

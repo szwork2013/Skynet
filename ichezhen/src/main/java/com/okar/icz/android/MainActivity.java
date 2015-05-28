@@ -20,11 +20,14 @@ public class MainActivity extends BaseActivity {
 
     public static final String Event_LIST = "event_list_frag";
 
+    public static final String MERCHANT = "merchant_frag";
+
     public static final String FRAG_TEXT = "text_frag";
 
     GiveCardFragmentList giveCardFragmentList;
     MerchantFragmentList merchantFragmentList;
     EventFragmentList eventFragmentList;
+    MerchantFragment merchantFragment;
 
     TextView titleTv;
 
@@ -35,7 +38,7 @@ public class MainActivity extends BaseActivity {
         initFragment();
         initActionBar();
         fragmentManager = getSupportFragmentManager();
-        showFragments(R.id.main_content, Event_LIST, R.anim.fragment_enter_anim, R.anim.fragment_exit_anim, false);
+        showFragments(R.id.main_content, MERCHANT, R.anim.fragment_enter_anim, R.anim.fragment_exit_anim, false);
     }
 
     void initActionBar() {
@@ -53,6 +56,7 @@ public class MainActivity extends BaseActivity {
         giveCardFragmentList = new GiveCardFragmentList();
         merchantFragmentList = new MerchantFragmentList();
         eventFragmentList = new EventFragmentList();
+        merchantFragment = new MerchantFragment();
     }
 
     @Override
@@ -63,6 +67,8 @@ public class MainActivity extends BaseActivity {
             return merchantFragmentList;
         }else if(Event_LIST.equals(tag)) {
             return eventFragmentList;
+        }else if(MERCHANT.equals(tag)) {
+            return merchantFragment;
         }
         return null;
     }
