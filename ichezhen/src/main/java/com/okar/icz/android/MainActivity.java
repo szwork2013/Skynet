@@ -16,12 +16,15 @@ public class MainActivity extends BaseActivity {
 
     public static final String FRAG_GIVE_CARD_LIST = "give_card_list_frag";
 
-    public static final String MERCHANT_CARD_LIST = "merchant_list_frag";
+    public static final String MERCHANT_LIST = "merchant_list_frag";
+
+    public static final String Event_LIST = "event_list_frag";
 
     public static final String FRAG_TEXT = "text_frag";
 
     GiveCardFragmentList giveCardFragmentList;
     MerchantFragmentList merchantFragmentList;
+    EventFragmentList eventFragmentList;
 
     TextView titleTv;
 
@@ -32,7 +35,7 @@ public class MainActivity extends BaseActivity {
         initFragment();
         initActionBar();
         fragmentManager = getSupportFragmentManager();
-        showFragments(R.id.main_content, MERCHANT_CARD_LIST, false);
+        showFragments(R.id.main_content, Event_LIST, R.anim.fragment_enter_anim, R.anim.fragment_exit_anim, false);
     }
 
     void initActionBar() {
@@ -40,7 +43,7 @@ public class MainActivity extends BaseActivity {
         if(actionBar!=null) {
             titleTv = (TextView) actionBar.findViewById(R.id.iw_title);
             titleTv.setVisibility(View.VISIBLE);
-            titleTv.setText("发卡列表");
+            titleTv.setText("活动列表");
         }
     }
 
@@ -49,14 +52,17 @@ public class MainActivity extends BaseActivity {
     void initFragment() {
         giveCardFragmentList = new GiveCardFragmentList();
         merchantFragmentList = new MerchantFragmentList();
+        eventFragmentList = new EventFragmentList();
     }
 
     @Override
     public Fragment getFragmentByTag(String tag) {
         if(FRAG_GIVE_CARD_LIST.equals(tag)) {
             return giveCardFragmentList;
-        }else if(MERCHANT_CARD_LIST.equals(tag)) {
+        }else if(MERCHANT_LIST.equals(tag)) {
             return merchantFragmentList;
+        }else if(Event_LIST.equals(tag)) {
+            return eventFragmentList;
         }
         return null;
     }
