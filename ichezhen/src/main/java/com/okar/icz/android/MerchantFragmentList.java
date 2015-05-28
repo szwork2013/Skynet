@@ -76,14 +76,14 @@ public class MerchantFragmentList extends BaseSuperRecyclerFragment {
         return rootView;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(rootView != null) {
-            log.info("remove root view");
-            ((ViewGroup)rootView.getParent()).removeView(rootView);
-        }
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        if(rootView != null) {
+//            log.info("remove root view");
+//            ((ViewGroup)rootView.getParent()).removeView(rootView);
+//        }
+//    }
 
     @Override
     public void onAttach(Activity activity) {

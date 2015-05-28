@@ -63,6 +63,7 @@ public abstract class BaseSuperRecyclerFragment extends BaseFragment implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("onCreate");
         isInit = true;
     }
 

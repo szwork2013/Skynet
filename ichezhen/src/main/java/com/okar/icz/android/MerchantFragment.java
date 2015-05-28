@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -117,7 +118,7 @@ public class MerchantFragment extends BaseFragment implements
     }
 
 
-    public class MyViewPagerAdapter extends FragmentPagerAdapter {
+    public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
         private List<Fragment> fragmentList;
 
         public MyViewPagerAdapter(FragmentManager fm,
@@ -145,6 +146,11 @@ public class MerchantFragment extends BaseFragment implements
         public int getItemPosition(Object object) {
             //加此方法可以使viewpager可以进行刷新
             return PagerAdapter.POSITION_NONE;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+//            super.destroyItem(container, position, object);
         }
     }
 
