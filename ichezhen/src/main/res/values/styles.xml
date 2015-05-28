@@ -92,9 +92,20 @@
     </style>
 
     <style name="Label.DefLabel1">
-        <item name="android:layout_marginLeft">8sp</item>
-        <item name="android:layout_marginTop">8sp</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Label.DefLabel1.h1">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Label.DefLabel1.h2">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Label.DefLabel1.h3">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@drawable/darkgray</item>
     </style>
 
     <style name="MemberHeadSingleton">
@@ -198,5 +209,9 @@
         <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
     </style>
 
+    <!-- 活动列表样式 -->
+    <style name="EventItemCoverStyle" parent="ItemCoverStyle">
+
+    </style>
 
 </resources>

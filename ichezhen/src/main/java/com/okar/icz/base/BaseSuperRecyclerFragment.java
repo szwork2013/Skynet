@@ -58,7 +58,7 @@ public abstract class BaseSuperRecyclerFragment extends BaseFragment implements 
         mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecycler.setRefreshListener(this);
         mRecycler.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
-        mRecycler.setupMoreListener(this, 4);
+        mRecycler.setupMoreListener(this, 1);
         mRecycler.setAdapter(getArrayRecyclerAdapter());
     }
 

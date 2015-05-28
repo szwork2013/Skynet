@@ -16,6 +16,7 @@
 
 <resources>
 
+    <dimen name="default_box_padding">9dp</dimen>
     <dimen name="default_line">0.3dp</dimen> <!-- 线 -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>

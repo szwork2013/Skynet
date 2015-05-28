@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class EventFragmentList extends BaseSuperRecyclerFragment {
 
         @Override
         public RecyclerView.ViewHolder create(ViewGroup viewGroup, int i) {
-            View v = layoutInflater.inflate(R.layout.item_merchant, viewGroup, false);
+            View v = layoutInflater.inflate(R.layout.item_event, viewGroup, false);
             return new MyViewHolder(v);
         }
 
@@ -90,7 +91,7 @@ public class EventFragmentList extends BaseSuperRecyclerFragment {
         params.add("accountId", String.valueOf(146));
         params.add("uid", String.valueOf(20624));
         System.out.println("p ------->" + getP());
-        client.get(Config.URI.MERCHANT_LIST_URL, params, new JsonHttpResponseHandler() {
+        client.get(Config.URI.EVENT_LIST_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -127,17 +128,20 @@ public class EventFragmentList extends BaseSuperRecyclerFragment {
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView coverIV;
-        public TextView nameTV;
+        public TextView nameTV, submitTimeTV;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            coverIV = (ImageView) itemView.findViewById(R.id.merls_cover);
-            nameTV = (TextView) itemView.findViewById(R.id.merls_name);
+            coverIV = (ImageView) itemView.findViewById(R.id.ei_cover_iv);
+            nameTV = (TextView) itemView.findViewById(R.id.ei_name_tv);
+            submitTimeTV = (TextView) itemView.findViewById(R.id.ei_submit_time_tv);
         }
 
         public void setView(JSONObject object) {
             nameTV.setText(object.optString("name"));
             nameTV.setOnClickListener(EventFragmentList.this);
+            Long submitEndTime = object.optLong("submitEndTime");
+            submitTimeTV.setText(DateFormat.format("yyyy年MM月dd日 HH:mm", submitEndTime));
             il.displayImage(object.optString("cover"), coverIV, animateFirstListener);
         }
     }

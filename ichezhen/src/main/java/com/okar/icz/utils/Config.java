@@ -9,6 +9,7 @@ public class Config {
         public static final String SERVICE_URL = "http://mp.ichezhen.com";
 
         public static final String MERCHANT_LIST_URL = SERVICE_URL+"/merchant/indexMore.htm";
+        public static final String EVENT_LIST_URL = SERVICE_URL+"/dynamic/eventList1.htm";
 
         public static final String SET_COOKIE = SERVICE_URL+ "/test/addSession.htm";
     }
