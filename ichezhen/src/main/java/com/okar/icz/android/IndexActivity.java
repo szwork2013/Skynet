@@ -31,12 +31,10 @@ import roboguice.inject.InjectView;
 public class IndexActivity extends BaseActivity{
 
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
-    private String[] pagerTitles = {"发卡", "会员" ,"活动"};
+    private String[] pagerTitles = {"商家", "会员" ,"活动"};
 
     @InjectView(R.id.index_pager)
     private ViewPager mViewPager;
-
-    private Button tab1,tab2,tab3;
 
     private Button[] tabs;
 
@@ -50,9 +48,9 @@ public class IndexActivity extends BaseActivity{
 
     void initActionBar() {
         View actionBar = setActionBarLayout(R.layout.actionbar_index);
-        tab1 = (Button) actionBar.findViewById(R.id.index_tab1).findViewById(R.id.inc_index_tab_btn);
-        tab2 = (Button) actionBar.findViewById(R.id.index_tab2).findViewById(R.id.inc_index_tab_btn);
-        tab3 = (Button) actionBar.findViewById(R.id.index_tab3).findViewById(R.id.inc_index_tab_btn);
+        Button tab1 = (Button) actionBar.findViewById(R.id.index_tab1).findViewById(R.id.inc_index_tab_btn);
+        Button tab2 = (Button) actionBar.findViewById(R.id.index_tab2).findViewById(R.id.inc_index_tab_btn);
+        Button tab3 = (Button) actionBar.findViewById(R.id.index_tab3).findViewById(R.id.inc_index_tab_btn);
         tab1.setOnClickListener(this);
         tab2.setOnClickListener(this);
         tab3.setOnClickListener(this);
@@ -63,7 +61,7 @@ public class IndexActivity extends BaseActivity{
     }
 
     void initPager() {
-        Fragment f1 = new Fragment1();
+        Fragment f1 = new MerchantFragmentList();
         Fragment f2 = new Fragment2();
         Fragment f3 = new Fragment3();
 

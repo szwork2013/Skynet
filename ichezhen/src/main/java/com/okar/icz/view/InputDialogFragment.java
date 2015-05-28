@@ -80,7 +80,12 @@ public class InputDialogFragment extends DialogFragment implements View.OnClickL
         mSubmitBtn.setOnClickListener(this);
         mTitleTV.setText(getTitle());
         initInputContentLayout();
+        setDialogAnimations();
         return v;
+    }
+
+    void setDialogAnimations() {
+        getDialog().getWindow().setWindowAnimations(R.style.dialogWindowAnim);
     }
 
     private View createListItem(String label) {

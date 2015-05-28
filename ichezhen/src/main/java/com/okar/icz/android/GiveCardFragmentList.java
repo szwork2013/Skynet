@@ -73,15 +73,7 @@ public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
         return layoutInflater.inflate(R.layout.fragmentlist_give_card, container, false);
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        init();
-        loadData();
-    }
-
-
-    void init() {
+    protected void init() {
         initLoadingMore(recyclerView);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorScheme(R.color.holo_blue_bright,
@@ -97,12 +89,6 @@ public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
     @Override
     public void onClick(View v) {
 
-    }
-
-    @Override
-    public void onRefresh() {
-        setP(0);
-        loadData();
     }
 
     @Override

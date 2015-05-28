@@ -18,14 +18,19 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.okar.icz.base.ArrayRecyclerAdapter;
 import com.okar.icz.base.BaseSwipeRecyclerFragmentList;
 import com.okar.icz.common.uiimage.AnimateFirstDisplayListener;
-import com.okar.icz.model.ApplyMemberCardRecord;
+import com.okar.icz.po.Merchant;
 import com.okar.icz.utils.Config;
+import com.okar.icz.utils.JSONParser;
+import com.okar.icz.view.InputDialogFragment;
 import com.okar.icz.view.swipe.SwipeRefreshLayout;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import roboguice.inject.InjectView;
 
@@ -87,7 +92,9 @@ public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList {
 
     @Override
     public void onClick(View view) {
-
+        ArrayList<String> labels = new ArrayList<>();
+        labels.add("shangjiaming");
+        InputDialogFragment.newInstance("lala", labels).show(getFragmentTransaction(), "dialog");
     }
 
     @Override
@@ -144,6 +151,7 @@ public class MerchantFragmentList extends BaseSwipeRecyclerFragmentList {
 
         public void setView(JSONObject object) {
             nameTV.setText(object.optString("name"));
+            nameTV.setOnClickListener(MerchantFragmentList.this);
             il.displayImage(object.optString("cover"), coverIV, animateFirstListener);
         }
     }

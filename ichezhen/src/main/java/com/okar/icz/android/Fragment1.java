@@ -68,13 +68,6 @@ public class Fragment1 extends BaseSwipeRecyclerFragmentList implements SwipeRef
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        init();
-        loadData();
-    }
-
-    @Override
     public void loadData() {
         super.loadData();
         for(int i=0;i<10;i++) {
@@ -85,7 +78,7 @@ public class Fragment1 extends BaseSwipeRecyclerFragmentList implements SwipeRef
                 .RecyclerItem<String>(ArrayRecyclerAdapter.RecyclerItem.LOADING));
     }
 
-    void init() {
+    protected void init() {
         initLoadingMore(recyclerView);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorScheme(R.color.holo_blue_bright,
@@ -100,11 +93,6 @@ public class Fragment1 extends BaseSwipeRecyclerFragmentList implements SwipeRef
 
     @Override
     public void onClick(View v) {
-
-    }
-
-    @Override
-    public void onRefresh() {
 
     }
 
