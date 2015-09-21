@@ -1,4 +1,4 @@
-package com.okar.android;
+package com.okar.chatservice;
 
 import android.app.Service;
 import android.content.ComponentName;
@@ -22,10 +22,10 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.nineoldandroids.view.ViewHelper;
-import com.okar.android.fragment.Fragment1;
-import com.okar.android.fragment.Fragment2;
-import com.okar.android.fragment.Fragment3;
-import com.okar.android.fragment.FriendListFragment;
+import com.okar.chatservice.fragment.Fragment1;
+import com.okar.chatservice.fragment.Fragment2;
+import com.okar.chatservice.fragment.Fragment3;
+import com.okar.chatservice.fragment.FriendListFragment;
 import com.okar.view.JazzyViewPager;
 import com.works.skynet.base.BaseActivity;
 

@@ -1,4 +1,4 @@
-package com.okar.android;
+package com.okar.chatservice;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

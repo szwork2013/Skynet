@@ -15,11 +15,10 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
-import com.okar.android.IChatService;
-import com.okar.po.Packet;
+import com.okar.chatservice.IChatService;
+import com.okar.entry.Packet;
 import com.okar.service.runnable.ChatWorkRunnable;
 
-import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

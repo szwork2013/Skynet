@@ -1,4 +1,4 @@
-package com.okar.po;
+package com.okar.entry;
 
 import java.io.Serializable;
 import java.util.Date;

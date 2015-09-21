@@ -1,4 +1,4 @@
-package com.okar.android.fragment;
+package com.okar.chatservice.fragment;
 
 import android.app.Activity;
 import android.app.Service;
@@ -22,16 +22,16 @@ import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.j256.ormlite.logger.LoggerFactory;
-import com.okar.android.ChatActivity;
-import com.okar.android.IChatService;
-import com.okar.android.IndexActivity;
-import com.okar.android.R;
+import com.okar.chatservice.ChatActivity;
+import com.okar.chatservice.IChatService;
+import com.okar.chatservice.IndexActivity;
+import com.okar.chatservice.R;
 import com.okar.app.ICZApplication;
 import com.okar.base.IczBaseFragmentList;
-import com.okar.po.Body;
-import com.okar.po.Friend;
-import com.okar.po.FriendList;
-import com.okar.po.Packet;
+import com.okar.entry.Body;
+import com.okar.entry.Friend;
+import com.okar.entry.FriendList;
+import com.okar.entry.Packet;
 import com.okar.utils.RefreshUtils;
 
 import java.util.ArrayList;

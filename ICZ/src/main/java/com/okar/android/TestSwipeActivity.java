@@ -1,4 +1,4 @@
-package com.okar.android;
+package com.okar.chatservice;
 
 import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;

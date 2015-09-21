@@ -5,8 +5,8 @@ import android.content.Context;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
-import com.okar.po.MsgBody;
-import com.okar.po.TextMsg;
+import com.okar.entry.MsgBody;
+import com.okar.entry.TextMsg;
 
 import java.sql.SQLException;
 import java.util.List;

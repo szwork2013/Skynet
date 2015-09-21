@@ -2,9 +2,8 @@ package com.okar.service;
 
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
-import com.okar.android.IChatService;
+import com.okar.chatservice.IChatService;
 
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 

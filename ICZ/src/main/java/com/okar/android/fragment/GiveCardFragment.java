@@ -1,4 +1,4 @@
-package com.okar.android.fragment;
+package com.okar.chatservice.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.j256.ormlite.logger.LoggerFactory;
-import com.okar.android.R;
+import com.okar.chatservice.R;
 import com.okar.base.IczBaseFragmentList;
 import com.okar.model.ApplyMemberCardRecord;
 import com.okar.utils.IczResponseHandler;

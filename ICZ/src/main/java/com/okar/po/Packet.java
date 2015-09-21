@@ -1,10 +1,9 @@
-package com.okar.po;
+package com.okar.entry;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by wangfengchen on 15/1/20.

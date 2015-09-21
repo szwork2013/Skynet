@@ -17,7 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.nineoldandroids.view.ViewHelper;
-import com.okar.android.R;
+import com.okar.chatservice.R;
 
 public class JazzyViewPager extends ViewPager {
 	public static final String TAG = "JazzyViewPager";

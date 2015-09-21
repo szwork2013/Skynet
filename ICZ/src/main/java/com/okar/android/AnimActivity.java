@@ -1,4 +1,4 @@
-package com.okar.android;
+package com.okar.chatservice;
 
 import android.view.View;
 import android.widget.Button;

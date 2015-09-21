@@ -11,7 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
-import com.okar.android.R;
+import com.okar.chatservice.R;
 
 
 public class OutlineContainer extends FrameLayout implements Animatable {

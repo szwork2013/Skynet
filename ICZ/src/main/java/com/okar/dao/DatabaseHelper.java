@@ -8,8 +8,8 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 import com.j256.ormlite.table.TableUtils;
 import com.okar.model.Commodity;
-import com.okar.po.MsgBody;
-import com.okar.po.TextMsg;
+import com.okar.entry.MsgBody;
+import com.okar.entry.TextMsg;
 import com.okar.service.MsgParser;
 
 import android.content.Context;

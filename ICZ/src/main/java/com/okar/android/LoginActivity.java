@@ -1,4 +1,4 @@
-package com.okar.android;
+package com.okar.chatservice;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -14,9 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.okar.app.ICZApplication;
-import com.okar.po.Body;
-import com.okar.po.Packet;
-import com.okar.po.UserBody;
+import com.okar.entry.Body;
+import com.okar.entry.Packet;
+import com.okar.entry.UserBody;
 import com.okar.receiver.AuthReceiveBroadCast;
 import com.okar.utils.Constants;
 import com.works.skynet.base.BaseActivity;

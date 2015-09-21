@@ -2,8 +2,21 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <!-- Customize your theme here. -->
-        <item name="android:background">@color/appBackgroundColor</item>
+    </style>
+
+    <style name="SwipeBackLayout">
+        <item name="edge_size">50dip</item>
+        <item name="shadow_left">@drawable/shadow_left</item>
+        <item name="shadow_right">@drawable/shadow_right</item>
+        <item name="shadow_bottom">@drawable/shadow_bottom</item>
+    </style>
+
+    <style name="AppBaseTheme"  parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="AppBaseThemeMain"  parent="AppTheme">
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
     <!-- 自定义ActionBar样式，重设ActionBar背景，隐藏actionbar左侧的应用图标和标题 -->

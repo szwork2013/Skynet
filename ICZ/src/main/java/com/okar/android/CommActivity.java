@@ -1,9 +1,9 @@
-package com.okar.android;
+package com.okar.chatservice;
 
 import android.app.FragmentTransaction;
 import android.view.View;
 
-import com.okar.android.fragment.GiveCardFragment;
+import com.okar.chatservice.fragment.GiveCardFragment;
 import com.works.skynet.base.BaseActivity;
 
 /**

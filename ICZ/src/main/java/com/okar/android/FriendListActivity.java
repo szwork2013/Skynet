@@ -1,4 +1,4 @@
-package com.okar.android;
+package com.okar.chatservice;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -21,11 +21,11 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.j256.ormlite.logger.LoggerFactory;
 import com.okar.base.IczBaseActivity;
 import com.okar.model.ApplyMemberCardRecord;
-import com.okar.po.Body;
-import com.okar.po.Friend;
-import com.okar.po.FriendList;
-import com.okar.po.Packet;
-import com.okar.po.TextMsg;
+import com.okar.entry.Body;
+import com.okar.entry.Friend;
+import com.okar.entry.FriendList;
+import com.okar.entry.Packet;
+import com.okar.entry.TextMsg;
 import com.okar.utils.RefreshUtils;
 import java.util.ArrayList;
 import roboguice.inject.InjectView;

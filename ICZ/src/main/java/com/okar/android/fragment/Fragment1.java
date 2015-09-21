@@ -1,4 +1,4 @@
-package com.okar.android.fragment;
+package com.okar.chatservice.fragment;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.okar.android.R;
+import com.okar.chatservice.R;
 import com.okar.utils.RefreshUtils;
 
 public class Fragment1 extends Fragment implements PullToRefreshBase.OnRefreshListener, PullToRefreshBase.OnLastItemVisibleListener{

@@ -1,4 +1,4 @@
-package com.okar.android.fragment;
+package com.okar.chatservice.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;

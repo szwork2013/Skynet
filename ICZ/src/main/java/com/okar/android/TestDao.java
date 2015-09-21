@@ -1,14 +1,13 @@
-package com.okar.android;
+package com.okar.chatservice;
 
 import android.app.Activity;
 import android.os.Bundle;
 
 import com.okar.dao.MsgBodyDAO;
 import com.okar.dao.TextMsgDAO;
-import com.okar.po.MsgBody;
-import com.okar.po.TextMsg;
+import com.okar.entry.MsgBody;
+import com.okar.entry.TextMsg;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by wangfengchen on 15/2/2.

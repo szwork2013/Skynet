@@ -7,12 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.j256.ormlite.logger.LoggerFactory;
-import com.okar.android.FriendListActivity;
-import com.okar.android.IndexActivity;
-import com.okar.android.LoginActivity;
+import com.okar.chatservice.FriendListActivity;
+import com.okar.chatservice.IndexActivity;
+import com.okar.chatservice.LoginActivity;
 import com.okar.app.ICZApplication;
-import com.okar.po.Body;
-import com.okar.po.Packet;
+import com.okar.entry.Body;
+import com.okar.entry.Packet;
 import com.okar.utils.Cache;
 import com.okar.utils.Constants;
 import com.works.skynet.common.utils.Utils;
