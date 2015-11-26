@@ -13,12 +13,14 @@ import android.widget.TextView;
 import com.j256.ormlite.logger.LoggerFactory;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.okar.icz.android.R;
 import com.okar.icz.base.ArrayRecyclerAdapter;
 import com.okar.icz.base.BaseSuperRecyclerFragment;
 import com.okar.icz.common.uiimage.AnimateFirstDisplayListener;
 import com.okar.icz.utils.Config;
+import com.okar.icz.utils.HttpClient;
 import com.okar.icz.view.InputDialogFragment;
 
 import org.apache.http.Header;
@@ -45,7 +47,7 @@ public class MerchantFragmentList extends BaseSuperRecyclerFragment {
 
         @Override
         public RecyclerView.ViewHolder create(ViewGroup viewGroup, int i) {
-            View v = layoutInflater.inflate(R.layout.item_merchant, viewGroup, false);
+            View v = inflater.inflate(R.layout.item_merchant, viewGroup, false);
             return new MyViewHolder(v);
         }
 
@@ -65,7 +67,7 @@ public class MerchantFragmentList extends BaseSuperRecyclerFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootView==null) {
             log.info("create root view");
-            rootView = layoutInflater.inflate(R.layout.fragmentlist_merchant, container, false);
+            rootView = inflater.inflate(R.layout.fragmentlist_merchant, container, false);
         }
         return rootView;
     }
@@ -110,7 +112,7 @@ public class MerchantFragmentList extends BaseSuperRecyclerFragment {
             params.add("category", String.valueOf(category));
         }
         System.out.println("p ------->" + getP());
-        client.get(Config.URI.MERCHANT_LIST_URL, params, new JsonHttpResponseHandler() {
+        HttpClient.getInstance().get(Config.URI.MERCHANT_LIST_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -157,7 +159,7 @@ public class MerchantFragmentList extends BaseSuperRecyclerFragment {
         public void setView(JSONObject object) {
             nameTV.setText(object.optString("name"));
             nameTV.setOnClickListener(MerchantFragmentList.this);
-            il.displayImage(object.optString("cover"), coverIV, animateFirstListener);
+            ImageLoader.getInstance().displayImage(object.optString("cover"), coverIV, animateFirstListener);
         }
     }
 }

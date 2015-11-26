@@ -17,6 +17,7 @@ import com.loopj.android.http.RequestParams;
 import com.okar.icz.android.R;
 import com.okar.icz.base.BaseFragment;
 import com.okar.icz.utils.Config;
+import com.okar.icz.utils.HttpClient;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,15 +52,15 @@ public class MerchantFragment extends BaseFragment implements
         RequestParams params = new RequestParams();
         params.add("accountId", String.valueOf(146));
         params.add("uid", String.valueOf(20246));
-        client.get(Config.URI.MERCHANT_SORT_URL, params, new JsonHttpResponseHandler(){
+        HttpClient.getInstance().get(Config.URI.MERCHANT_SORT_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
                 super.onSuccess(response);
-                log.info("response "+response);
+                log.info("response " + response);
                 String type = response.optString("type");
-                if("success".equals(type)) {
+                if ("success".equals(type)) {
                     JSONArray sortList = response.optJSONArray("sortlist");
-                    for(int i=0;i<sortList.length();i++) {
+                    for (int i = 0; i < sortList.length(); i++) {
                         Fragment f = new MerchantFragmentList();
                         Bundle args = new Bundle();
                         JSONObject jo = sortList.optJSONObject(i);
@@ -77,7 +78,7 @@ public class MerchantFragment extends BaseFragment implements
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return layoutInflater.inflate(R.layout.fragment_merchant, container, false);
+        return inflater.inflate(R.layout.fragment_merchant, container, false);
     }
 
     @Override

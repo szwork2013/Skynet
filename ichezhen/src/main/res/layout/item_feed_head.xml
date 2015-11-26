@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:id="@+id/item_user_head" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/ItemUserName"
+        android:text="秋雨滴无痛"
+        android:id="@+id/item_user_name"
+        android:layout_alignTop="@+id/item_user_head"
+        android:layout_toRightOf="@+id/item_user_head"
+        android:layout_toEndOf="@+id/item_user_head"
+        android:layout_marginLeft="3dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/ItemUserInfo"
+        android:text="威海市 怕似懂非懂是非得失"
+        android:id="@+id/item_user_info"
+        android:layout_below="@+id/item_user_name"
+        android:layout_alignLeft="@+id/item_user_name"
+        android:layout_alignStart="@+id/item_user_name"
+        android:layout_marginTop="2dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/ItemTime"
+        android:text="11-25"
+        android:id="@+id/item_time"
+        android:layout_alignTop="@+id/item_user_head"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/item_user_brand"
+        android:layout_alignTop="@+id/item_user_head"
+        android:layout_toRightOf="@+id/item_user_name"
+        android:layout_toEndOf="@+id/item_user_name"
+        android:layout_marginLeft="3dp"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/iconfont_sex_men"
+        android:id="@+id/item_user_gender"
+        android:layout_alignTop="@+id/item_user_head"
+        android:layout_toRightOf="@+id/item_user_brand"
+        android:layout_toEndOf="@+id/item_user_brand"
+        android:layout_marginLeft="3dp"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/item_user_auth"
+        android:src="@drawable/icon_member_v"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        />
+</RelativeLayout>

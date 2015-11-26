@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.okar.icz.android.R;
 import com.okar.icz.base.ArrayRecyclerAdapter;
@@ -53,7 +54,7 @@ public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
 
         @Override
         public RecyclerView.ViewHolder create(ViewGroup viewGroup, int i) {
-            View v = layoutInflater.inflate(R.layout.item_give_card, viewGroup, false);
+            View v = inflater.inflate(R.layout.item_give_card, viewGroup, false);
             return new MyViewHolder(v);
         }
 
@@ -71,7 +72,7 @@ public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return layoutInflater.inflate(R.layout.fragmentlist_give_card, container, false);
+        return inflater.inflate(R.layout.fragmentlist_give_card, container, false);
     }
 
     protected void init() {
@@ -136,7 +137,7 @@ public class GiveCardFragmentList extends BaseSwipeRecyclerFragmentList
         public void setView(ApplyMemberCardRecord item) {
             final Member member = item.getMember();
             if (member != null) {
-                il.displayImage(member.getHead(), headIV, animateFirstListener);
+                ImageLoader.getInstance().displayImage(member.getHead(), headIV, animateFirstListener);
                 wxNameTV.setText(member.getWxNickname());
                 mobileTV.setText(member.getMobile());
                 nameTV.setText(member.getNickname());

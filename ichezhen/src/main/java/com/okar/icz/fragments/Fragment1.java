@@ -47,7 +47,7 @@ public class Fragment1 extends BaseSwipeRecyclerFragmentList implements SwipeRef
 
                 @Override
                 public RecyclerView.ViewHolder create(ViewGroup viewGroup, int i) {
-                    View v = layoutInflater.inflate(R.layout.view_loading, viewGroup, false);
+                    View v = inflater.inflate(R.layout.view_loading, viewGroup, false);
                     return new MyViewHolder(v);
                 }
 
@@ -65,7 +65,7 @@ public class Fragment1 extends BaseSwipeRecyclerFragmentList implements SwipeRef
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return layoutInflater.inflate(R.layout.fragmentlist_give_card, container, false);
+        return inflater.inflate(R.layout.fragmentlist_give_card, container, false);
     }
 
     @Override

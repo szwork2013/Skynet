@@ -18,6 +18,7 @@ import com.okar.icz.fragments.Fragment1;
 import com.okar.icz.fragments.Fragment2;
 import com.okar.icz.fragments.Fragment3;
 import com.okar.icz.fragments.GiveCardFragmentList;
+import com.okar.icz.fragments.HomeFragment;
 import com.okar.icz.fragments.MerchantFragment;
 import com.okar.icz.fragments.MerchantFragmentList;
 
@@ -37,7 +38,7 @@ public class MainActivity extends BaseActivity {
     private Resources resources;
 
     //定义数组来存放Fragment界面
-    private Class fragmentArray[] = {Fragment1.class, Fragment2.class, Fragment3.class};
+    private Class fragmentArray[] = {HomeFragment.class, Fragment2.class, Fragment3.class};
 
     //定义数组来存放按钮图片
     private int mImageViewArray[] = {R.drawable.tab_home_btn, R.drawable.tab_commodity_btn, R.drawable.tab_me_btn};
@@ -85,7 +86,7 @@ public class MainActivity extends BaseActivity {
                 textView.setTextColor(resources.getColor(R.color.tab_highlight_text));
                 for (int i = 0; i < mTabHost.getTabWidget().getChildCount(); i++) {
                     if(i!=curr) {
-                        View currView = mTabHost.getTabWidget().getChildAt(0);
+                        View currView = mTabHost.getTabWidget().getChildAt(i);
                         ((TextView)currView.findViewById(R.id.textview)).setTextColor(resources.getColor(R.color.tab_def_text));
                     }
                 }

@@ -13,12 +13,14 @@ import android.widget.TextView;
 import com.j256.ormlite.logger.LoggerFactory;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.okar.icz.android.R;
 import com.okar.icz.base.ArrayRecyclerAdapter;
 import com.okar.icz.base.BaseSuperRecyclerFragment;
 import com.okar.icz.common.uiimage.AnimateFirstDisplayListener;
 import com.okar.icz.utils.Config;
+import com.okar.icz.utils.HttpClient;
 import com.okar.icz.view.InputDialogFragment;
 
 import org.apache.http.Header;
@@ -42,7 +44,7 @@ public class EventFragmentList extends BaseSuperRecyclerFragment {
 
         @Override
         public RecyclerView.ViewHolder create(ViewGroup viewGroup, int i) {
-            View v = layoutInflater.inflate(R.layout.item_event, viewGroup, false);
+            View v = inflater.inflate(R.layout.item_event, viewGroup, false);
             return new MyViewHolder(v);
         }
 
@@ -60,7 +62,7 @@ public class EventFragmentList extends BaseSuperRecyclerFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = layoutInflater.inflate(R.layout.fragmentlist_event, container, false);
+        rootView = inflater.inflate(R.layout.fragmentlist_event, container, false);
         return rootView;
     }
 
@@ -85,7 +87,7 @@ public class EventFragmentList extends BaseSuperRecyclerFragment {
         params.add("accountId", String.valueOf(146));
         params.add("uid", String.valueOf(20624));
         System.out.println("p ------->" + getP());
-        client.get(Config.URI.EVENT_LIST_URL, params, new JsonHttpResponseHandler() {
+        HttpClient.getInstance().get(Config.URI.EVENT_LIST_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -136,7 +138,7 @@ public class EventFragmentList extends BaseSuperRecyclerFragment {
             nameTV.setOnClickListener(EventFragmentList.this);
             Long submitEndTime = object.optLong("submitEndTime");
             submitTimeTV.setText(DateFormat.format("yyyy年MM月dd日 HH:mm", submitEndTime));
-            il.displayImage(object.optString("cover"), coverIV, animateFirstListener);
+            ImageLoader.getInstance().displayImage(object.optString("cover"), coverIV, animateFirstListener);
         }
     }
 }
