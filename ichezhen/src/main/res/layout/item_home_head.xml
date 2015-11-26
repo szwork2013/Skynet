@@ -1,11 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="北京奥迪车友会"
-        android:id="@+id/textView3" />
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:padding="10dp"
+         android:background="@drawable/bg_index">
+
+
+         <ImageView
+             android:layout_width="80dp"
+             android:layout_height="80dp"
+             android:id="@+id/item_home_head"
+             android:background="#ddd"
+             android:layout_alignParentTop="true"
+             android:layout_alignParentLeft="true"
+             android:layout_alignParentStart="true" />
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="北京奥迪车友会"
+             android:id="@+id/item_home_name"
+             android:layout_alignTop="@+id/item_home_head"
+             android:layout_toRightOf="@+id/item_home_head"
+             android:layout_toEndOf="@+id/item_home_head"
+             android:layout_marginLeft="5dp"
+             android:layout_marginStart="5dp"
+             android:textSize="15sp"
+             android:textColor="@color/white"
+             android:layout_marginTop="3dp"/>
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="会长 Snow"
+             android:id="@+id/item_home_hz"
+             android:textSize="13sp"
+             android:textColor="@color/white"
+             android:layout_below="@+id/item_home_name"
+             android:layout_alignLeft="@+id/item_home_name"
+             android:layout_alignStart="@+id/item_home_name"
+             android:layout_marginTop="5dp"/>
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="嘉峪关 不限车系"
+             android:textSize="13sp"
+             android:textColor="@color/white"
+             android:id="@+id/item_home_info"
+             android:layout_below="@+id/item_home_hz"
+             android:layout_alignLeft="@+id/item_home_name"
+             android:layout_alignStart="@+id/item_home_name"
+             android:layout_marginTop="5dp" />
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="总贴量173"
+             android:textSize="13sp"
+             android:textColor="@color/white"
+             android:id="@+id/item_home_topic_num"
+             android:layout_below="@+id/item_home_info"
+             android:layout_alignLeft="@+id/item_home_name"
+             android:layout_alignStart="@+id/item_home_name"
+             android:layout_marginTop="5dp" />
+
+         <ImageView
+             android:layout_width="14dp"
+             android:layout_height="15dp"
+             android:id="@+id/member_num"
+             android:src="@drawable/iconfont_member_num"
+             android:layout_alignTop="@+id/item_home_topic_num"
+             android:layout_toRightOf="@+id/item_home_topic_num"
+             android:layout_toEndOf="@+id/item_home_topic_num"
+             android:layout_marginLeft="30dp"/>
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textSize="13sp"
+             android:textColor="@color/white"
+             android:text="11人"
+             android:id="@+id/item_home_member_num"
+             android:layout_alignTop="@+id/item_home_topic_num"
+             android:layout_toRightOf="@+id/member_num"
+             android:layout_toEndOf="@+id/item_home_topic_num"
+             android:layout_marginLeft="2dp"/>
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textSize="13sp"
+             android:textColor="@color/white"
+             android:text="群阵币 120"
+             android:id="@+id/item_home_score"
+             android:layout_alignTop="@+id/item_home_member_num"
+             android:layout_toRightOf="@+id/item_home_member_num"
+             android:layout_toEndOf="@+id/item_home_member_num"
+             android:layout_marginLeft="20dp"
+             android:layout_marginStart="20dp" />
+
+     </RelativeLayout>
+
 </LinearLayout>

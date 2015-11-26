@@ -14,6 +14,7 @@ import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.okar.icz.android.R;
 import com.okar.icz.base.BaseFragment;
+import com.okar.icz.view.DividerItemDecoration;
 
 /**
  * Created by wangfengchen on 15/11/26.
@@ -37,6 +38,11 @@ public abstract class SuperRecyclerBaseFragmentList
         mRecycler.setRefreshListener(this);
         mRecycler.setupMoreListener(this, getMax());
         mRecycler.setAdapter(getAdapter());
+        initRecycler(mRecycler);
+    }
+
+    public void initRecycler(SuperRecyclerView view) {
+
     }
 
     /**

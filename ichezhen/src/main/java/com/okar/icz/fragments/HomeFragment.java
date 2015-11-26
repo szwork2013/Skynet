@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.okar.icz.android.R;
 import com.okar.icz.common.Constants;
@@ -15,6 +16,7 @@ import com.okar.icz.common.SuperRecyclerBaseFragmentList;
 import com.okar.icz.entry.Feed;
 import com.okar.icz.entry.Member;
 import com.okar.icz.entry.MemberCar;
+import com.okar.icz.view.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,18 +40,22 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
     }
 
     void test() {
-        Feed feed = new Feed();
-        feed.setContent("werewfsfsdfsdfsdfdsfdsfsfdsfsdfdsfdsfsdfsdf");
-        Member member = new Member();
-        member.setLevel(2);
-        member.setNickname("王晨");
-        member.setHead("http://img.ichezhen.com/0/1447910592879.png");
-        member.setGender(2);
-        MemberCar car = new MemberCar();
-        car.setBrand(33);
-        car.setPinpai("奥迪");
-        member.setCar(car);
-        items.add(feed);
+        for (int i=0;i<3;i++) {
+            Feed feed = new Feed();
+            feed.setContent("werewfsfsdfsdfsdfdsfdsfsfdsfsdfdsfdsfsdfsdf");
+            Member member = new Member();
+            member.setChengshi("北京市");
+            member.setLevel(2);
+            member.setNickname("王晨");
+            member.setHead("http://img.ichezhen.com/0/1447910592879.png");
+            member.setGender(2);
+            MemberCar car = new MemberCar();
+            car.setBrand(33);
+            car.setPinpai("奥迪");
+            member.setCar(car);
+            feed.setMember(member);
+            items.add(feed);
+        }
     }
 
     private RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter
@@ -164,6 +170,12 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
 
     public RecyclerView.Adapter getAdapter() {
         return mAdapter;
+    }
+
+    @Override
+    public void initRecycler(SuperRecyclerView view) {
+//        view.addItemDecoration(new DividerItemDecoration(getActivity(),
+//                DividerItemDecoration.VERTICAL_LIST));
     }
 
     @Override

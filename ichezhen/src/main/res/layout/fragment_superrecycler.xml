@@ -9,4 +9,4 @@
     app:mainLayoutId="@layout/layout_custom_recyclerview"
     app:layout_progress="@layout/view_more_progress"
     app:recyclerClipToPadding="false"
-    app:scrollbarStyle="insideInset" />
+    android:background="@color/list_bg"/>

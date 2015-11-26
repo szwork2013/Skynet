@@ -34,4 +34,5 @@
     
     <color name="tab_def_text">#808080</color>
     <color name="tab_highlight_text">#50af55</color>
+    <color name="list_bg">#f1f1f1</color>
 </resources>
