@@ -3,7 +3,6 @@ package com.brik.chatservice.service.runnable;
 import com.brik.chatservice.service.MsgBlockingQueue;
 import com.j256.ormlite.logger.LoggerFactory;
 
-import org.jivesoftware.smack.util.StringUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;

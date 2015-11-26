@@ -1,4 +1,4 @@
-package com.okar.icz.android;
+package com.okar.icz.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,15 +14,12 @@ import com.j256.ormlite.logger.LoggerFactory;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.okar.icz.android.R;
 import com.okar.icz.base.ArrayRecyclerAdapter;
 import com.okar.icz.base.BaseSuperRecyclerFragment;
-import com.okar.icz.base.BaseSwipeRecyclerFragmentList;
 import com.okar.icz.common.uiimage.AnimateFirstDisplayListener;
-import com.okar.icz.po.Merchant;
 import com.okar.icz.utils.Config;
-import com.okar.icz.utils.JSONParser;
 import com.okar.icz.view.InputDialogFragment;
-import com.okar.icz.view.swipe.SwipeRefreshLayout;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -30,9 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import roboguice.inject.InjectView;
 
 /**
  * Created by wangfengchen on 15/5/21.

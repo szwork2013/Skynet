@@ -1,4 +1,4 @@
-package com.okar.icz.android;
+package com.okar.icz.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;

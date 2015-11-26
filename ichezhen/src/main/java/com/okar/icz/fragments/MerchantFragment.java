@@ -1,10 +1,9 @@
-package com.okar.icz.android;
+package com.okar.icz.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,6 +14,7 @@ import android.view.ViewGroup;
 import com.j256.ormlite.logger.LoggerFactory;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.okar.icz.android.R;
 import com.okar.icz.base.BaseFragment;
 import com.okar.icz.utils.Config;
 

@@ -1,4 +1,4 @@
-package com.okar.icz.android;
+package com.okar.icz.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.okar.icz.android.R;
 import com.okar.icz.base.ArrayRecyclerAdapter;
 import com.okar.icz.base.BaseSwipeRecyclerFragmentList;
 import com.okar.icz.common.uiimage.AnimateFirstDisplayListener;

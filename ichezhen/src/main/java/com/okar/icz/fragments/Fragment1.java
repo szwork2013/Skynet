@@ -1,4 +1,4 @@
-package com.okar.icz.android;
+package com.okar.icz.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.okar.icz.android.R;
 import com.okar.icz.base.ArrayRecyclerAdapter;
 import com.okar.icz.base.BaseSwipeRecyclerFragmentList;
 import com.okar.icz.view.swipe.SwipeRefreshLayout;

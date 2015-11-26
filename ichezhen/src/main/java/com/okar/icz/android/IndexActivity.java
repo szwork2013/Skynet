@@ -1,24 +1,16 @@
 package com.okar.icz.android;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.ImageSpan;
-import android.text.style.RelativeSizeSpan;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.inject.Inject;
 import com.okar.icz.base.BaseActivity;
+import com.okar.icz.fragments.Fragment2;
+import com.okar.icz.fragments.Fragment3;
+import com.okar.icz.fragments.MerchantFragmentList;
 
 import java.util.ArrayList;
 import java.util.List;
