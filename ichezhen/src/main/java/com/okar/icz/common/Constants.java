@@ -9,4 +9,6 @@ public class Constants {
     public static final String RESOURCE_IMG_URI = SERVER_NAME+"/resource/img/";
     public static final String BRAND_RESOURCE_IMG_URI = RESOURCE_IMG_URI+"/brand/";
 
+    public static final String GET_FEED_ALL = SERVER_NAME+ "/feed/getFeedAll.htm";
+
 }

@@ -15,6 +15,7 @@ import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.okar.icz.android.R;
 import com.okar.icz.base.BaseFragment;
 import com.okar.icz.view.DividerItemDecoration;
+import com.okar.icz.view.RecyclerViewHeader;
 
 /**
  * Created by wangfengchen on 15/11/26.
@@ -39,6 +40,24 @@ public abstract class SuperRecyclerBaseFragmentList
         mRecycler.setupMoreListener(this, getMax());
         mRecycler.setAdapter(getAdapter());
         initRecycler(mRecycler);
+    }
+
+    public RecyclerView getRecycler() {
+        return mRecycler.getRecyclerView();
+    }
+
+    public SuperRecyclerView getSuperRecycler() {
+        return mRecycler;
+    }
+
+    public void refreshOnComplete() {
+        mRecycler.getSwipeToRefresh().setRefreshing(false);
+    }
+
+    public RecyclerViewHeader addHeadView(int layout) {
+        RecyclerViewHeader header = RecyclerViewHeader.fromXml(getActivity(), layout);
+        header.attachTo(getRecycler());
+        return header;
     }
 
     public void initRecycler(SuperRecyclerView view) {

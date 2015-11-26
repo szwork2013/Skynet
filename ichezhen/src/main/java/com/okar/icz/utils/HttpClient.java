@@ -1,10 +1,13 @@
 package com.okar.icz.utils;
 
+import com.google.inject.Inject;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.ResponseHandlerInterface;
+import com.okar.icz.common.Constants;
 
 /**
  * Created by wangfengchen on 15/4/8.
@@ -29,6 +32,10 @@ public class HttpClient {
         return instance;
     }
 
+    public void getAccountInfo(Integer accountId, ResponseHandlerInterface handler) {
+        String url = Constants.SERVER_NAME + "/account/getInfo.htm?id=" + accountId;
+        client.get(url, handler);
+    }
 
     public void get(String urlString, AsyncHttpResponseHandler res)    //用一个完整url获取一个string对象
     {
