@@ -1,4 +1,4 @@
-package com.okar.icz.base;
+package com.okar.icz.common;
 
 import android.app.Activity;
 import android.support.v4.app.FragmentTransaction;

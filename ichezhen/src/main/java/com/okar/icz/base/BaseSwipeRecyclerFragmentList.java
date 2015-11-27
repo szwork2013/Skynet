@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 
+import com.okar.icz.common.BaseFragment;
 import com.okar.icz.view.swipe.SwipeRefreshLayout;
 
 /**

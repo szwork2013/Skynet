@@ -15,7 +15,7 @@ import com.j256.ormlite.logger.LoggerFactory;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.okar.icz.android.R;
-import com.okar.icz.base.BaseFragment;
+import com.okar.icz.common.BaseFragment;
 import com.okar.icz.utils.Config;
 import com.okar.icz.utils.HttpClient;
 

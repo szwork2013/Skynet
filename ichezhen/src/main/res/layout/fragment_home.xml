@@ -26,7 +26,7 @@
         android:id="@+id/select_post_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#55ffffff">
+        android:background="#eeffffff">
 
         <ImageView
             style="@style/PostTopicRoundBtn"

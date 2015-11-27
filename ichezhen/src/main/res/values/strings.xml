@@ -29,4 +29,10 @@
         <item>RotateDown</item>
         <item>Accordion</item>
     </string-array>
+
+    <string name="pick_image_title">请选择上传方式</string>
+    <string-array name="pick_image">
+        <item>从相册上传</item>
+        <item>从相机上传</item>
+    </string-array>
 </resources>

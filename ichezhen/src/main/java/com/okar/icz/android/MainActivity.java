@@ -2,7 +2,6 @@ package com.okar.icz.android;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,16 +11,10 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
-import com.okar.icz.base.BaseActivity;
-import com.okar.icz.fragments.EventFragmentList;
-import com.okar.icz.fragments.Fragment1;
+import com.okar.icz.common.BaseActivity;
 import com.okar.icz.fragments.Fragment2;
 import com.okar.icz.fragments.Fragment3;
-import com.okar.icz.fragments.GiveCardFragmentList;
 import com.okar.icz.fragments.HomeContainer;
-import com.okar.icz.fragments.HomeFragment;
-import com.okar.icz.fragments.MerchantFragment;
-import com.okar.icz.fragments.MerchantFragmentList;
 
 import roboguice.inject.InjectView;
 

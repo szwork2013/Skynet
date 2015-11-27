@@ -1,9 +1,15 @@
 package com.okar.icz.common;
 
+import android.os.Environment;
+
 /**
  * Created by wangfengchen on 15/11/26.
  */
 public class Constants {
+    public static final String SDCARD_PATH = Environment
+            .getExternalStorageDirectory().getAbsolutePath();
+    public static final String ICHEZHEN_ROOT_DIR = SDCARD_PATH + "/ichezhen";
+    public static final String TEMP_ROOT_DIR = ICHEZHEN_ROOT_DIR + "/temp";
 
     public static final String SERVER_NAME = "http://qq.ichezhen.com";
     public static final String RESOURCE_IMG_URI = SERVER_NAME+"/resource/img/";

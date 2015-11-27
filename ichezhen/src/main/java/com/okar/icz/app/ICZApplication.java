@@ -1,12 +1,9 @@
 package com.okar.icz.app;
 
 import android.app.Application;
-import android.content.Intent;
 import android.graphics.Bitmap;
 
 import com.j256.ormlite.logger.LoggerFactory;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

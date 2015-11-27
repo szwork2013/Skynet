@@ -9,12 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.inject.Inject;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.okar.icz.android.R;
-import com.okar.icz.base.BaseFragment;
-import com.okar.icz.view.DividerItemDecoration;
 import com.okar.icz.view.RecyclerViewHeader;
 
 /**

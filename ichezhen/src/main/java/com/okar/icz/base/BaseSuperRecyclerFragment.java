@@ -8,6 +8,7 @@ import android.view.View;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.okar.icz.android.R;
+import com.okar.icz.common.BaseFragment;
 
 /**
  * Created by wangfengchen on 15/5/28.

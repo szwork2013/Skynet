@@ -1,4 +1,4 @@
-package com.okar.icz.base;
+package com.okar.icz.common;
 
 import android.app.ActionBar;
 import android.os.Build;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,11 +22,7 @@ import roboguice.activity.RoboFragmentActivity;
 /**
  * Created by wangfengchen on 14/10/19.
  */
-public abstract class BaseActivity extends RoboFragmentActivity implements View.OnClickListener {
-
-    protected HttpClient client = HttpClient.getInstance();
-
-    protected ImageLoader il = ImageLoader.getInstance();
+public class BaseActivity extends RoboFragmentActivity implements View.OnClickListener {
 
     protected FragmentManager fragmentManager;
 
@@ -35,23 +32,10 @@ public abstract class BaseActivity extends RoboFragmentActivity implements View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();
-        onListener();
-    }
-
-    protected void init() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-
-        // 如果 Activity 有 actionbar，那么还需要在 Activity 的布局文件的根节点上设置两个属性
-        //        android:clipToPadding="true"
-        //        android:fitsSystemWindows="true"
-    }
-
-    protected void onListener() {
-
     }
 
     @Override
@@ -99,4 +83,32 @@ public abstract class BaseActivity extends RoboFragmentActivity implements View.
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
+    /***
+     * 获取屏幕宽度
+     *
+     * @return
+     */
+    protected int getScreenWidth() {
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float density = dm.density; // 屏幕密度（像素比例：0.75/1.0/1.5/2.0）
+        return (int) dm.widthPixels; // 屏幕宽（px，如：480px）
+    }
+
+    /***
+     * 获取屏幕高度
+     *
+     * @return
+     */
+    protected int getScreenHeight() {
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float density = dm.density; // 屏幕密度（像素比例：0.75/1.0/1.5/2.0）
+        return (int) dm.heightPixels;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
 }
