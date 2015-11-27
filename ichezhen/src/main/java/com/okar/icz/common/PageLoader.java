@@ -4,13 +4,15 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
-import com.okar.icz.model.PageResult;
+import com.okar.icz.entry.PageResult;
 import com.okar.icz.utils.HttpClient;
 
 import org.apache.http.Header;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -20,7 +22,7 @@ public class PageLoader<T> extends TextHttpResponseHandler {
 
     PageResult<T> pageResult;
 
-    Class<T> tempCls;
+    Type type;
 
     private String url;
 
@@ -32,9 +34,10 @@ public class PageLoader<T> extends TextHttpResponseHandler {
         return params;
     }
 
-    public PageLoader(String url, LoaderCallback<T> c) {
+    public PageLoader(String url, Type t, LoaderCallback<T> c) {
         this.url = url;
         callback = c;
+        type = t;
     }
 
     public void refresh() {
@@ -64,7 +67,7 @@ public class PageLoader<T> extends TextHttpResponseHandler {
         if (statusCode == 200) {
             GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
             Gson gson = builder.create();
-            pageResult = (PageResult<T>) gson.fromJson(responseBody, tempCls);
+            pageResult = gson.fromJson(responseBody, type);
             callback.onSuccess(pageResult.getP(), pageResult.getData());
         }
     }

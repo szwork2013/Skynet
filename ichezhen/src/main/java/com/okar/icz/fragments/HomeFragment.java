@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
@@ -25,6 +26,7 @@ import com.okar.icz.entry.Account;
 import com.okar.icz.entry.Feed;
 import com.okar.icz.entry.Member;
 import com.okar.icz.entry.MemberCar;
+import com.okar.icz.entry.PageResult;
 import com.okar.icz.utils.HttpClient;
 import com.okar.icz.view.DividerItemDecoration;
 
@@ -49,28 +51,31 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
     };
 
     PageLoader<Feed> feedPageLoader =
-            new PageLoader<>(Constants.GET_FEED_ALL, new PageLoader.LoaderCallback<Feed>() {
-        @Override
-        public void onSuccess(int p, List<Feed> datas) {
-            if(p==0) {//是刷新的
-                Object o = items.get(0);
-                items = new ArrayList<>();
-                items.add(o);
-            }
-            HomeFragment.this.items.addAll(datas);
-            mAdapter.notifyDataSetChanged();
-        }
+            new PageLoader<>(Constants.GET_FEED_ALL,
+                    new TypeToken<PageResult<Feed>>() {
+                    }.getType(),
+                    new PageLoader.LoaderCallback<Feed>() {
+                        @Override
+                        public void onSuccess(int p, List<Feed> d) {
+                            if (p == 0) {//是刷新的
+                                Object o = items.get(0);
+                                items = new ArrayList<>();
+                                items.add(o);
+                            }
+                            HomeFragment.this.items.addAll(d);
+                            mAdapter.notifyDataSetChanged();
+                        }
 
-        @Override
-        public void onFailure(String responseBody, Throwable error) {
+                        @Override
+                        public void onFailure(String responseBody, Throwable error) {
 
-        }
+                        }
 
-        @Override
-        public void onFinish() {
-            refreshOnComplete();
-        }
-    });
+                        @Override
+                        public void onFinish() {
+                            refreshOnComplete();
+                        }
+                    });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

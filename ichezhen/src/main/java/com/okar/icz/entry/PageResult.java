@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by wangfengchen on 15/11/26.
  */
-public class BasePageResult<T> {
+public class PageResult<T> {
     @Expose
     int p;
     @Expose
