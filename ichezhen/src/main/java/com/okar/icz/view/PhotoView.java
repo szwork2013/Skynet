@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.okar.icz.android.R;
+import com.okar.icz.test.StringListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,7 @@ public class PhotoView extends RecyclerView {
             if(viewType==0){//增加
                 photoViewHolder.deleteIV.setVisibility(View.GONE);
                 photoViewHolder.photoIV.setImageResource(R.drawable.iconfont_jiahao);
-                photoViewHolder.photoIV.setPadding(20, 20, 20, 20);
+                photoViewHolder.photoIV.setPadding(35, 35, 35, 35);
                 photoViewHolder.photoIV.setBackgroundResource(R.drawable.add_photo_bg);
                 photoViewHolder.photoIV.setOnClickListener(new OnClickListener() {
                     @Override
@@ -129,4 +130,13 @@ public class PhotoView extends RecyclerView {
         mAdapter.notifyItemInserted(index);
     }
 
+    public List<String> getPhotoUrls() {
+        List<String> rs = new ArrayList<String>();
+        for (Photo photo : photos) {
+            if(photo.type==1) {
+                rs.add(photo.url);
+            }
+        }
+        return rs;
+    }
 }

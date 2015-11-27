@@ -3,6 +3,8 @@
     package="com.okar.icz.android" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:name="com.okar.icz.app.ICZApplication"
         android:allowBackup="true"
@@ -28,7 +30,7 @@
         </activity>
 
         <activity
-            android:name=".TestActivity">
+            android:name=".PostTopicActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

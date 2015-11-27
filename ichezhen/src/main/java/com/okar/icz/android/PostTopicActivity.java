@@ -1,5 +1,6 @@
 package com.okar.icz.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -9,7 +10,7 @@ import com.okar.icz.view.photo.PickImageBaseActivity;
 /**
  * Created by wangfengchen on 15/11/27.
  */
-public class PostTopicActivity extends PickImageBaseActivity {
+public class PostTopicActivity extends BaseActivity {
 
 
     @Override
@@ -21,5 +22,12 @@ public class PostTopicActivity extends PickImageBaseActivity {
     @Override
     public void onClick(View view) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        fragmentManager.findFragmentById(R.id.fragment_post_topic)
+                .onActivityResult(requestCode, resultCode, data);
     }
 }

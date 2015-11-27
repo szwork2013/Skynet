@@ -24,6 +24,7 @@ import roboguice.activity.RoboFragmentActivity;
  */
 public class BaseActivity extends RoboFragmentActivity implements View.OnClickListener {
 
+    @Inject
     protected FragmentManager fragmentManager;
 
     @Inject

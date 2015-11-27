@@ -9,6 +9,9 @@ import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.ResponseHandlerInterface;
 import com.okar.icz.common.Constants;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 /**
  * Created by wangfengchen on 15/4/8.
  */
@@ -35,6 +38,18 @@ public class HttpClient {
     public void getAccountInfo(Integer accountId, ResponseHandlerInterface handler) {
         String url = Constants.SERVER_NAME + "/account/getInfo.htm?id=" + accountId;
         client.get(url, handler);
+    }
+
+    public void uploadImage(String filePath, ResponseHandlerInterface handler) {
+        String url = Constants.SERVER_NAME + "/upload/uploadFile.htm";
+        RequestParams params = new RequestParams();
+        try {
+            params.put("upload", new File(filePath));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        params.add("uid", String.valueOf(0));
+        client.post(url, params, handler);
     }
 
     public void get(String urlString, AsyncHttpResponseHandler res)    //用一个完整url获取一个string对象

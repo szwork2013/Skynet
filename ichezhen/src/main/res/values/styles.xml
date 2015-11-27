@@ -255,4 +255,25 @@
         <item name="android:padding">15dp</item>
     </style>
 
+    <style name="SubmitBtn">
+        <item name="android:background">@drawable/submit_btn_bg</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:textColor">#585858</item>
+    </style>
+
+    <style name="Msg">
+        <item name="android:textColor">#C2BEBE</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    
+    <style name="Input">
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/input_bg</item>
+        <item name="android:gravity">top|left</item>
+        <item name="android:textColorHint">#C2BEBE</item>
+        <item name="android:textColor">#C2BEBE</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
 </resources>

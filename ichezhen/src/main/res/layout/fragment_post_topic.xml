@@ -1,13 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" android:background="@color/white">
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:id="@+id/input"
         android:layout_margin="10dp"
-        android:background="@drawable/input_bg"
+        style="@style/Input"
+        android:hint="一个好的发帖能让你备受关注"
         android:inputType="text" />
-</LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发帖奖励累积可达150阵币"
+        style="@style/Msg"
+        android:id="@+id/post_topic_msg"
+        android:layout_below="@+id/input"
+        android:layout_alignLeft="@+id/input"
+        android:layout_alignStart="@+id/input" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0/400"
+        style="@style/Msg"
+        android:id="@+id/post_topic_text_count"
+        android:layout_below="@+id/input"
+        android:layout_alignRight="@+id/input"
+        android:layout_alignEnd="@+id/input" />
+
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        class="com.okar.icz.view.PhotoView"
+        android:id="@+id/photo_view"
+        android:layout_below="@+id/post_topic_msg"
+        android:layout_alignLeft="@+id/post_topic_msg"
+        android:layout_alignStart="@+id/post_topic_msg"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        style="@style/SubmitBtn"
+        android:text="发布帖子"
+        android:id="@+id/post_topic"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>
