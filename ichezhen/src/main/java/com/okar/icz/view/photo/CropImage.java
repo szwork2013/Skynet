@@ -11,9 +11,10 @@ import android.graphics.RectF;
 import android.media.FaceDetector;
 import android.os.Handler;
 
+import com.okar.icz.view.imagefactory.ImageFactoryCrop;
+
 import java.util.concurrent.CountDownLatch;
 
-import cn.okar.ichezhen.view.imagefactory.ImageFactoryCrop;
 
 
 /**

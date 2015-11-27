@@ -12,7 +12,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.okar.icz.android.R;
-import com.okar.icz.utils.Config;
 import com.okar.icz.utils.HttpClient;
 
 /**
@@ -53,13 +52,6 @@ public class ICZApplication extends Application{
         RequestParams params = new RequestParams();
         params.add("key", "uid");
         params.add("value", "20624");
-        HttpClient.getInstance().get(Config.URI.SET_COOKIE, params, new TextHttpResponseHandler() {
-            @Override
-            public void onSuccess(String content) {
-                super.onSuccess(content);
-                System.out.println(content);
-            }
-        });
     }
 
 }

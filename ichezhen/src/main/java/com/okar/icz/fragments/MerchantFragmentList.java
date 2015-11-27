@@ -19,7 +19,6 @@ import com.okar.icz.android.R;
 import com.okar.icz.base.ArrayRecyclerAdapter;
 import com.okar.icz.base.BaseSuperRecyclerFragment;
 import com.okar.icz.common.uiimage.AnimateFirstDisplayListener;
-import com.okar.icz.utils.Config;
 import com.okar.icz.utils.HttpClient;
 import com.okar.icz.view.InputDialogFragment;
 
@@ -112,7 +111,7 @@ public class MerchantFragmentList extends BaseSuperRecyclerFragment {
             params.add("category", String.valueOf(category));
         }
         System.out.println("p ------->" + getP());
-        HttpClient.getInstance().get(Config.URI.MERCHANT_LIST_URL, params, new JsonHttpResponseHandler() {
+        HttpClient.getInstance().get("", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

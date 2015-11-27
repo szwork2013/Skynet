@@ -16,7 +16,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.okar.icz.android.R;
 import com.okar.icz.common.BaseFragment;
-import com.okar.icz.utils.Config;
 import com.okar.icz.utils.HttpClient;
 
 import org.json.JSONArray;
@@ -52,7 +51,7 @@ public class MerchantFragment extends BaseFragment implements
         RequestParams params = new RequestParams();
         params.add("accountId", String.valueOf(146));
         params.add("uid", String.valueOf(20246));
-        HttpClient.getInstance().get(Config.URI.MERCHANT_SORT_URL, params, new JsonHttpResponseHandler() {
+        HttpClient.getInstance().get("", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
                 super.onSuccess(response);

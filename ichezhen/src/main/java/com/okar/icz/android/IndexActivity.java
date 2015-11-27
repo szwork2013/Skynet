@@ -30,9 +30,7 @@ public class IndexActivity extends BaseActivity{
 
     private Button[] tabs;
 
-    @Override
     protected void init() {
-        super.init();
         setContentView(R.layout.activity_index);
         initActionBar();
         initPager();
