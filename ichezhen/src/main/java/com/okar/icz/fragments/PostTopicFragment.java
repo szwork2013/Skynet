@@ -1,6 +1,5 @@
 package com.okar.icz.fragments;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +13,7 @@ import android.widget.EditText;
 import com.google.inject.Inject;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.okar.icz.android.R;
-import com.okar.icz.common.BaseFragment;
+import com.okar.icz.common.ProgressView;
 import com.okar.icz.common.SystemSettings;
 import com.okar.icz.utils.HttpClient;
 import com.okar.icz.utils.StringUtils;
@@ -52,6 +51,8 @@ public class PostTopicFragment extends PickImageBaseFragment {
     @Inject
     SystemSettings settings;
 
+    ProgressView progressView;
+
     public static PostTopicFragment getInstance(int topicType) {
         PostTopicFragment fragment = new PostTopicFragment();
         Bundle args = new Bundle();
@@ -83,6 +84,7 @@ public class PostTopicFragment extends PickImageBaseFragment {
             }
         });
         postTopicBtn.setOnClickListener(this);
+        progressView = new ProgressView(getActivity(), (ViewGroup) view);
     }
 
     @Override
@@ -97,12 +99,19 @@ public class PostTopicFragment extends PickImageBaseFragment {
     @Override
     protected void pickImageResult(Bitmap bitmap, final String filePath) {
         Log.d("result", filePath);
+        progressView.show();
         HttpClient.getInstance().uploadImage(filePath, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onProgress(int bytesWritten, int totalSize) {
+                super.onProgress(bytesWritten, totalSize);
+                progressView.progress(bytesWritten, totalSize);
+            }
 
             @Override
             public void onFinish() {
                 super.onFinish();
-
+                progressView.dismiss();
             }
 
             @Override
@@ -121,9 +130,25 @@ public class PostTopicFragment extends PickImageBaseFragment {
             showToast("帖子内容不能为空");
             return;
         }
+        postTopicBtn.setEnabled(false);
+        progressView.show();
         List<String> photos = photoView.getPhotoUrls();
         try {
             HttpClient.getInstance().postTopicOrQuestion(getActivity(), settings.getAccountId(), settings.getUid(), text, photos, topicType, new JsonHttpResponseHandler() {
+
+                @Override
+                public void onProgress(int bytesWritten, int totalSize) {
+                    super.onProgress(bytesWritten, totalSize);
+                    progressView.progress(bytesWritten, totalSize);
+                }
+
+                @Override
+                public void onFinish() {
+                    super.onFinish();
+                    postTopicBtn.setEnabled(true);
+                    progressView.dismiss();
+                }
+
                 @Override
                 public void onSuccess(JSONObject response) {
                     super.onSuccess(response);
