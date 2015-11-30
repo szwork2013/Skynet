@@ -21,8 +21,10 @@ import com.okar.icz.utils.StringUtils;
 import com.okar.icz.view.PhotoView;
 import com.okar.icz.view.photo.PickImageBaseFragment;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import roboguice.inject.InjectView;
@@ -120,16 +122,20 @@ public class PostTopicFragment extends PickImageBaseFragment {
             return;
         }
         List<String> photos = photoView.getPhotoUrls();
-        HttpClient.getInstance().postTopicOrQuestion(settings.getAccountId(), settings.getUid(), text, photos, topicType, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(JSONObject response) {
-                super.onSuccess(response);
-                Log.d("postTopicd", "response " + response);
-                showToast(response.optString("message"));
-                if(HttpClient.isSuccess(response)) {
-                    //成功跳转
+        try {
+            HttpClient.getInstance().postTopicOrQuestion(getActivity(), settings.getAccountId(), settings.getUid(), text, photos, topicType, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(JSONObject response) {
+                    super.onSuccess(response);
+                    Log.d("postTopicd", "response " + response);
+                    showToast(response.optString("message"));
+                    if(HttpClient.isSuccess(response)) {
+                        //成功跳转
+                    }
                 }
-            }
-        });
+            });
+        } catch (JSONException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }

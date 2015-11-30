@@ -1,20 +1,28 @@
 package com.okar.icz.utils;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.google.inject.Inject;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.ResponseHandlerInterface;
 import com.okar.icz.common.Constants;
 import com.okar.icz.common.SystemSettings;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -61,17 +69,18 @@ public class HttpClient {
         client.post(url, params, handler);
     }
 
-    public void postTopicOrQuestion(Integer accountId, Integer uid, String content, List<String> photos, int type, ResponseHandlerInterface handler) {
+    public void postTopicOrQuestion(Context context, Integer accountId, Integer uid, String content, List<String> photos, int type, ResponseHandlerInterface handler) throws JSONException, UnsupportedEncodingException {
         String url = Constants.SERVER_NAME + "/feed/postFeed.htm";
-        RequestParams params = new RequestParams();
-        params.put("content", content);
-        params.put("accountId", accountId);
-        params.put("uid", uid);
-        params.put("type", type);
-        if(photos!=null && !photos.isEmpty()) {
-            params.put("cover", new JSONArray(photos).toString());
+        JSONObject json = new JSONObject();
+        json.put("content", content);
+        json.put("accountId", accountId);
+        json.put("uid", uid);
+        json.put("type", type);
+        if (photos != null && !photos.isEmpty()) {
+            json.put("cover", new JSONArray(photos).toString());
         }
-        client.post(url, params, handler);
+        Log.d("postTopicOrQuestion url", url + "?" + json);
+        client.post(context, url, new StringEntity(json.toString()), "application/json", handler);
     }
 
     public void get(String urlString, AsyncHttpResponseHandler res)    //用一个完整url获取一个string对象

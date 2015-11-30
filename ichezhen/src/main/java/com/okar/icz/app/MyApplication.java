@@ -29,7 +29,7 @@ public class MyApplication extends Application{
         initImageLoaderConfiguration();
         initRobo();
         settings.setAccountId(50605);
-        settings.setUid(28792);
+        settings.setUid(28793);
     }
 
     private void initRobo() {
