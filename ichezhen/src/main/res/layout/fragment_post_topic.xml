@@ -33,7 +33,7 @@
         android:layout_alignEnd="@+id/input" />
 
     <view
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/photo_width"
         android:layout_height="wrap_content"
         class="com.okar.icz.view.PhotoView"
         android:id="@+id/photo_view"

@@ -4,14 +4,17 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.okar.icz.android.R;
 import com.okar.icz.test.StringListAdapter;
+import com.okar.icz.utils.DensityUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +69,11 @@ public class PhotoView extends RecyclerView {
             if(viewType==0){//增加
                 photoViewHolder.deleteIV.setVisibility(View.GONE);
                 photoViewHolder.photoIV.setImageResource(R.drawable.iconfont_jiahao);
-                photoViewHolder.photoIV.setPadding(35, 35, 35, 35);
+                photoViewHolder.photoIV.setPadding(
+                        DensityUtils.dip2px(getContext(), 15),
+                        DensityUtils.dip2px(getContext(), 15),
+                        DensityUtils.dip2px(getContext(), 15),
+                        DensityUtils.dip2px(getContext(), 15));
                 photoViewHolder.photoIV.setBackgroundResource(R.drawable.add_photo_bg);
                 photoViewHolder.photoIV.setOnClickListener(new OnClickListener() {
                     @Override
