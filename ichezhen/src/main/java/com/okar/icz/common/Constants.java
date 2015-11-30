@@ -17,4 +17,7 @@ public class Constants {
 
     public static final String GET_FEED_ALL = SERVER_NAME+ "/feed/getFeedAll.htm";
 
+    public static final String HTTP_RESULT_SUCCESS  = "success";
+    public static final String HTTP_RESULT_ERROR  = "error";
+
 }

@@ -3,35 +3,42 @@ package com.okar.icz.app;
 import android.app.Application;
 import android.graphics.Bitmap;
 
-import com.j256.ormlite.logger.LoggerFactory;
-import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.TextHttpResponseHandler;
+import com.google.inject.Inject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.okar.icz.android.R;
-import com.okar.icz.utils.HttpClient;
+import com.okar.icz.common.MyModule;
+import com.okar.icz.common.SystemSettings;
+
+import roboguice.RoboGuice;
 
 /**
  * Created by wangfengchen on 15/1/13.
  */
-public class ICZApplication extends Application{
+public class MyApplication extends Application{
 
-    private final com.j256.ormlite.logger.Logger log = LoggerFactory.getLogger(ICZApplication.class);
+    @Inject
+    SystemSettings settings;
 
     @Override
     public void onCreate() {
         super.onCreate();
         initImageLoaderConfiguration();
-//        startService(new Intent(this, ChatService.class));
-//        initRobo();
-        login();
+        initRobo();
+        settings.setAccountId(50605);
+        settings.setUid(28792);
+    }
+
+    private void initRobo() {
+        super.onCreate();
+        RoboGuice. setBaseApplicationInjector(this, RoboGuice.DEFAULT_STAGE,
+                RoboGuice.newDefaultRoboModule(this), new MyModule(this));
     }
 
     private void initImageLoaderConfiguration(){
-        log.info("initImageLoaderConfiguration");
         DisplayImageOptions defaultDisplayImageOptions = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.whitesmoke)
                 .cacheInMemory(true)
@@ -46,12 +53,6 @@ public class ICZApplication extends Application{
                 .defaultDisplayImageOptions(defaultDisplayImageOptions)
                 .build();
         ImageLoader.getInstance().init(config);
-    }
-
-    private void login() {
-        RequestParams params = new RequestParams();
-        params.add("key", "uid");
-        params.add("value", "20624");
     }
 
 }

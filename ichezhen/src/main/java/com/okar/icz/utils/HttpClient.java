@@ -8,9 +8,14 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.ResponseHandlerInterface;
 import com.okar.icz.common.Constants;
+import com.okar.icz.common.SystemSettings;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 /**
  * Created by wangfengchen on 15/4/8.
@@ -35,6 +40,10 @@ public class HttpClient {
         return instance;
     }
 
+    public static boolean isSuccess(JSONObject result) {
+        return result != null && Constants.HTTP_RESULT_SUCCESS.equals(result.optString("type"));
+    }
+
     public void getAccountInfo(Integer accountId, ResponseHandlerInterface handler) {
         String url = Constants.SERVER_NAME + "/account/getInfo.htm?id=" + accountId;
         client.get(url, handler);
@@ -49,6 +58,19 @@ public class HttpClient {
             e.printStackTrace();
         }
         params.add("uid", String.valueOf(0));
+        client.post(url, params, handler);
+    }
+
+    public void postTopicOrQuestion(Integer accountId, Integer uid, String content, List<String> photos, int type, ResponseHandlerInterface handler) {
+        String url = Constants.SERVER_NAME + "/feed/postFeed.htm";
+        RequestParams params = new RequestParams();
+        params.put("content", content);
+        params.put("accountId", accountId);
+        params.put("uid", uid);
+        params.put("type", type);
+        if(photos!=null && !photos.isEmpty()) {
+            params.put("cover", new JSONArray(photos).toString());
+        }
         client.post(url, params, handler);
     }
 

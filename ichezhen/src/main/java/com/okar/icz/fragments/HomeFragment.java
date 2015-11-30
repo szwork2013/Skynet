@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.google.inject.Inject;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
@@ -22,6 +23,7 @@ import com.okar.icz.android.R;
 import com.okar.icz.common.Constants;
 import com.okar.icz.common.PageLoader;
 import com.okar.icz.common.SuperRecyclerBaseFragmentList;
+import com.okar.icz.common.SystemSettings;
 import com.okar.icz.entry.Account;
 import com.okar.icz.entry.Feed;
 import com.okar.icz.entry.Member;
@@ -43,6 +45,9 @@ import java.util.Map;
  * Created by wangfengchen on 15/11/26.
  */
 public class HomeFragment extends SuperRecyclerBaseFragmentList {
+
+    @Inject
+    SystemSettings settings;
 
     List items = new ArrayList();
 
@@ -259,7 +264,7 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
     }
 
     void loadHead() {
-        HttpClient.getInstance().getAccountInfo(50605, new TextHttpResponseHandler() {
+        HttpClient.getInstance().getAccountInfo(settings.getAccountId(), new TextHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseBody) {
