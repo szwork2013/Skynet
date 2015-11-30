@@ -21,7 +21,6 @@ import com.okar.icz.android.R;
  */
 public class ProgressView {
 
-    ImageView progressIV;
     TextView progressTV;
 
     PopupWindow popupWindow;
@@ -42,7 +41,6 @@ public class ProgressView {
         // 一个自定义的布局，作为显示的内容
         View contentView = LayoutInflater.from(context).inflate(
                 R.layout.layout_progress, null);
-        progressIV = (ImageView) contentView.findViewById(R.id.progress_image);
         progressTV = (TextView) contentView.findViewById(R.id.progress_text);
         popupWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
