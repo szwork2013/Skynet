@@ -83,6 +83,16 @@ public class HttpClient {
         client.post(context, url, new StringEntity(json.toString(), "UTF-8"), "application/json", handler);
     }
 
+    public void praiseFeed(Integer accountId, Integer uid, Integer feedId, ResponseHandlerInterface handler) {
+        String url = Constants.SERVER_NAME + "/feed/postPraise.htm";
+        RequestParams params = new RequestParams();
+        params.put("accountId", String.valueOf(accountId));
+        params.put("uid", String.valueOf(uid));
+        params.put("feed", String.valueOf(feedId));
+        Log.d("praiseFeed url", url + "?" + params);
+        client.post(url, params, handler);
+    }
+
     public void get(String urlString, AsyncHttpResponseHandler res)    //用一个完整url获取一个string对象
     {
         client.get(urlString, res);

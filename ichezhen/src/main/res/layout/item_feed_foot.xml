@@ -1,50 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="right|center"
     android:padding="8dp">
 
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="18dp"
-        android:src="@drawable/iconfont_zan"
-        android:id="@+id/item_zan_im"
-        android:layout_gravity="center_vertical" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/ItemFootText"
         android:text="0"
-        android:id="@+id/item_zan_num" />
-
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="18dp"
-        android:src="@drawable/iconfont_share_list"
-        android:id="@+id/item_zf_im"
-        android:layout_gravity="center_vertical" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/ItemFootText"
-        android:text="0"
-        android:id="@+id/item_zf_num" />
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/item_pl_num" />
 
     <ImageView
         android:layout_width="30dp"
         android:layout_height="18dp"
         android:src="@drawable/iconfont_qz"
         android:id="@+id/item_pl_im"
-        android:layout_gravity="center_vertical" />
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/item_pl_num"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/ItemFootText"
         android:text="0"
-        android:id="@+id/item_pl_num" />
-</LinearLayout>
+        android:id="@+id/item_zf_num"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/item_pl_im"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"/>
+
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="18dp"
+        android:src="@drawable/iconfont_share_list"
+        android:id="@+id/item_zf_im"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/item_zf_num"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp" />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/item_zf_im"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:id="@+id/item_zan_layout"
+        >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="18dp"
+            android:src="@drawable/iconfont_zan"
+            android:id="@+id/item_zan_im"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ItemFootText"
+            android:text="0"
+            android:id="@+id/item_zan_num"
+            android:layout_toRightOf="@id/item_zan_im"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"/>
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

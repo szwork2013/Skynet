@@ -1,6 +1,7 @@
 package com.okar.icz.fragments;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +34,7 @@ import com.okar.icz.entry.Feed;
 import com.okar.icz.entry.Member;
 import com.okar.icz.entry.MemberCar;
 import com.okar.icz.entry.PageResult;
+import com.okar.icz.utils.DateUtils;
 import com.okar.icz.utils.HttpClient;
 import com.okar.icz.utils.StringUtils;
 import com.okar.icz.view.DividerItemDecoration;
@@ -140,7 +142,7 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
                 HeadViewHolder headViewHolder = (HeadViewHolder) holder;
                 headViewHolder.bindAccount((Account) items.get(position));
             } else {
-                ((FeedBaseViewHolder) holder).bindView((Feed) items.get(position));
+                ((FeedBaseViewHolder) holder).bindView((Feed) items.get(position), position);
             }
         }
 
@@ -162,25 +164,25 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
                 case Feed.FEED_TYPE_POST_TOPIC://图文
                 case Feed.FEED_TYPE_POST_QUESTION://问题
                 case Feed.FEED_TYPE_WANTED2STICK://通缉
-                    if(StringUtils.isBlank(feed.getCover())) {
+                    if (StringUtils.isBlank(feed.getCover())) {
                         return FeedBaseViewHolder.TEXT;
                     } else {
                         try {
-                            if("[".equals(feed.getCover().substring(0,1))) {//是数组
+                            if ("[".equals(feed.getCover().substring(0, 1))) {//是数组
                                 JSONArray coverJSON = new JSONArray(feed.getCover());
-                                if(coverJSON.length()>0) {
+                                if (coverJSON.length() > 0) {
                                     List<String> coverList = new ArrayList<>();
-                                    for (int i=0;i<coverJSON.length();i++) {
+                                    for (int i = 0; i < coverJSON.length(); i++) {
                                         coverList.add(coverJSON.optString(i));
                                     }
                                     feed.setCoverList(coverList);
                                 }
-                            } else if("{".equals(feed.getCover().substring(0, 1))) {//对象
+                            } else if ("{".equals(feed.getCover().substring(0, 1))) {//对象
                                 JSONObject coverJSON = new JSONObject(feed.getCover());
-                                if(coverJSON.length()>0) {
+                                if (coverJSON.length() > 0) {
                                     List<String> coverList = new ArrayList<>();
-                                    for (int i=0;i<coverJSON.length();i++) {
-                                        coverList.add(coverJSON.optString(""+i));
+                                    for (int i = 0; i < coverJSON.length(); i++) {
+                                        coverList.add(coverJSON.optString("" + i));
                                     }
                                     feed.setCoverList(coverList);
                                 }
@@ -189,9 +191,9 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
                             e.printStackTrace();
                         }
 
-                        if(feed.getCoverList()==null||feed.getCoverList().isEmpty()) {
+                        if (feed.getCoverList() == null || feed.getCoverList().isEmpty()) {
                             return FeedBaseViewHolder.TEXT;
-                        } else if(feed.getCoverList().size()>1) {
+                        } else if (feed.getCoverList().size() > 1) {
                             return FeedBaseViewHolder.TEXT_WITH_IMAGES;
                         } else {
                             return FeedBaseViewHolder.TEXT_WITH_SINGLE_IMAGE;
@@ -234,18 +236,27 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
         }
     }
 
-    abstract class FeedBaseViewHolder extends RecyclerView.ViewHolder {
+    abstract class FeedBaseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public static final int TEXT = -2;
         public static final int TEXT_WITH_SINGLE_IMAGE = -3;
         public static final int TEXT_WITH_IMAGES = -4;
 
+        //heads
         TextView userNameTV, userInfoTV, timeTV;
         ImageView userHeadIV, userGenderIV, userBrandIV;
         View userAuth;
 
+        //foots
+        TextView zanNumTV, zfNumTV, plNumTV;
+        ImageView zanIV;
+        View zanView;
+
+        View rootView;
+
         public FeedBaseViewHolder(View itemView) {
             super(itemView);
+            rootView = itemView;
             userNameTV = (TextView) itemView.findViewById(R.id.item_user_name);
             userInfoTV = (TextView) itemView.findViewById(R.id.item_user_info);
             timeTV = (TextView) itemView.findViewById(R.id.item_time);
@@ -253,9 +264,15 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
             userGenderIV = (ImageView) itemView.findViewById(R.id.item_user_gender);
             userBrandIV = (ImageView) itemView.findViewById(R.id.item_user_brand);
             userAuth = itemView.findViewById(R.id.item_user_auth);
+
+            zanNumTV = (TextView) itemView.findViewById(R.id.item_zan_num);
+            zfNumTV = (TextView) itemView.findViewById(R.id.item_zf_num);
+            plNumTV = (TextView) itemView.findViewById(R.id.item_pl_num);
+            zanIV = (ImageView) itemView.findViewById(R.id.item_zan_im);
+            zanView = itemView.findViewById(R.id.item_zan_layout);
         }
 
-        public void bindView(Feed feed) {
+        public void bindView(Feed feed, int pos) {
             Member member = feed.getMember();
             if (member != null) {
                 userNameTV.setText(member.getNickname());
@@ -284,13 +301,63 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
                                 super.onLoadingFailed(imageUri, view, failReason);
                                 userBrandIV.setVisibility(View.GONE);
                             }
-                });
+                        });
                 if (member.getLevel() == 2)
                     userAuth.setVisibility(View.VISIBLE);
                 else
                     userAuth.setVisibility(View.GONE);
             }
-            //timeTV.setText(feed);
+            //init foots
+            if (feed.getPraiseState() == 1) {
+                zanIV.setImageResource(R.drawable.iconfont_zan1);
+            } else {
+                zanIV.setImageResource(R.drawable.iconfont_zan);
+            }
+            zanNumTV.setText("" + feed.getPraiseCount());
+            zfNumTV.setText("" + feed.getFeedForwardNum());
+            plNumTV.setText("" + feed.getCommentCount());
+//              //点击事件
+            zanView.setOnClickListener(this);
+            feed.setPos(pos);
+            zanView.setTag(feed);
+            timeTV.setText(DateUtils.getSimpleTime(feed.getCreateTime()));
+
+            rootView.setOnClickListener(this);
+            rootView.setTag(feed);
+        }
+
+        @Override
+        public void onClick(View view) {
+            final Feed feed = (Feed) view.getTag();
+            switch (view.getId()) {
+                case R.id.item_zan_layout:
+                    HttpClient.getInstance().praiseFeed(settings.getAccountId(),
+                            settings.getUid(), feed.getId(),
+                            new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(JSONObject response) {
+                                    super.onSuccess(response);
+                                    Integer state = (Integer) response.opt("state");
+                                    if (state != null) {
+                                        if (state == 1) {
+                                            //点
+                                            feed.setPraiseState(1);
+                                            feed.setPraiseCount(feed.getPraiseCount() + 1);
+                                            mAdapter.notifyItemChanged(feed.getPos());
+                                        } else {
+                                            //取消
+                                            feed.setPraiseState(0);
+                                            feed.setPraiseCount(feed.getPraiseCount() - 1);
+                                            mAdapter.notifyItemChanged(feed.getPos());
+                                        }
+                                    }
+                                }
+                            });
+                    break;
+                default:
+                    showToast("进入详情 "+feed.getContent());
+                    break;
+            }
         }
     }
 
@@ -304,9 +371,9 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
         }
 
         @Override
-        public void bindView(Feed feed) {
-            super.bindView(feed);
-            if(StringUtils.isBlank(feed.getContent())) {
+        public void bindView(Feed feed, int pos) {
+            super.bindView(feed, pos);
+            if (StringUtils.isBlank(feed.getContent())) {
                 contentTV.setVisibility(View.GONE);
             } else {
                 contentTV.setVisibility(View.VISIBLE);
@@ -325,8 +392,8 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
         }
 
         @Override
-        public void bindView(Feed feed) {
-            super.bindView(feed);
+        public void bindView(Feed feed, int pos) {
+            super.bindView(feed, pos);
             ImageLoader.getInstance().displayImage(feed.getCoverList().get(0), singleIV);
         }
     }
@@ -347,19 +414,19 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
         }
 
         @Override
-        public void bindView(Feed feed) {
-            super.bindView(feed);
-            for (int i=0;i<imageIVs.length;i++) {
-                if(i<feed.getCoverList().size()) {
+        public void bindView(Feed feed, int pos) {
+            super.bindView(feed, pos);
+            for (int i = 0; i < imageIVs.length; i++) {
+                if (i < feed.getCoverList().size()) {
                     imageIVs[i].setVisibility(View.VISIBLE);
                     ImageLoader.getInstance().displayImage(feed.getCoverList().get(i), imageIVs[i]);
                 } else {
                     imageIVs[i].setVisibility(View.GONE);
                 }
             }
-            if(feed.getCoverList().size()>3) {
+            if (feed.getCoverList().size() > 3) {
                 imageNumView.setVisibility(View.VISIBLE);
-                imageNumTV.setText(""+feed.getCoverList().size());
+                imageNumTV.setText("" + feed.getCoverList().size());
             } else {
                 imageNumView.setVisibility(View.GONE);
             }
