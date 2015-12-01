@@ -1,4 +1,4 @@
-package com.okar.icz.common.uiimage;
+package com.okar.icz.common.imageloader;
 
 import android.graphics.Bitmap;
 import android.view.View;

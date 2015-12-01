@@ -1,6 +1,7 @@
 package com.okar.icz.fragments;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -19,11 +20,14 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.okar.icz.android.R;
 import com.okar.icz.common.Constants;
 import com.okar.icz.common.PageLoader;
 import com.okar.icz.common.SuperRecyclerBaseFragmentList;
 import com.okar.icz.common.SystemSettings;
+import com.okar.icz.common.imageloader.DisplayImageOptionFactory;
 import com.okar.icz.entry.Account;
 import com.okar.icz.entry.Feed;
 import com.okar.icz.entry.Member;
@@ -263,9 +267,24 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
                     brandId = car.getBrand();
                 }
                 userInfoTV.setText(member.getChengshi() + brandName);
-                ImageLoader.getInstance().displayImage(member.getHead(), userHeadIV);
+                ImageLoader.getInstance().displayImage(member.getHead(), userHeadIV, DisplayImageOptionFactory.getHeadOptions());
                 userGenderIV.setImageResource(member.getGender() == 2 ? R.drawable.iconfont_sex_men : R.drawable.iconfont_sex_girl);
-                ImageLoader.getInstance().displayImage(Constants.BRAND_RESOURCE_IMG_URI + "b" + brandId + ".png", userBrandIV);
+                ImageLoader.getInstance().displayImage(Constants.BRAND_RESOURCE_IMG_URI + "b" + brandId + ".png",
+                        userBrandIV,
+                        new SimpleImageLoadingListener() {
+
+                            @Override
+                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                super.onLoadingComplete(imageUri, view, loadedImage);
+                                userBrandIV.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                super.onLoadingFailed(imageUri, view, failReason);
+                                userBrandIV.setVisibility(View.GONE);
+                            }
+                });
                 if (member.getLevel() == 2)
                     userAuth.setVisibility(View.VISIBLE);
                 else
