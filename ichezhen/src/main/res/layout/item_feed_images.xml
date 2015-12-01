@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        style="@style/ItemImages"
+        android:id="@+id/image1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        />
+
+    <ImageView
+        style="@style/ItemImages"
+        android:id="@+id/image2"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_alignTop="@id/image1"
+        android:layout_toRightOf="@+id/image1"
+        android:layout_toEndOf="@+id/image1"
+        android:scaleType="centerCrop"/>
+
+    <ImageView
+        style="@style/ItemImages"
+        android:id="@+id/image3"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_alignTop="@id/image1"
+        android:layout_toRightOf="@+id/image2"
+        android:layout_toEndOf="@+id/image2"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/image1"
+        android:layout_alignRight="@+id/image3"
+        android:layout_alignEnd="@+id/image3"
+        android:id="@+id/image_num_layout"
+        android:background="#88000000">
+
+        <ImageView
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:src="@drawable/iconfont_xiaoxiangce"
+            android:id="@+id/imageView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:textSize="13sp"
+            android:text="4"
+            android:layout_marginStart="3dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="2dp"
+            android:id="@+id/image_num"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

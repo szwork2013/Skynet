@@ -80,7 +80,7 @@ public class HttpClient {
             json.put("cover", new JSONArray(photos).toString());
         }
         Log.d("postTopicOrQuestion url", url + "?" + json);
-        client.post(context, url, new StringEntity(json.toString()), "application/json", handler);
+        client.post(context, url, new StringEntity(json.toString(), "UTF-8"), "application/json", handler);
     }
 
     public void get(String urlString, AsyncHttpResponseHandler res)    //用一个完整url获取一个string对象

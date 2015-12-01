@@ -2,6 +2,8 @@ package com.okar.icz.entry;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.List;
+
 /**
  * Created by wangfengchen on 15/11/26.
  */
@@ -14,6 +16,8 @@ public class Feed {
     @Expose
     String content;
     @Expose
+    String cover;
+    @Expose
     Account account;
     @Expose
     Member member;
@@ -22,12 +26,22 @@ public class Feed {
     @Expose
     long createTime;
 
+    private List<String> coverList;
+
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     public Account getAccount() {
@@ -60,5 +74,13 @@ public class Feed {
 
     public void setCreateTime(long createTime) {
         this.createTime = createTime;
+    }
+
+    public List<String> getCoverList() {
+        return coverList;
+    }
+
+    public void setCoverList(List<String> coverList) {
+        this.coverList = coverList;
     }
 }

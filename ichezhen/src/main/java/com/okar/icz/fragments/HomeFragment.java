@@ -30,10 +30,12 @@ import com.okar.icz.entry.Member;
 import com.okar.icz.entry.MemberCar;
 import com.okar.icz.entry.PageResult;
 import com.okar.icz.utils.HttpClient;
+import com.okar.icz.utils.StringUtils;
 import com.okar.icz.view.DividerItemDecoration;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -117,6 +119,11 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
             switch (viewType) {
                 case -1:
                     return new HeadViewHolder(inflater.inflate(R.layout.item_home_head, parent, false));
+                case FeedBaseViewHolder.TEXT_WITH_SINGLE_IMAGE:
+                    return new TextWithSingleImageViewHolder(inflater.inflate(R.layout.item_feed_text_with_single_image, parent, false));
+                case FeedBaseViewHolder.TEXT_WITH_IMAGES:
+                    return new TextWithImagesViewHolder(inflater.inflate(R.layout.item_feed_text_with_image, parent, false));
+                case FeedBaseViewHolder.TEXT:
                 default:
                     return new TextFeedViewHolder(inflater.inflate(R.layout.item_feed_text, parent, false));
             }
@@ -147,7 +154,48 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
                 return -1;//这是头
             }
             Feed feed = (Feed) items.get(position);
-            return feed.getType();
+            switch (feed.getType()) {
+                case Feed.FEED_TYPE_POST_TOPIC://图文
+                case Feed.FEED_TYPE_POST_QUESTION://问题
+                case Feed.FEED_TYPE_WANTED2STICK://通缉
+                    if(StringUtils.isBlank(feed.getCover())) {
+                        return FeedBaseViewHolder.TEXT;
+                    } else {
+                        try {
+                            if("[".equals(feed.getCover().substring(0,1))) {//是数组
+                                JSONArray coverJSON = new JSONArray(feed.getCover());
+                                if(coverJSON.length()>0) {
+                                    List<String> coverList = new ArrayList<>();
+                                    for (int i=0;i<coverJSON.length();i++) {
+                                        coverList.add(coverJSON.optString(i));
+                                    }
+                                    feed.setCoverList(coverList);
+                                }
+                            } else if("{".equals(feed.getCover().substring(0, 1))) {//对象
+                                JSONObject coverJSON = new JSONObject(feed.getCover());
+                                if(coverJSON.length()>0) {
+                                    List<String> coverList = new ArrayList<>();
+                                    for (int i=0;i<coverJSON.length();i++) {
+                                        coverList.add(coverJSON.optString(""+i));
+                                    }
+                                    feed.setCoverList(coverList);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        if(feed.getCoverList()==null||feed.getCoverList().isEmpty()) {
+                            return FeedBaseViewHolder.TEXT;
+                        } else if(feed.getCoverList().size()>1) {
+                            return FeedBaseViewHolder.TEXT_WITH_IMAGES;
+                        } else {
+                            return FeedBaseViewHolder.TEXT_WITH_SINGLE_IMAGE;
+                        }
+                    }
+                default:
+                    return feed.getType();
+            }
         }
     };
 
@@ -183,6 +231,10 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
     }
 
     abstract class FeedBaseViewHolder extends RecyclerView.ViewHolder {
+
+        public static final int TEXT = -2;
+        public static final int TEXT_WITH_SINGLE_IMAGE = -3;
+        public static final int TEXT_WITH_IMAGES = -4;
 
         TextView userNameTV, userInfoTV, timeTV;
         ImageView userHeadIV, userGenderIV, userBrandIV;
@@ -235,7 +287,63 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
         @Override
         public void bindView(Feed feed) {
             super.bindView(feed);
-            contentTV.setText(feed.getContent());
+            if(StringUtils.isBlank(feed.getContent())) {
+                contentTV.setVisibility(View.GONE);
+            } else {
+                contentTV.setVisibility(View.VISIBLE);
+                contentTV.setText(feed.getContent());
+            }
+        }
+    }
+
+    class TextWithSingleImageViewHolder extends TextFeedViewHolder {
+
+        ImageView singleIV;
+
+        public TextWithSingleImageViewHolder(View itemView) {
+            super(itemView);
+            singleIV = (ImageView) itemView.findViewById(R.id.single_image);
+        }
+
+        @Override
+        public void bindView(Feed feed) {
+            super.bindView(feed);
+            ImageLoader.getInstance().displayImage(feed.getCoverList().get(0), singleIV);
+        }
+    }
+
+    class TextWithImagesViewHolder extends TextFeedViewHolder {
+
+        ImageView[] imageIVs = new ImageView[3];
+        View imageNumView;
+        TextView imageNumTV;
+
+        public TextWithImagesViewHolder(View itemView) {
+            super(itemView);
+            imageIVs[0] = (ImageView) itemView.findViewById(R.id.image1);
+            imageIVs[1] = (ImageView) itemView.findViewById(R.id.image2);
+            imageIVs[2] = (ImageView) itemView.findViewById(R.id.image3);
+            imageNumView = itemView.findViewById(R.id.image_num_layout);
+            imageNumTV = (TextView) itemView.findViewById(R.id.image_num);
+        }
+
+        @Override
+        public void bindView(Feed feed) {
+            super.bindView(feed);
+            for (int i=0;i<imageIVs.length;i++) {
+                if(i<feed.getCoverList().size()) {
+                    imageIVs[i].setVisibility(View.VISIBLE);
+                    ImageLoader.getInstance().displayImage(feed.getCoverList().get(i), imageIVs[i]);
+                } else {
+                    imageIVs[i].setVisibility(View.GONE);
+                }
+            }
+            if(feed.getCoverList().size()>3) {
+                imageNumView.setVisibility(View.VISIBLE);
+                imageNumTV.setText(""+feed.getCoverList().size());
+            } else {
+                imageNumView.setVisibility(View.GONE);
+            }
         }
     }
 

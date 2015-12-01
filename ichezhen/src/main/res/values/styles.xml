@@ -278,4 +278,9 @@
         <item name="android:inputType">textMultiLine</item>
     </style>
 
+    <style name="ItemImages">
+        <item name="android:layout_width">90dp</item>
+        <item name="android:layout_height">90dp</item>
+        <item name="android:background">#eee</item>
+    </style>
 </resources>

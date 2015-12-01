@@ -14,4 +14,10 @@
     </declare-styleable>
 
     <attr name="SwipeBackLayoutStyle" format="reference"/>
+
+    <declare-styleable name="WordWrapLayout">
+        <attr name="cell_width" format="dimension" />
+        <attr name="cell_height" format="dimension" />
+    </declare-styleable>
+
 </resources>
