@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/home"
+        android:tag="home"
         />
 
     <ImageView
@@ -26,7 +27,8 @@
         android:id="@+id/select_post_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#eeffffff">
+        android:background="#eeffffff"
+        android:visibility="gone">
 
         <ImageView
             style="@style/PostTopicRoundBtn"

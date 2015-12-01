@@ -6,6 +6,11 @@ import com.google.gson.annotations.Expose;
  * Created by wangfengchen on 15/11/26.
  */
 public class Feed {
+
+    public static final int FEED_TYPE_POST_TOPIC = 31;//发帖
+    public static final int FEED_TYPE_WANTED2STICK = 34;//通缉贴
+    public static final int FEED_TYPE_POST_QUESTION = 38;//问问贴
+
     @Expose
     String content;
     @Expose

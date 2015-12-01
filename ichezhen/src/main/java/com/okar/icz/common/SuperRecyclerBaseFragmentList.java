@@ -22,10 +22,9 @@ public abstract class SuperRecyclerBaseFragmentList
 
     private SuperRecyclerView mRecycler;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_superrecycler, container, false);
+    protected View getRootView() {
+        return inflater.inflate(R.layout.fragment_superrecycler, null);
     }
 
     @Override

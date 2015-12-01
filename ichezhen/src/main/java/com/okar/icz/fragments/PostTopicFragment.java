@@ -36,9 +36,6 @@ import roboguice.inject.InjectView;
  */
 public class PostTopicFragment extends PickImageBaseFragment {
 
-    public static final int TOPIC = 31;
-    public static final int QUESTION = 38;
-
     public int topicType;
 
 
@@ -74,10 +71,9 @@ public class PostTopicFragment extends PickImageBaseFragment {
         settings.getAccountId();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_post_topic, container, false);
+    protected View getRootView() {
+        return inflater.inflate(R.layout.fragment_post_topic,null);
     }
 
     @Override

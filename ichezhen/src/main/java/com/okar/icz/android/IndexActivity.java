@@ -10,7 +10,6 @@ import android.widget.Button;
 import com.okar.icz.common.BaseActivity;
 import com.okar.icz.fragments.Fragment2;
 import com.okar.icz.fragments.Fragment3;
-import com.okar.icz.fragments.MerchantFragmentList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,7 @@ public class IndexActivity extends BaseActivity{
     }
 
     void initPager() {
-        Fragment f1 = new MerchantFragmentList();
+        Fragment f1 = null;
         Fragment f2 = new Fragment2();
         Fragment f3 = new Fragment3();
 

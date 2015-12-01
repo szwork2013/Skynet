@@ -1,13 +1,17 @@
 package com.okar.icz.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.okar.icz.android.PostTopicActivity;
 import com.okar.icz.android.R;
 import com.okar.icz.common.BaseFragment;
+import com.okar.icz.entry.Feed;
 
 import roboguice.inject.InjectView;
 
@@ -28,10 +32,19 @@ public class HomeContainer extends BaseFragment {
     View postWantedBtn;
 
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+    protected View getRootView() {
+        return inflater.inflate(R.layout.fragment_home, null);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        selectPostBtn.setOnClickListener(this);
+        selectPostContent.setOnClickListener(this);
+        postTopicBtn.setOnClickListener(this);
+        postQusBtn.setOnClickListener(this);
+        postWantedBtn.setOnClickListener(this);
     }
 
     @Override
@@ -44,8 +57,21 @@ public class HomeContainer extends BaseFragment {
                 selectPostContent.setVisibility(View.GONE);
                 break;
             case R.id.post_topic_btn:
-
+                startTopicActivity(Feed.FEED_TYPE_POST_TOPIC);
+                break;
+            case R.id.post_tw_btn:
+                startTopicActivity(Feed.FEED_TYPE_POST_QUESTION);
+                break;
+            case R.id.post_tj_btn:
+                startTopicActivity(Feed.FEED_TYPE_WANTED2STICK);
                 break;
         }
+    }
+
+    void startTopicActivity(int type) {
+        selectPostContent.setVisibility(View.GONE);
+        Intent intent = new Intent(getActivity(), PostTopicActivity.class);
+        intent.putExtra("topicType", type);
+        startActivity(intent);
     }
 }
