@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/item_feed_info_foot_bg">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        layout="@layout/item_feed_head"
+        android:id="@+id/include" />
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_below="@+id/include"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp">
+        <ViewStub
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/single_image_stub"
+            android:layout="@layout/layout_feed_info_single_image"/>
+
+        <ViewStub
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/images_stub"
+            android:layout="@layout/layout_feed_info_images"/>
+    </FrameLayout>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@+id/content"
+        layout="@layout/item_feed_info_foot"
+        android:id="@+id/include1" />
+
+</RelativeLayout>

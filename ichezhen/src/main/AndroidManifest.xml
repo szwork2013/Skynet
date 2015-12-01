@@ -30,7 +30,7 @@
         </activity>
 
         <activity
-            android:name=".MainActivity">
+            android:name=".FeedInfoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
