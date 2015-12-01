@@ -25,7 +25,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0/400"
+        android:text=""
         style="@style/Msg"
         android:id="@+id/post_topic_text_count"
         android:layout_below="@+id/input"

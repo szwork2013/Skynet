@@ -3,17 +3,20 @@ package com.okar.icz.fragments;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.inject.Inject;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.okar.icz.android.R;
 import com.okar.icz.common.ProgressView;
+import com.okar.icz.common.ShowTextLengthTextWatcher;
 import com.okar.icz.common.SystemSettings;
 import com.okar.icz.utils.HttpClient;
 import com.okar.icz.utils.StringUtils;
@@ -47,6 +50,9 @@ public class PostTopicFragment extends PickImageBaseFragment {
 
     @InjectView(R.id.input)
     EditText inputET;
+
+    @InjectView(R.id.post_topic_text_count)
+    TextView showTextLenTV;
 
     @Inject
     SystemSettings settings;
@@ -85,6 +91,18 @@ public class PostTopicFragment extends PickImageBaseFragment {
         });
         postTopicBtn.setOnClickListener(this);
         progressView = new ProgressView(getActivity(), (ViewGroup) view);
+        initInput();
+    }
+
+    void initInput() {
+        showTextLenTV.setText("0/400");
+        inputET.addTextChangedListener(new ShowTextLengthTextWatcher(400, inputET, showTextLenTV));
+        //设置EditText的显示方式为多行文本输入
+        inputET.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        //改变默认的单行模式
+        inputET.setSingleLine(false);
+        //水平滚动设置为False
+        inputET.setHorizontallyScrolling(false);
     }
 
     @Override
@@ -118,14 +136,14 @@ public class PostTopicFragment extends PickImageBaseFragment {
             public void onSuccess(JSONObject response) {
                 super.onSuccess(response);
                 Log.d("upload", "response " + response);
-                photoView.addPhoto("file:/"+filePath, response.optString("url"));
+                photoView.addPhoto("file:/" + filePath, response.optString("url"));
             }
         });
     }
 
     void postTopic() {
         String text = inputET.getText().toString();
-        if(StringUtils.isBlank(text)) {
+        if (StringUtils.isBlank(text)) {
             //不能为空
             showToast("帖子内容不能为空");
             return;
@@ -154,7 +172,7 @@ public class PostTopicFragment extends PickImageBaseFragment {
                     super.onSuccess(response);
                     Log.d("postTopicd", "response " + response);
                     showToast(response.optString("message"));
-                    if(HttpClient.isSuccess(response)) {
+                    if (HttpClient.isSuccess(response)) {
                         //成功跳转
                     }
                 }
