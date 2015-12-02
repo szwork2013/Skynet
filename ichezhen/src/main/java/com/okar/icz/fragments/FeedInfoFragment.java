@@ -49,7 +49,7 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
         super.onCreate(savedInstanceState);
         feed = (Feed) getArguments().get("feed");
         mAdapter.add(feed);
-        mAdapter.add(null);
+        mAdapter.add(1);
         commentPageLoader.getParams().put("feed", String.valueOf(feed.getId()));
         commentPageLoader.load();
     }
@@ -94,9 +94,8 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
         List items = new ArrayList();
 
         public void add(Object o) {
-            int p = items.size()==0?0:items.size()-1;
             items.add(o);
-            notifyItemInserted(p);
+            notifyItemInserted(items.size() - 1);
         }
 
         public void addAll(List d) {
@@ -106,12 +105,10 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
         }
 
         public void refresh(List d) {
-            Object o = items.get(0);
-            items = new ArrayList<>();
-            items.add(o);
-            for (Object o1 : d) {
-                add(o1);
+            if(items.size()>2) {
+                items = items.subList(0, 2);
             }
+            addAll(d);
         }
 
         @Override
@@ -149,7 +146,7 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
         public int getItemViewType(int position) {
             if(position==0) return -1;//feed
             if(position==1) return -2;//评论标题
-            return 1;
+            return 0;
         }
 
     }
