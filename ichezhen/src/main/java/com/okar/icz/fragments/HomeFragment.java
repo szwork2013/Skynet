@@ -132,7 +132,7 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         items.add(null);
-        feedPageLoader.getParams().put("accountId", "50605");
+        feedPageLoader.getParams().put("accountId", String.valueOf(settings.getAccountId()));
         feedPageLoader.load();
     }
 

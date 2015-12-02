@@ -16,6 +16,7 @@ public class Constants {
     public static final String BRAND_RESOURCE_IMG_URI = RESOURCE_IMG_URI+"/brand/";
 
     public static final String GET_FEED_ALL = SERVER_NAME+ "/feed/getFeedAll.htm";
+    public static final String GET_FEED_COMMENTS = SERVER_NAME+ "/feed/getComments.htm";
 
     public static final String HTTP_RESULT_SUCCESS  = "success";
     public static final String HTTP_RESULT_ERROR  = "error";
