@@ -37,6 +37,8 @@ public class Feed {
     int feedForwardNum;
     @Expose
     int commentCount;
+    @Expose
+    int favourite;
 
     private List<String> coverList;
 
@@ -152,5 +154,13 @@ public class Feed {
 
     public void setPos(int pos) {
         this.pos = pos;
+    }
+
+    public int getFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(int favourite) {
+        this.favourite = favourite;
     }
 }

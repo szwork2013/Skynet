@@ -68,6 +68,20 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
 
         public FeedInfoViewHolder(View itemView) {
             super(itemView);
+            userNameTV = (TextView) itemView.findViewById(R.id.item_user_name);
+            userInfoTV = (TextView) itemView.findViewById(R.id.item_user_info);
+            timeTV = (TextView) itemView.findViewById(R.id.item_time);
+            userHeadIV = (ImageView) itemView.findViewById(R.id.item_user_head);
+            userGenderIV = (ImageView) itemView.findViewById(R.id.item_user_gender);
+            userBrandIV = (ImageView) itemView.findViewById(R.id.item_user_brand);
+            userAuth = itemView.findViewById(R.id.item_user_auth);
+
+            zanNumTV = (TextView) itemView.findViewById(R.id.item_zan_num);
+            zfNumTV = (TextView) itemView.findViewById(R.id.item_zf_num);
+            plNumTV = (TextView) itemView.findViewById(R.id.item_pl_num);
+            zanIV = (ImageView) itemView.findViewById(R.id.item_zan_im);
+            zanView = itemView.findViewById(R.id.item_zan_layout);
+
         }
 
         void bindView(Feed feed) {

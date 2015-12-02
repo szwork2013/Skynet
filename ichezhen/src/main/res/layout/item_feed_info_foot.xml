@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/jb_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_weight="1"
@@ -19,6 +20,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/sc_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_weight="1"
@@ -33,6 +35,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/zf_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_weight="1"
@@ -54,6 +57,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/zan_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_weight="1"

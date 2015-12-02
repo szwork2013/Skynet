@@ -38,6 +38,7 @@ import com.okar.icz.utils.DateUtils;
 import com.okar.icz.utils.HttpClient;
 import com.okar.icz.utils.StringUtils;
 import com.okar.icz.view.DividerItemDecoration;
+import com.okar.icz.viewholder.FeedBaseViewHolder;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -90,6 +91,35 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
                         }
                     });
 
+    FeedBaseViewHolder.ViewClickHandler viewClickHandler = new FeedBaseViewHolder.ViewClickHandler() {
+        @Override
+        public void onItemPraise(final Feed feed) {
+            super.onItemPraise(feed);
+            HttpClient.getInstance().praiseFeed(settings.getAccountId(),
+                    settings.getUid(), feed.getId(),
+                        new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(JSONObject response) {
+                                super.onSuccess(response);
+                                Integer state = (Integer) response.opt("state");
+                                if (state != null) {
+                                    if (state == 1) {
+                                        //点
+                                        feed.setPraiseState(1);
+                                        feed.setPraiseCount(feed.getPraiseCount() + 1);
+                                        mAdapter.notifyItemChanged(feed.getPos());
+                                    } else {
+                                        //取消
+                                        feed.setPraiseState(0);
+                                        feed.setPraiseCount(feed.getPraiseCount() - 1);
+                                        mAdapter.notifyItemChanged(feed.getPos());
+                                    }
+                                }
+                            }
+                        });
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,12 +156,12 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
                 case -1:
                     return new HeadViewHolder(inflater.inflate(R.layout.item_home_head, parent, false));
                 case FeedBaseViewHolder.TEXT_WITH_SINGLE_IMAGE:
-                    return new TextWithSingleImageViewHolder(inflater.inflate(R.layout.item_feed_text_with_single_image, parent, false));
+                    return new TextWithSingleImageViewHolder(inflater.inflate(R.layout.item_feed_text_with_single_image, parent, false), viewClickHandler);
                 case FeedBaseViewHolder.TEXT_WITH_IMAGES:
-                    return new TextWithImagesViewHolder(inflater.inflate(R.layout.item_feed_text_with_image, parent, false));
+                    return new TextWithImagesViewHolder(inflater.inflate(R.layout.item_feed_text_with_image, parent, false), viewClickHandler);
                 case FeedBaseViewHolder.TEXT:
                 default:
-                    return new TextFeedViewHolder(inflater.inflate(R.layout.item_feed_text, parent, false));
+                    return new TextFeedViewHolder(inflater.inflate(R.layout.item_feed_text, parent, false), viewClickHandler);
             }
         }
 
@@ -142,7 +172,7 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
                 HeadViewHolder headViewHolder = (HeadViewHolder) holder;
                 headViewHolder.bindAccount((Account) items.get(position));
             } else {
-                ((FeedBaseViewHolder) holder).bindView((Feed) items.get(position), position);
+                ((FeedBaseViewHolder) holder).bindView((Feed) items.get(position));
             }
         }
 
@@ -236,143 +266,19 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
         }
     }
 
-    abstract class FeedBaseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        public static final int TEXT = -2;
-        public static final int TEXT_WITH_SINGLE_IMAGE = -3;
-        public static final int TEXT_WITH_IMAGES = -4;
-
-        //heads
-        TextView userNameTV, userInfoTV, timeTV;
-        ImageView userHeadIV, userGenderIV, userBrandIV;
-        View userAuth;
-
-        //foots
-        TextView zanNumTV, zfNumTV, plNumTV;
-        ImageView zanIV;
-        View zanView;
-
-        View rootView;
-
-        public FeedBaseViewHolder(View itemView) {
-            super(itemView);
-            rootView = itemView;
-            userNameTV = (TextView) itemView.findViewById(R.id.item_user_name);
-            userInfoTV = (TextView) itemView.findViewById(R.id.item_user_info);
-            timeTV = (TextView) itemView.findViewById(R.id.item_time);
-            userHeadIV = (ImageView) itemView.findViewById(R.id.item_user_head);
-            userGenderIV = (ImageView) itemView.findViewById(R.id.item_user_gender);
-            userBrandIV = (ImageView) itemView.findViewById(R.id.item_user_brand);
-            userAuth = itemView.findViewById(R.id.item_user_auth);
-
-            zanNumTV = (TextView) itemView.findViewById(R.id.item_zan_num);
-            zfNumTV = (TextView) itemView.findViewById(R.id.item_zf_num);
-            plNumTV = (TextView) itemView.findViewById(R.id.item_pl_num);
-            zanIV = (ImageView) itemView.findViewById(R.id.item_zan_im);
-            zanView = itemView.findViewById(R.id.item_zan_layout);
-        }
-
-        public void bindView(Feed feed, int pos) {
-            Member member = feed.getMember();
-            if (member != null) {
-                userNameTV.setText(member.getNickname());
-                MemberCar car = member.getCar();
-                String brandName = "";
-                int brandId = 0;
-                if (car != null) {
-                    brandName = " " + car.getPinpai();
-                    brandId = car.getBrand();
-                }
-                userInfoTV.setText(member.getChengshi() + brandName);
-                ImageLoader.getInstance().displayImage(member.getHead(), userHeadIV, DisplayImageOptionFactory.getHeadOptions());
-                userGenderIV.setImageResource(member.getGender() == 2 ? R.drawable.iconfont_sex_men : R.drawable.iconfont_sex_girl);
-                ImageLoader.getInstance().displayImage(Constants.BRAND_RESOURCE_IMG_URI + "b" + brandId + ".png",
-                        userBrandIV,
-                        new SimpleImageLoadingListener() {
-
-                            @Override
-                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                super.onLoadingComplete(imageUri, view, loadedImage);
-                                userBrandIV.setVisibility(View.VISIBLE);
-                            }
-
-                            @Override
-                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                                super.onLoadingFailed(imageUri, view, failReason);
-                                userBrandIV.setVisibility(View.GONE);
-                            }
-                        });
-                if (member.getLevel() == 2)
-                    userAuth.setVisibility(View.VISIBLE);
-                else
-                    userAuth.setVisibility(View.GONE);
-            }
-            //init foots
-            if (feed.getPraiseState() == 1) {
-                zanIV.setImageResource(R.drawable.iconfont_zan1);
-            } else {
-                zanIV.setImageResource(R.drawable.iconfont_zan);
-            }
-            zanNumTV.setText("" + feed.getPraiseCount());
-            zfNumTV.setText("" + feed.getFeedForwardNum());
-            plNumTV.setText("" + feed.getCommentCount());
-//              //点击事件
-            zanView.setOnClickListener(this);
-            feed.setPos(pos);
-            zanView.setTag(feed);
-            timeTV.setText(DateUtils.getSimpleTime(feed.getCreateTime()));
-
-            rootView.setOnClickListener(this);
-            rootView.setTag(feed);
-        }
-
-        @Override
-        public void onClick(View view) {
-            final Feed feed = (Feed) view.getTag();
-            switch (view.getId()) {
-                case R.id.item_zan_layout:
-                    HttpClient.getInstance().praiseFeed(settings.getAccountId(),
-                            settings.getUid(), feed.getId(),
-                            new JsonHttpResponseHandler() {
-                                @Override
-                                public void onSuccess(JSONObject response) {
-                                    super.onSuccess(response);
-                                    Integer state = (Integer) response.opt("state");
-                                    if (state != null) {
-                                        if (state == 1) {
-                                            //点
-                                            feed.setPraiseState(1);
-                                            feed.setPraiseCount(feed.getPraiseCount() + 1);
-                                            mAdapter.notifyItemChanged(feed.getPos());
-                                        } else {
-                                            //取消
-                                            feed.setPraiseState(0);
-                                            feed.setPraiseCount(feed.getPraiseCount() - 1);
-                                            mAdapter.notifyItemChanged(feed.getPos());
-                                        }
-                                    }
-                                }
-                            });
-                    break;
-                default:
-                    showToast("进入详情 "+feed.getContent());
-                    break;
-            }
-        }
-    }
 
     class TextFeedViewHolder extends FeedBaseViewHolder {
 
         TextView contentTV;
 
-        public TextFeedViewHolder(View itemView) {
-            super(itemView);
+        public TextFeedViewHolder(View itemView, ViewClickHandler viewClickHandler) {
+            super(itemView, viewClickHandler);
             contentTV = (TextView) itemView.findViewById(R.id.item_content_text);
         }
 
         @Override
-        public void bindView(Feed feed, int pos) {
-            super.bindView(feed, pos);
+        public void bindView(Feed feed) {
+            super.bindView(feed);
             if (StringUtils.isBlank(feed.getContent())) {
                 contentTV.setVisibility(View.GONE);
             } else {
@@ -386,14 +292,14 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
 
         ImageView singleIV;
 
-        public TextWithSingleImageViewHolder(View itemView) {
-            super(itemView);
+        public TextWithSingleImageViewHolder(View itemView, ViewClickHandler viewClickHandler) {
+            super(itemView, viewClickHandler);
             singleIV = (ImageView) itemView.findViewById(R.id.single_image);
         }
 
         @Override
-        public void bindView(Feed feed, int pos) {
-            super.bindView(feed, pos);
+        public void bindView(Feed feed) {
+            super.bindView(feed);
             ImageLoader.getInstance().displayImage(feed.getCoverList().get(0), singleIV);
         }
     }
@@ -404,8 +310,8 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
         View imageNumView;
         TextView imageNumTV;
 
-        public TextWithImagesViewHolder(View itemView) {
-            super(itemView);
+        public TextWithImagesViewHolder(View itemView, ViewClickHandler viewClickHandler) {
+            super(itemView, viewClickHandler);
             imageIVs[0] = (ImageView) itemView.findViewById(R.id.image1);
             imageIVs[1] = (ImageView) itemView.findViewById(R.id.image2);
             imageIVs[2] = (ImageView) itemView.findViewById(R.id.image3);
@@ -414,8 +320,8 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
         }
 
         @Override
-        public void bindView(Feed feed, int pos) {
-            super.bindView(feed, pos);
+        public void bindView(Feed feed) {
+            super.bindView(feed);
             for (int i = 0; i < imageIVs.length; i++) {
                 if (i < feed.getCoverList().size()) {
                     imageIVs[i].setVisibility(View.VISIBLE);
