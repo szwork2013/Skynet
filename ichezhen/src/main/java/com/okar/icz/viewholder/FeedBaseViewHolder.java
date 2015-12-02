@@ -39,6 +39,12 @@ public abstract class FeedBaseViewHolder extends RecyclerView.ViewHolder impleme
     View infoInformView, infoCollectView, infoShareView, infoPraiseView;
     ViewClickHandler viewClickHandler;
 
+    public FeedBaseViewHolder(View itemView, ViewClickHandler viewClickHandler, int type) {
+        this(itemView);
+        this.viewClickHandler = viewClickHandler;
+        this.type = type;
+    }
+
     public FeedBaseViewHolder(View itemView, ViewClickHandler viewClickHandler) {
         this(itemView);
         this.viewClickHandler = viewClickHandler;

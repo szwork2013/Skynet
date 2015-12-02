@@ -2,6 +2,7 @@ package com.okar.icz.fragments;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +24,7 @@ import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.okar.icz.android.FeedInfoActivity;
 import com.okar.icz.android.R;
 import com.okar.icz.common.Constants;
 import com.okar.icz.common.PageLoader;
@@ -94,7 +96,6 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
     FeedBaseViewHolder.ViewClickHandler viewClickHandler = new FeedBaseViewHolder.ViewClickHandler() {
         @Override
         public void onItemPraise(final Feed feed) {
-            super.onItemPraise(feed);
             HttpClient.getInstance().praiseFeed(settings.getAccountId(),
                     settings.getUid(), feed.getId(),
                         new JsonHttpResponseHandler() {
@@ -117,6 +118,13 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
                                 }
                             }
                         });
+        }
+
+        @Override
+        public void onItemClick(Feed feed) {
+            Intent intent = new Intent(getActivity(), FeedInfoActivity.class);
+            intent.putExtra("feed", feed);
+            startActivity(intent);
         }
     };
 

@@ -1,5 +1,8 @@
 package com.okar.icz.entry;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 
 import java.util.List;
@@ -7,7 +10,7 @@ import java.util.List;
 /**
  * Created by wangfengchen on 15/11/26.
  */
-public class Feed {
+public class Feed implements Parcelable {
 
     public static final int FEED_TYPE_POST_TOPIC = 31;//发帖
     public static final int FEED_TYPE_WANTED2STICK = 34;//通缉贴
@@ -162,5 +165,46 @@ public class Feed {
 
     public void setFavourite(int favourite) {
         this.favourite = favourite;
+    }
+
+    public Feed(){}
+
+    private Feed(Parcel in) {
+        setId(in.readInt());
+        setContent(in.readString());
+        setPraiseCount(in.readInt());
+        setPraiseState(in.readInt());
+        setAccountId(in.readInt());
+        setFeedForwardNum(in.readInt());
+        setCommentCount(in.readInt());
+        setFavourite(in.readInt());
+        setCoverList(in.readArrayList(Feed.class.getClassLoader()));
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(getId());
+        parcel.writeString(getContent());
+        parcel.writeInt(getPraiseCount());
+        parcel.writeInt(getPraiseState());
+        parcel.writeInt(getAccountId());
+        parcel.writeInt(getFeedForwardNum());
+        parcel.writeInt(getCommentCount());
+        parcel.writeInt(getFavourite());
+        parcel.writeStringList(getCoverList());
+    }
+
+    public static final Parcelable.Creator<Feed> CREATOR = new Parcelable.Creator<Feed>() {
+        public Feed createFromParcel(Parcel in) {
+            return new Feed(in);
+        }
+
+        public Feed[] newArray(int size) {
+            return new Feed[size];
+        }
+    };
+
+    public int describeContents() {
+        return 0;
     }
 }

@@ -1,15 +1,21 @@
 package com.okar.icz.fragments;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.okar.icz.android.R;
 import com.okar.icz.common.SuperRecyclerBaseFragmentList;
 import com.okar.icz.entry.Account;
 import com.okar.icz.entry.Feed;
+import com.okar.icz.utils.StringUtils;
+import com.okar.icz.view.WordWrapLayout;
+import com.okar.icz.viewholder.FeedBaseViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +27,31 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
 
     List items = new ArrayList();
 
+    Feed feed;
+
+    public static FeedInfoFragment getInstance(Feed feed) {
+        Bundle args = new Bundle();
+        args.putParcelable("feed", feed);
+        FeedInfoFragment f = new FeedInfoFragment();
+        f.setArguments(args);
+        return f;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        feed = (Feed) getArguments().get("feed");
+        items.add(feed);
+    }
+
+    FeedBaseViewHolder.ViewClickHandler viewClickHandler = new FeedBaseViewHolder.ViewClickHandler() {
+        @Override
+        public void onInfoInform(Feed feed) {
+            super.onInfoInform(feed);
+            showToast("jubao");
+        }
+    };
+
     private RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter
             = new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -28,7 +59,7 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             switch (viewType) {
                 case -1:
-                    return new FeedInfoViewHolder(inflater.inflate(R.layout.layout_feed_info, parent, false));
+                    return new FeedInfoViewHolder(inflater.inflate(R.layout.layout_feed_info, parent, false), viewClickHandler);
             }
             return null;
         }
@@ -54,39 +85,55 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
         }
     };
 
-    class FeedInfoViewHolder extends RecyclerView.ViewHolder {
+    class FeedInfoViewHolder extends FeedBaseViewHolder {
 
-        //heads
-        TextView userNameTV, userInfoTV, timeTV;
-        ImageView userHeadIV, userGenderIV, userBrandIV;
-        View userAuth;
+        TextView contentTV;
 
-        //foots
-        TextView zanNumTV, zfNumTV, plNumTV;
-        ImageView zanIV;
-        View zanView;
+        ViewStub singleStub, imagesStub;
+        WordWrapLayout wordWrapLayout;
+        ImageView singleIV;
 
-        public FeedInfoViewHolder(View itemView) {
-            super(itemView);
-            userNameTV = (TextView) itemView.findViewById(R.id.item_user_name);
-            userInfoTV = (TextView) itemView.findViewById(R.id.item_user_info);
-            timeTV = (TextView) itemView.findViewById(R.id.item_time);
-            userHeadIV = (ImageView) itemView.findViewById(R.id.item_user_head);
-            userGenderIV = (ImageView) itemView.findViewById(R.id.item_user_gender);
-            userBrandIV = (ImageView) itemView.findViewById(R.id.item_user_brand);
-            userAuth = itemView.findViewById(R.id.item_user_auth);
-
-            zanNumTV = (TextView) itemView.findViewById(R.id.item_zan_num);
-            zfNumTV = (TextView) itemView.findViewById(R.id.item_zf_num);
-            plNumTV = (TextView) itemView.findViewById(R.id.item_pl_num);
-            zanIV = (ImageView) itemView.findViewById(R.id.item_zan_im);
-            zanView = itemView.findViewById(R.id.item_zan_layout);
-
+        public FeedInfoViewHolder(View itemView, ViewClickHandler viewClickHandler) {
+            super(itemView, viewClickHandler, 1);//info
+            contentTV = (TextView) itemView.findViewById(R.id.item_content_text);
+            singleStub = (ViewStub) itemView.findViewById(R.id.single_image_stub);
+            imagesStub = (ViewStub) itemView.findViewById(R.id.images_stub);
+            wordWrapLayout = (WordWrapLayout) itemView.findViewById(R.id.images_content);
+            singleIV = (ImageView) itemView.findViewById(R.id.single_image);
         }
 
-        void bindView(Feed feed) {
+        @Override
+        public void bindView(Feed feed) {
+            super.bindView(feed);
+            int type = feed.getType();
 
+            if (StringUtils.isBlank(feed.getContent())) {
+                contentTV.setVisibility(View.GONE);
+            } else {
+                contentTV.setVisibility(View.VISIBLE);
+                contentTV.setText(feed.getContent());
+            }
+
+            List<String> covers = feed.getCoverList();
+            if(covers!=null && !covers.isEmpty()) {
+                if(covers.size()>1) {
+                    imagesStub.inflate();
+                    for(String cover : covers) {
+                        ImageView iv = new ImageView(getActivity());
+                        wordWrapLayout.addView(iv);
+                        ImageLoader.getInstance().displayImage(cover, iv);
+                    }
+                } else {
+                    singleStub.inflate();
+                    ImageLoader.getInstance().displayImage(covers.get(0), singleIV);
+                }
+            }
         }
+    }
+
+    @Override
+    public RecyclerView.Adapter getAdapter() {
+        return mAdapter;
     }
 
     @Override

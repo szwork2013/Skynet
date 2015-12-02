@@ -5,6 +5,8 @@ import android.view.ViewStub;
 import android.widget.ImageView;
 
 import com.okar.icz.common.BaseActivity;
+import com.okar.icz.entry.Feed;
+import com.okar.icz.fragments.FeedInfoFragment;
 
 /**
  * Created by wangfengchen on 15/12/1.
@@ -14,10 +16,9 @@ public class FeedInfoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_feed_info);
-        ViewStub singleImageStub = (ViewStub) findViewById(R.id.single_image_stub);
-        singleImageStub.inflate();
-        ImageView singleIV = (ImageView) findViewById(R.id.single_image);
-        singleIV.setImageResource(R.drawable.iconfont_zan1);
+        setContentView(R.layout.activity_feed_info);
+        Feed feed = getIntent().getParcelableExtra("feed");
+        FeedInfoFragment f = FeedInfoFragment.getInstance(feed);
+        fragmentManager.beginTransaction().add(R.id.content, f).commitAllowingStateLoss();
     }
 }

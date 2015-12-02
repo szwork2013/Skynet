@@ -41,6 +41,9 @@
         <activity android:name=".PostTopicActivity"
             android:theme="@style/AppBaseTheme"/>
 
+        <activity android:name=".FeedInfoActivity"
+            android:theme="@style/AppBaseTheme"/>
+
         <activity android:name=".MessageActivity"
             android:theme="@style/AppBaseTheme"/>
 
