@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -13,6 +14,7 @@ import com.okar.icz.android.R;
 import com.okar.icz.common.SuperRecyclerBaseFragmentList;
 import com.okar.icz.entry.Account;
 import com.okar.icz.entry.Feed;
+import com.okar.icz.utils.DensityUtils;
 import com.okar.icz.utils.StringUtils;
 import com.okar.icz.view.WordWrapLayout;
 import com.okar.icz.viewholder.FeedBaseViewHolder;
@@ -98,8 +100,6 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
             contentTV = (TextView) itemView.findViewById(R.id.item_content_text);
             singleStub = (ViewStub) itemView.findViewById(R.id.single_image_stub);
             imagesStub = (ViewStub) itemView.findViewById(R.id.images_stub);
-            wordWrapLayout = (WordWrapLayout) itemView.findViewById(R.id.images_content);
-            singleIV = (ImageView) itemView.findViewById(R.id.single_image);
         }
 
         @Override
@@ -118,13 +118,18 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
             if(covers!=null && !covers.isEmpty()) {
                 if(covers.size()>1) {
                     imagesStub.inflate();
+                    wordWrapLayout = (WordWrapLayout) itemView.findViewById(R.id.images_content);
                     for(String cover : covers) {
                         ImageView iv = new ImageView(getActivity());
+//                        int p = DensityUtils.dip2px(getActivity(), 4);
+//                        iv.setPadding(p, p, p, p);
+                        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         wordWrapLayout.addView(iv);
                         ImageLoader.getInstance().displayImage(cover, iv);
                     }
                 } else {
                     singleStub.inflate();
+                    singleIV = (ImageView) itemView.findViewById(R.id.single_image);
                     ImageLoader.getInstance().displayImage(covers.get(0), singleIV);
                 }
             }

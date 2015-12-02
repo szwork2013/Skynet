@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.okar.icz.android.R;
+import com.okar.icz.utils.DensityUtils;
 
 /**
  * @author huanglong 2013-5-28 自定义自动换行LinearLayout
@@ -16,6 +17,7 @@ import com.okar.icz.android.R;
 public class WordWrapLayout extends ViewGroup {
     private int cellWidth;
     private int cellHeight;
+    private int cellSpacing;
 
     public WordWrapLayout(Context context) {
         super(context);
@@ -35,6 +37,7 @@ public class WordWrapLayout extends ViewGroup {
         TypedArray t = getContext().obtainStyledAttributes(attrs, R.styleable.WordWrapLayout);
         cellWidth = (int) t.getDimension(R.styleable.WordWrapLayout_cell_width, 0);
         cellHeight = (int) t.getDimension(R.styleable.WordWrapLayout_cell_height, 0);
+        cellSpacing = (int) t.getDimension(R.styleable.WordWrapLayout_cell_spacing, 0);
         Log.d("word wrap", "cellWidth "+cellWidth);
         Log.d("word wrap", "cellHeight "+cellHeight);
     }
@@ -56,6 +59,8 @@ public class WordWrapLayout extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int cellWidth = this.cellWidth;
         int cellHeight = this.cellHeight;
+        cellWidth += cellSpacing * 2;
+        cellHeight += cellSpacing * 2;
         int columns = (r - l) / cellWidth;
         if (columns < 0) {
             columns = 1;
@@ -97,8 +102,23 @@ public class WordWrapLayout extends ViewGroup {
         // 创建测量参数
         int cellWidthSpec = MeasureSpec.makeMeasureSpec(cellWidth, MeasureSpec.AT_MOST);
         int cellHeightSpec = MeasureSpec.makeMeasureSpec(cellHeight, MeasureSpec.AT_MOST);
+
+        int cellWidth = this.cellWidth;
+        int cellHeight = this.cellHeight;
+        cellWidth += cellSpacing * 2;
+        cellHeight += cellSpacing * 2;
+
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+//        Log.d("onMeasure", "控件宽度 "+ width);
+        int columns = width / cellWidth;
+        if (columns < 0) {
+            columns = 1;
+        }
+//        Log.d("onMeasure", "columns "+ columns);
         // 记录ViewGroup中Child的总个数
         int count = getChildCount();
+        int height = (int) Math.ceil(count / (double)columns);
+//        Log.d("onMeasure", "height "+ height);
         // 设置子空间Child的宽高
         for (int i = 0; i < count; i++) {
             View childView = getChildAt(i);
@@ -114,8 +134,8 @@ public class WordWrapLayout extends ViewGroup {
         }
         // 设置容器控件所占区域大小
         // 注意setMeasuredDimension和resolveSize的用法
-        setMeasuredDimension(resolveSize(cellWidth * count, widthMeasureSpec),
-                resolveSize(cellHeight * count, heightMeasureSpec));
+        setMeasuredDimension(resolveSize( cellWidth * columns, widthMeasureSpec),
+                resolveSize(cellHeight * height, heightMeasureSpec));
         // setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
 
         // 不需要调用父类的方法

@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -178,7 +180,9 @@ public class Feed implements Parcelable {
         setFeedForwardNum(in.readInt());
         setCommentCount(in.readInt());
         setFavourite(in.readInt());
-        setCoverList(in.readArrayList(Feed.class.getClassLoader()));
+        List<String> list = new ArrayList<>();
+        in.readStringList(list);
+        setCoverList(list);
     }
 
     @Override

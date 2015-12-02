@@ -18,6 +18,7 @@
     <declare-styleable name="WordWrapLayout">
         <attr name="cell_width" format="dimension" />
         <attr name="cell_height" format="dimension" />
+        <attr name="cell_spacing" format="dimension" />
     </declare-styleable>
 
 </resources>

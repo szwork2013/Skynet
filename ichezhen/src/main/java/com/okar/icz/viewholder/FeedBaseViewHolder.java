@@ -40,18 +40,13 @@ public abstract class FeedBaseViewHolder extends RecyclerView.ViewHolder impleme
     ViewClickHandler viewClickHandler;
 
     public FeedBaseViewHolder(View itemView, ViewClickHandler viewClickHandler, int type) {
-        this(itemView);
+        super(itemView);
         this.viewClickHandler = viewClickHandler;
         this.type = type;
+        init(itemView);
     }
 
-    public FeedBaseViewHolder(View itemView, ViewClickHandler viewClickHandler) {
-        this(itemView);
-        this.viewClickHandler = viewClickHandler;
-    }
-
-    public FeedBaseViewHolder(View itemView) {
-        super(itemView);
+    void init(View itemView) {
         userNameTV = (TextView) itemView.findViewById(R.id.item_user_name);
         userInfoTV = (TextView) itemView.findViewById(R.id.item_user_info);
         timeTV = (TextView) itemView.findViewById(R.id.item_time);
@@ -77,7 +72,6 @@ public abstract class FeedBaseViewHolder extends RecyclerView.ViewHolder impleme
             zanIV = (ImageView) itemView.findViewById(R.id.item_zan_im);
             zanView = itemView.findViewById(R.id.item_zan_layout);
         }
-
 
     }
 

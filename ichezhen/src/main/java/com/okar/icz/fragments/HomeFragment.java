@@ -280,7 +280,7 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
         TextView contentTV;
 
         public TextFeedViewHolder(View itemView, ViewClickHandler viewClickHandler) {
-            super(itemView, viewClickHandler);
+            super(itemView, viewClickHandler, 0);
             contentTV = (TextView) itemView.findViewById(R.id.item_content_text);
         }
 
