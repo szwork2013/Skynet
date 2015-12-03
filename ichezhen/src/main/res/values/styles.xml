@@ -288,4 +288,10 @@
         <item name="android:textColor">#383838</item>
         <item name="android:textSize">13sp</item>
     </style>
+
+    <style name="CommentBtn">
+        <item name="android:textColor">#09BEFF</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/comment_btn_bg</item>
+    </style>
 </resources>

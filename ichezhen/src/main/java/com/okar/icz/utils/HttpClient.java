@@ -93,6 +93,20 @@ public class HttpClient {
         client.post(url, params, handler);
     }
 
+    public void commentFeed(Context context, Integer accountId, Integer uid, Integer reUid, Integer feedId, String comment, ResponseHandlerInterface handler) throws JSONException, UnsupportedEncodingException {
+        String url = Constants.SERVER_NAME + "/feed/postComment.htm";
+        JSONObject json = new JSONObject();
+        json.put("account", accountId);
+        json.put("uid", uid);
+        json.put("feed", feedId);
+        json.put("comment", comment);
+        if(reUid!=null) {
+            json.put("reUid", reUid);
+        }
+        Log.d("praiseFeed url", url + "?" + json);
+        client.post(context, url, new StringEntity(json.toString(), "UTF-8"), "application/json", handler);
+    }
+
     public void get(String urlString, AsyncHttpResponseHandler res)    //用一个完整url获取一个string对象
     {
         client.get(urlString, res);

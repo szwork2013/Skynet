@@ -33,10 +33,10 @@ public class BaseActivity extends RoboFragmentActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//        }
     }
 
     @Override
@@ -73,7 +73,7 @@ public class BaseActivity extends RoboFragmentActivity implements View.OnClickLi
         }else{
             trans.replace(content, getFragmentByTag(tag), tag);
         }
-        trans.commit();
+        trans.commitAllowingStateLoss();
     }
 
     protected Fragment getFragmentByTag(String tag) {
