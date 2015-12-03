@@ -1,11 +1,19 @@
 package com.okar.icz.entry;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wangfengchen on 15/11/26.
  */
-public class Member {
+public class Member implements Parcelable {
+    @Expose
+    int id;
     @Expose
     String nickname;
     @Expose
@@ -20,6 +28,14 @@ public class Member {
     String chengshi;
     @Expose
     int gender;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNickname() {
         return nickname;
@@ -75,5 +91,46 @@ public class Member {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public Member(){}
+
+    private Member(Parcel in) {
+        setId(in.readInt());
+        setNickname(in.readString());
+        setHead(in.readString());
+        setCar(in.<MemberCar>readParcelable(getClass().getClassLoader()));
+        setLevel(in.readInt());
+        setAdmin(in.readInt());
+        setChengshi(in.readString());
+        setGender(in.readInt());
+
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(getId());
+        parcel.writeString(getNickname());
+        parcel.writeString(getHead());
+        parcel.writeParcelable(getCar(), i);
+        parcel.writeInt(getLevel());
+        parcel.writeInt(getAdmin());
+        parcel.writeString(getChengshi());
+        parcel.writeInt(getGender());
+
+    }
+
+    public static final Parcelable.Creator<Member> CREATOR = new Parcelable.Creator<Member>() {
+        public Member createFromParcel(Parcel in) {
+            return new Member(in);
+        }
+
+        public Member[] newArray(int size) {
+            return new Member[size];
+        }
+    };
+
+    public int describeContents() {
+        return 0;
     }
 }

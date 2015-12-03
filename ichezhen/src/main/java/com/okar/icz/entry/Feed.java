@@ -174,6 +174,7 @@ public class Feed implements Parcelable {
     private Feed(Parcel in) {
         setId(in.readInt());
         setContent(in.readString());
+        setMember(in.<Member>readParcelable(getClass().getClassLoader()));
         setPraiseCount(in.readInt());
         setPraiseState(in.readInt());
         setAccountId(in.readInt());
@@ -189,6 +190,7 @@ public class Feed implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(getId());
         parcel.writeString(getContent());
+        parcel.writeParcelable(getMember(), i);
         parcel.writeInt(getPraiseCount());
         parcel.writeInt(getPraiseState());
         parcel.writeInt(getAccountId());
