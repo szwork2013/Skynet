@@ -142,6 +142,7 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
             if(items.size()>1) {
                 items = items.subList(0, 1);
             }
+            notifyDataSetChanged();
             addAll(d);
         }
 

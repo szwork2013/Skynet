@@ -73,6 +73,7 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
                         @Override
                         public void onFinish() {
                             onRefreshFinish();
+                            onLoadMoreFinish();
                         }
                     });
 
@@ -102,9 +103,10 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
         }
 
         public void refresh(List d) {
-            if(items.size()>2) {
+            if (items.size() > 2) {
                 items = items.subList(0, 2);
             }
+            notifyDataSetChanged();
             addAll(d);
         }
 
@@ -114,7 +116,8 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
                 case -1:
                     return new FeedInfoViewHolder(inflater.inflate(R.layout.layout_feed_info, parent, false), viewClickHandler);
                 case -2:
-                    return new RecyclerView.ViewHolder(inflater.inflate(R.layout.item_label, parent, false)) {};
+                    return new RecyclerView.ViewHolder(inflater.inflate(R.layout.item_label, parent, false)) {
+                    };
                 default:
                     return new CommentViewHolder(inflater.inflate(R.layout.item_comment, parent, false));
             }
@@ -126,8 +129,8 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
             if (type == -1) {
                 FeedInfoViewHolder feedInfoViewHolder = (FeedInfoViewHolder) holder;
                 feedInfoViewHolder.bindView((Feed) items.get(position));
-            } else if(type == -2) {
-                ((TextView)holder.itemView.findViewById(R.id.label)).setText(String.format("评论(%d)", feed.getCommentCount()));
+            } else if (type == -2) {
+                ((TextView) holder.itemView.findViewById(R.id.label)).setText(String.format("评论(%d)", feed.getCommentCount()));
             } else {
                 CommentViewHolder commentViewHolder = (CommentViewHolder) holder;
                 commentViewHolder.bindView((Comment) items.get(position));
@@ -141,26 +144,29 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
 
         @Override
         public int getItemViewType(int position) {
-            if(position==0) return -1;//feed
-            if(position==1) return -2;//评论标题
+            if (position == 0) return -1;//feed
+            if (position == 1) return -2;//评论标题
             return 0;
         }
 
     }
 
-    class FeedInfoViewHolder extends FeedBaseViewHolder {
+    class FeedInfoViewHolder extends FeedBaseViewHolder implements ViewStub.OnInflateListener {
 
         TextView contentTV;
 
         ViewStub singleStub, imagesStub;
         WordWrapLayout wordWrapLayout;
         ImageView singleIV;
+        boolean isInflate;
 
         public FeedInfoViewHolder(View itemView, ViewClickHandler viewClickHandler) {
             super(itemView, viewClickHandler, 1);//info
             contentTV = (TextView) itemView.findViewById(R.id.item_content_text);
             singleStub = (ViewStub) itemView.findViewById(R.id.single_image_stub);
             imagesStub = (ViewStub) itemView.findViewById(R.id.images_stub);
+            singleStub.setOnInflateListener(this);
+            imagesStub.setOnInflateListener(this);
         }
 
         @Override
@@ -177,28 +183,33 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
             }
 
             List<String> covers = feed.getCoverList();
-            if(covers!=null && !covers.isEmpty()) {
-                if(covers.size()>1) {
-                    if(imagesStub!=null) {
+            if (covers != null && !covers.isEmpty()) {
+                if (covers.size() > 1) {
+                    if (imagesStub != null && !isInflate) {
                         imagesStub.inflate();
                         wordWrapLayout = (WordWrapLayout) itemView.findViewById(R.id.images_content);
-                        for(String cover : covers) {
-                            ImageView iv = new ImageView(getActivity());
+                    }
+                    for (String cover : covers) {
+                        ImageView iv = new ImageView(getActivity());
 //                        int p = DensityUtils.dip2px(getActivity(), 4);
 //                        iv.setPadding(p, p, p, p);
-                            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                            wordWrapLayout.addView(iv);
-                            ImageLoader.getInstance().displayImage(cover, iv);
-                        }
+                        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        wordWrapLayout.addView(iv);
+                        ImageLoader.getInstance().displayImage(cover, iv);
                     }
                 } else {
-                    if(singleStub!=null) {
+                    if (singleStub != null && !isInflate) {
                         singleStub.inflate();
                         singleIV = (ImageView) itemView.findViewById(R.id.single_image);
-                        ImageLoader.getInstance().displayImage(covers.get(0), singleIV);
                     }
+                    ImageLoader.getInstance().displayImage(covers.get(0), singleIV);
                 }
             }
+        }
+
+        @Override
+        public void onInflate(ViewStub viewStub, View view) {
+            isInflate = true;
         }
     }
 
@@ -208,8 +219,8 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
     }
 
     @Override
-    public void onMoreAsked(int i, int i1, int i2) {
-
+    public void onLoadMore() {
+        commentPageLoader.load();
     }
 
     @Override
