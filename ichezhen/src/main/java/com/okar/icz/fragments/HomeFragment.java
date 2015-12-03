@@ -1,12 +1,8 @@
 package com.okar.icz.fragments;
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -22,24 +18,18 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.okar.icz.android.FeedInfoActivity;
 import com.okar.icz.android.R;
 import com.okar.icz.common.Constants;
 import com.okar.icz.common.PageLoader;
 import com.okar.icz.common.SuperRecyclerBaseFragmentList;
 import com.okar.icz.common.SystemSettings;
-import com.okar.icz.common.imageloader.DisplayImageOptionFactory;
 import com.okar.icz.entry.Account;
 import com.okar.icz.entry.Feed;
 import com.okar.icz.entry.Member;
-import com.okar.icz.entry.MemberCar;
 import com.okar.icz.entry.PageResult;
-import com.okar.icz.utils.DateUtils;
 import com.okar.icz.utils.HttpClient;
 import com.okar.icz.utils.StringUtils;
-import com.okar.icz.view.DividerItemDecoration;
 import com.okar.icz.viewholder.FeedBaseViewHolder;
 
 import org.apache.http.Header;
@@ -48,9 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by wangfengchen on 15/11/26.
@@ -60,11 +48,11 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
     @Inject
     SystemSettings settings;
 
-    List items = new ArrayList();
-
     private Handler mHandler = new Handler() {
 
     };
+
+    private MyAdapter mAdapter = new MyAdapter();
 
     PageLoader<Feed> feedPageLoader =
             new PageLoader<>(Constants.GET_FEED_ALL,
@@ -74,12 +62,10 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
                         @Override
                         public void onSuccess(int p, List<Feed> d) {
                             if (p == 0) {//是刷新的
-                                Object o = items.get(0);
-                                items = new ArrayList<>();
-                                items.add(o);
+                                mAdapter.refresh(d);
+                            } else {
+                                mAdapter.addAll(d);
                             }
-                            HomeFragment.this.items.addAll(d);
-                            mAdapter.notifyDataSetChanged();
                         }
 
                         @Override
@@ -89,7 +75,8 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
 
                         @Override
                         public void onFinish() {
-                            refreshOnComplete();
+                            onRefreshFinish();
+                            onLoadMoreFinish();
                         }
                     });
 
@@ -131,32 +118,38 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        items.add(null);
+        mAdapter.add(null);
         feedPageLoader.getParams().put("accountId", String.valueOf(settings.getAccountId()));
         feedPageLoader.load();
     }
 
-    void test() {
-        for (int i = 0; i < 3; i++) {
-            Feed feed = new Feed();
-            feed.setContent("werewfsfsdfsdfsdfdsfdsfsfdsfsdfdsfdsfsdfsdf");
-            Member member = new Member();
-            member.setChengshi("北京市");
-            member.setLevel(2);
-            member.setNickname("王晨");
-            member.setHead("http://img.ichezhen.com/0/1447910592879.png");
-            member.setGender(2);
-            MemberCar car = new MemberCar();
-            car.setBrand(33);
-            car.setPinpai("奥迪");
-            member.setCar(car);
-            feed.setMember(member);
-            items.add(feed);
-        }
-    }
+    class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter
-            = new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        List items = new ArrayList();
+
+        public void add(Object o) {
+            items.add(o);
+            notifyItemInserted(items.size() - 1);
+        }
+
+        public void addAll(List d) {
+            for (Object o : d) {
+                add(o);
+            }
+        }
+
+        public void refresh(List d) {
+            if(items.size()>1) {
+                items = items.subList(0, 1);
+            }
+            addAll(d);
+        }
+
+        public void replace(int index, Object o) {
+            items.remove(index);
+            items.add(index, o);
+            notifyItemChanged(index);
+        }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -241,7 +234,7 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
                     return feed.getType();
             }
         }
-    };
+    }
 
     class HeadViewHolder extends RecyclerView.ViewHolder {
 
@@ -362,13 +355,13 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
     }
 
     @Override
-    public void onMoreAsked(int i, int i1, int i2) {
-
+    public void onRefresh() {
+        feedPageLoader.refresh();
     }
 
     @Override
-    public void onRefresh() {
-        feedPageLoader.refresh();
+    public void onLoadMore() {
+        feedPageLoader.load();
     }
 
     void loadHead() {
@@ -382,13 +375,8 @@ public class HomeFragment extends SuperRecyclerBaseFragmentList {
                 GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
                 Gson gson = builder.create();
                 Account account = gson.fromJson(responseBody, Account.class);
-                items.remove(0);
-                items.add(0, account);
+                mAdapter.replace(0 ,account);
                 Log.d("load head", "" + account);
-                for (Object o : items) {
-                    Log.d("load head", "item " + o);
-                }
-                mAdapter.notifyItemChanged(0);
             }
         });
     }

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,9 @@ import com.okar.icz.view.RecyclerViewHeader;
  */
 public abstract class SuperRecyclerBaseFragmentList
         extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener {
+
+    private static final String TAG = "BaseFragmentList";
+    private boolean isLoadingMore;
 
     private SuperRecyclerView mRecycler;
 
@@ -46,7 +50,7 @@ public abstract class SuperRecyclerBaseFragmentList
         return mRecycler;
     }
 
-    public void refreshOnComplete() {
+    public void onRefreshFinish() {
         mRecycler.getSwipeToRefresh().setRefreshing(false);
     }
 
@@ -79,6 +83,26 @@ public abstract class SuperRecyclerBaseFragmentList
      */
     public int getMax() {
         return 5;
+    }
+
+    @Override
+    public void onMoreAsked(int numberOfItems, int numberBeforeMore, int currentItemPos) {
+        if(isLoadingMore){
+            Log.d(TAG, "ignore manually update!");
+        } else{
+            Log.d(TAG, "=============load start=============");
+            isLoadingMore = true;
+            onLoadMore();//这里多线程也要手动控制isLoadingMore
+        }
+    }
+
+    public void onLoadMore() {
+
+    }
+
+    public void onLoadMoreFinish() {
+        Log.d(TAG, "=============load finish=============");
+        isLoadingMore = false;
     }
 
     @Override

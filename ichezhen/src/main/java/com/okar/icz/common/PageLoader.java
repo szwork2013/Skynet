@@ -34,6 +34,8 @@ public class PageLoader<T> extends TextHttpResponseHandler {
         return params;
     }
 
+    private boolean isLoading, isRefresh;
+
     public PageLoader(String url, Type t, LoaderCallback<T> c) {
         this.url = url;
         callback = c;
@@ -42,6 +44,7 @@ public class PageLoader<T> extends TextHttpResponseHandler {
 
     public void refresh() {
         pageResult = null;
+        isRefresh = true;
         load();
     }
 
@@ -54,9 +57,15 @@ public class PageLoader<T> extends TextHttpResponseHandler {
             if (pageResult.getNp() >= pageResult.getpCount() - 1) {
                 return;
             }
-            params.put("p", pageResult.getNp());
+            Log.d("loader", "is p -> " + pageResult.getNp());
+            params.put("p", String.valueOf(pageResult.getNp()));
         }
-        HttpClient.getInstance().get(url, params, this);
+        if(isLoading) {
+            Log.d("loader", "is loading ...");
+        } else {
+            isLoading = true;
+            HttpClient.getInstance().get(url, params, this);
+        }
     }
 
     @Override
@@ -68,7 +77,9 @@ public class PageLoader<T> extends TextHttpResponseHandler {
             GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
             Gson gson = builder.create();
             pageResult = gson.fromJson(responseBody, type);
-            callback.onSuccess(pageResult.getP(), pageResult.getData());
+            callback.onSuccess(isRefresh?0:1, pageResult.getData());
+            isRefresh = false;
+            isLoading = false;
         }
     }
 
@@ -78,6 +89,8 @@ public class PageLoader<T> extends TextHttpResponseHandler {
         Log.d("loader", "responseBody " + responseBody);
         Log.d("loader", "error " + error);
         callback.onFailure(responseBody, error);
+        isRefresh = false;
+        isLoading = false;
     }
 
     @Override

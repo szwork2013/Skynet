@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
@@ -16,11 +15,9 @@ import com.okar.icz.android.R;
 import com.okar.icz.common.Constants;
 import com.okar.icz.common.PageLoader;
 import com.okar.icz.common.SuperRecyclerBaseFragmentList;
-import com.okar.icz.entry.Account;
 import com.okar.icz.entry.Comment;
 import com.okar.icz.entry.Feed;
 import com.okar.icz.entry.PageResult;
-import com.okar.icz.utils.DensityUtils;
 import com.okar.icz.utils.StringUtils;
 import com.okar.icz.view.WordWrapLayout;
 import com.okar.icz.viewholder.CommentViewHolder;
@@ -75,7 +72,7 @@ public class FeedInfoFragment extends SuperRecyclerBaseFragmentList {
 
                         @Override
                         public void onFinish() {
-                            refreshOnComplete();
+                            onRefreshFinish();
                         }
                     });
 
